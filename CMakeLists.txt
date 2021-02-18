@@ -11,17 +11,12 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(Fortran_C_CXX_interface
-LANGUAGES C Fortran CXX)
+LANGUAGES C Fortran CXX
+VERSION 1.1.0)
 
 include(CTest)
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  # this helps show the options are/aren't conflicting between C and Fortran
-  # at build time
-  string(APPEND CMAKE_Fortran_FLAGS -fimplicit-none)
-endif()
-
-add_compile_options(-Wall)
+include (cmake/compilers.cmake)
 
 add_library(c_lib call_c.c)
 target_compile_features(c_lib PRIVATE c_std_99)
@@ -40,7 +35,7 @@ add_test(NAME CXXCallFortran COMMAND cxx_call_f)
 add_library(cxx_lib OBJECT call_cxx.cxx)
 target_compile_features(cxx_lib PRIVATE cxx_std_11)
 
-add_executable(f_call_cxx f_call_cxx.f90 $<TARGET_OBJECTS:cxx_lib>)
+add_executable(f_call_cxx f_call_c.f90 $<TARGET_OBJECTS:cxx_lib>)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(f_call_cxx PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME FortranCallC++ COMMAND f_call_cxx)

@@ -1,25 +1,23 @@
 program call_c
-!! Demonstrate Fortran calling C.
+!! Demonstrate Fortran calling C or C++.
 !!
 !! Normally BIND(C) should be used after the function name in the interface block,
 !! rather than postpending underscore(s).
 
-use, intrinsic :: iso_c_binding, only: dp=>c_double, c_int
+use, intrinsic :: iso_c_binding, only: c_int
 implicit none (type, external)
 
 
 interface
-
-subroutine timestwo(x, x2, N)  bind (c)
-import c_int, dp
-integer(c_int), value :: N
-real(dp) :: x(N), x2(N)
+subroutine timestwo(a, a2, L)  bind (c)
+import c_int
+integer(c_int), value :: L
+integer(c_int) :: a(L), a2(L)
 end subroutine timestwo
-
 end interface
 
 integer(c_int) :: N, i
-real(dp), allocatable :: x(:), x2(:)
+integer(c_int), allocatable :: x(:), x2(:)
 
 N = 3
 

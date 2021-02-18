@@ -15,7 +15,7 @@ f_call_c = executable('f_call_c', 'f_call_c.f90',
 test('Fortran calling C', f_call_c,  timeout: 10)
 
 cxx_lib = library('call_cxx', 'call_cxx.cxx')
-f_call_cxx = executable('f_call_cxx', 'f_call_cxx.f90',
+f_call_cxx = executable('f_call_cxx', 'f_call_c.f90',
   link_with: cxx_lib,
   link_language: 'fortran')
 test('Fortran calling C++', f_call_cxx, timeout: 10)
