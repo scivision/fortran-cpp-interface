@@ -7,10 +7,21 @@ Fortran subroutines and functions are easily called from C and C++.
 
 Use the standard C binding to define variable and bind functions/subroutines.
 
+This project is also a way to quickly check if compilers you have are ABI-compatible.
+For example:
+
+* Clang and Gfortran
+* (Windows) MSVC and Intel oneAPI ifort
+
 ## build
 
 ```sh
-ctest -S setup.cmake -VV
+cmake -B build
+
+cmake --build build
+
+cd build
+ctest
 ```
 
 ## Example
