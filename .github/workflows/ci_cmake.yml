@@ -19,26 +19,29 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: ctest -S setup.cmake -VV
-      env:
-        FC: gfortran-9
-        CC: gcc-9
-        CXX: g++-9
+    - run: cmake --preset=make
+    - run: cmake --build build --parallel
+    - run: ctest --parallel 2 --output-on-failure
+      working-directory: build
+
 
   macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
 
-    - run: ctest -S setup.cmake -VV
-      env:
-        FC: gfortran-9
-        CC: gcc-9
-        CXX: g++-9
+    - run: cmake --preset=make
+    - run: cmake --build build --parallel
+    - run: ctest --parallel 2 --output-on-failure
+      working-directory: build
+
 
   windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
 
-    - run: ctest -S setup.cmake -VV
+    - run: cmake --preset=makewin
+    - run: cmake --build build --parallel
+    - run: ctest --parallel 2 --output-on-failure
+      working-directory: build
