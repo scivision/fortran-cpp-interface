@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(Fortran_C_CXX_interface
 LANGUAGES C Fortran CXX
-VERSION 1.1.0)
+VERSION 1.1.1)
 
 include(CTest)
 
