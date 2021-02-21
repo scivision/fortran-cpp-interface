@@ -8,7 +8,7 @@
 # this also works between ABI compatible compilers e.g. Clang 11.0 and GCC 10.2
 
 # in general, CMake >= 3.14 have better link resolution than CMake 3.13.
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14...3.20)
 
 project(Fortran_C_CXX_interface
 LANGUAGES C Fortran CXX
