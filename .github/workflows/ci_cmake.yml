@@ -19,21 +19,22 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: cmake --preset=make
+    - run: cmake --preset make
     - run: cmake --build build --parallel
-    - run: ctest --parallel 2 --output-on-failure
-      working-directory: build
+    - run: ctest --preset default
 
 
   macos:
+    env:
+      CC: gcc-10
+      FC: gfortran-10
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset=makegcc10
+    - run: cmake --preset make
     - run: cmake --build build --parallel
-    - run: ctest --parallel 2 --output-on-failure
-      working-directory: build
+    - run: ctest --preset default
 
 
   windows:
@@ -41,7 +42,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset=makewin
+    - run: cmake --preset makewin
     - run: cmake --build build --parallel
-    - run: ctest --parallel 2 --output-on-failure
-      working-directory: build
+    - run: ctest --preset default
