@@ -19,7 +19,7 @@
 # export CFLAGS=$CXXFLAGS
 #
 # in general, CMake >= 3.14 have better link resolution than CMake 3.13.
-cmake_minimum_required(VERSION 3.14...3.20)
+cmake_minimum_required(VERSION 3.14...3.21)
 
 project(Fortran_C_CXX_interface
 LANGUAGES C Fortran CXX

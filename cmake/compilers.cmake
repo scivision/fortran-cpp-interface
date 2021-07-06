@@ -15,6 +15,6 @@ endif()
 if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   # this helps show the options are/aren't conflicting between C and Fortran
   # at build time
-  string(APPEND CMAKE_Fortran_FLAGS -fimplicit-none)
+  string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
   add_compile_options(-Wextra -Wall)
 endif()

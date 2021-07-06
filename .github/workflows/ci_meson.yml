@@ -25,9 +25,10 @@ jobs:
   macos:
     runs-on: macos-latest
     env:
-      CC: gcc-10
-      CXX: g++-10
-      FC: gfortran-10
+      # meson needs to specify all GCC on Mac
+      CC: gcc-11
+      CXX: g++-11
+      FC: gfortran-11
 
     steps:
     - uses: actions/checkout@v2
