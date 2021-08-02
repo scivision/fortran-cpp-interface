@@ -19,7 +19,7 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: cmake --preset default -G "Unix Makefiles"
+    - run: cmake --preset default
     - run: cmake --build build --parallel
     - run: ctest --preset default
 
@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default -G "Unix Makefiles"
+    - run: cmake --preset default
     - run: cmake --build build --parallel
     - run: ctest --preset default
 
