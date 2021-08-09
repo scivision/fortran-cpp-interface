@@ -25,9 +25,11 @@ jobs:
 
 
   macos:
+    needs: linux
+    runs-on: macos-latest
     env:
       FC: gfortran-11
-    runs-on: macos-latest
+
     steps:
     - uses: actions/checkout@v2
 
@@ -38,9 +40,12 @@ jobs:
 
   windows:
     runs-on: windows-latest
+    env:
+      CMAKE_GENERATOR: MinGW Makefiles
+
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default -G "MinGW Makefiles"
+    - run: cmake --preset default
     - run: cmake --build build --parallel
     - run: ctest --preset default
