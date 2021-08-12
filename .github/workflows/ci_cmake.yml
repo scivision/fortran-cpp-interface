@@ -1,5 +1,9 @@
 name: ci_cmake
 
+env:
+    CMAKE_BUILD_PARALLEL_LEVEL: 2
+    CTEST_PARALLEL_LEVEL: 2
+
 on:
   push:
     paths:
@@ -15,12 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
 
     - run: cmake --preset default
-    - run: cmake --build build --parallel
+    - run: cmake --build --preset default
     - run: ctest --preset default
 
 
@@ -34,7 +35,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - run: cmake --preset default
-    - run: cmake --build build --parallel
+    - run: cmake --build --preset default
     - run: ctest --preset default
 
 
@@ -47,5 +48,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - run: cmake --preset default
-    - run: cmake --build build --parallel
+    - run: cmake --build --preset default
     - run: ctest --preset default

@@ -10,8 +10,13 @@
   }
 },
 {
+  "name": "multi", "inherits": "default",
+  "generator": "Ninja Multi-Config"
+},
+{
   "name": "intel", "inherits": "default",
   "displayName": "Intel oneAPI LLVM",
+  "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icx",
     "FC": "ifx"
@@ -22,6 +27,20 @@
   {
     "name": "default",
     "configurePreset": "default"
+  },
+  {
+    "name": "release",
+    "configurePreset": "multi",
+    "configuration": "Release"
+  },
+  {
+    "name": "debug",
+    "configurePreset": "multi",
+    "configuration": "Debug"
+  },
+  {
+    "name": "intel",
+    "configurePreset": "intel"
   }
 ],
 "testPresets": [
@@ -36,6 +55,20 @@
     "noTestsAction": "error",
     "stopOnFailure": false
   }
+},
+{
+  "name": "release", "inherits": "default",
+  "configurePreset": "multi",
+  "configuration": "Release"
+},
+{
+  "name": "debug", "inherits": "default",
+  "configurePreset": "multi",
+  "configuration": "Debug"
+},
+{
+  "name": "intel", "inherits": "default",
+  "configurePreset": "intel"
 }
 ]
 }

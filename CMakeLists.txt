@@ -35,5 +35,3 @@ set(CMAKE_CXX_STANDARD 11)
 add_subdirectory(c)
 
 add_subdirectory(cxx)
-
-add_subdirectory(signal)
