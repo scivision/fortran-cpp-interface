@@ -1,7 +1,8 @@
 # Call Fortran from C++
 
-![Actions Status](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_cmake/badge.svg)
-![Actions Status](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_meson/badge.svg)
+![cmake](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_cmake/badge.svg)
+![meson](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_meson/badge.svg)
+[![intel-oneapi](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml/badge.svg)](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml)
 
 Fortran subroutines and functions are easily called from C and C++.
 
