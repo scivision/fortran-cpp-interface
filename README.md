@@ -14,6 +14,28 @@ For example:
 * Clang and Gfortran
 * (Windows) MSVC and Intel oneAPI ifort
 
+Demonstrate linking of
+
+* C++ calling Fortran
+* Fortran calling C++
+* Fortran calling C
+
+https://stackoverflow.com/tags/fortran-iso-c-binding/info
+
+In general, CMake >= 3.14 has better link resolution than CMake 3.13.
+In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`
+
+## MacOS
+
+For MacOS with Apple's Clang and Homebrew GCC,
+be sure you have in ~/.zshrc like the following:
+(check directory / versions on your Mac)
+
+export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib
+export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/include
+export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
+export CFLAGS=$CXXFLAGS
+
 ## build
 
 ```sh
@@ -23,25 +45,3 @@ cmake --build build
 
 ctest --test-dir build
 ```
-
-## Example
-
-```fortran
-module flibs
-
-use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
-
-implicit none
-
-subroutine cool(X,N) bind(c)
-
-real(c_double), intent(inout) :: X
-integer(c_int), intent(in) :: N
-
-...
-
-end subroutine cool
-```
-
-`bind(c)` makes the name `cool` available to C/C++.
-In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`

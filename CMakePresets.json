@@ -4,10 +4,7 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
-  "cacheVariables": {
-    "CMAKE_BUILD_TYPE": "Release"
-  }
+  "binaryDir": "${sourceDir}/build"
 },
 {
   "name": "multi", "inherits": "default",
