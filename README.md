@@ -16,13 +16,9 @@ For example:
 
 Demonstrate linking of
 
-* C++ calling Fortran
-* Fortran calling C++
-* Fortran calling C
+* C and C++ program calling Fortran libraries
+* Fortran program calling C and C++ libraries
 
-https://stackoverflow.com/tags/fortran-iso-c-binding/info
-
-In general, CMake >= 3.14 has better link resolution than CMake 3.13.
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`
 
 ## build
@@ -42,13 +38,19 @@ be sure you have in ~/.zshrc like the following:
 (check directory / versions on your Mac)
 
 ```sh
-export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib
-export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/include
+export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
 export CFLAGS=$CXXFLAGS
 ```
 
 ## Error handling in Fortran with C/C++ main program
 
-Using Fortran statement "stop" or "error stop" with a C/C++ main program results in segmentation fault across compilers and operating systems.
-Instead, return an error code from Fortran subroutine to the C/C++ main program, and let C/C++ handle the error.
+Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
+The "error*" examples show this.
+
+
+## References
+
+* [StackOverflow](
+https://stackoverflow.com/tags/fortran-iso-c-binding/info)

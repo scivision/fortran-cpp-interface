@@ -21,7 +21,9 @@ add_executable(c_fortran_error c/error_main.c)
 target_link_libraries(c_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(c_fortran_error PROPERTIES LINKER_LANGUAGE C)
-add_test(NAME C_Fortran_error COMMAND c_fortran_error)
+add_test(NAME C_Fortran_error
+  COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:c_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
+)
 
 # -- C++ calling Fortran
 add_executable(cxx_call_fortran cxx/main.cxx)
@@ -32,12 +34,11 @@ add_executable(cxx_fortran_error cxx/error_main.cxx)
 target_link_libraries(cxx_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(cxx_fortran_error PROPERTIES LINKER_LANGUAGE CXX)
-add_test(NAME C++_Fortran_error COMMAND cxx_fortran_error)
+add_test(NAME C++_Fortran_error
+  COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:cxx_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
+)
 
 # -- test wrapup
-
-set_tests_properties(C++_Fortran_error C_Fortran_error PROPERTIES WILL_FAIL TRUE)
-
 set_tests_properties(C++_Fortran_math C++_Fortran_error Fortran_call_C Fortran_call_C++ PROPERTIES
 TIMEOUT 5
 )
