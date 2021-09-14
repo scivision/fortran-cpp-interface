@@ -17,7 +17,7 @@ target_link_libraries(fortran_call_c PRIVATE math_c)
 add_test(NAME Fortran_call_C COMMAND fortran_call_c)
 
 # -- C++ calling Fortran
-add_executable(cxx_call_fortran cxx/cxx_main.cxx)
+add_executable(cxx_call_fortran cxx/main.cxx)
 target_link_libraries(cxx_call_fortran PRIVATE math_fortran)
 add_test(NAME C++_call_Fortran COMMAND cxx_call_fortran)
 

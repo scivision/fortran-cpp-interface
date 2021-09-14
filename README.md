@@ -31,10 +31,12 @@ For MacOS with Apple's Clang and Homebrew GCC,
 be sure you have in ~/.zshrc like the following:
 (check directory / versions on your Mac)
 
+```sh
 export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib
 export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/include
 export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
 export CFLAGS=$CXXFLAGS
+```
 
 ## build
 

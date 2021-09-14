@@ -21,6 +21,6 @@ test('Fortran call C', fortran_call_c,  timeout: 5)
 
 # -- C++ calling Fortran
 cxx_call_fortran = executable('cxx_call_fortran',
-  sources: files('cxx/cxx_main.cxx'),
+  sources: files('cxx/main.cxx'),
   link_with: math_fortran)
 test('C++ calling Fortran', cxx_call_fortran, timeout: 10)
