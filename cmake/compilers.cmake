@@ -18,3 +18,8 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
   add_compile_options(-Wextra -Wall)
 endif()
+
+
+if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
+  file(WRITE ${PROJECT_BINARY_DIR}/.gitignore "*")
+endif()

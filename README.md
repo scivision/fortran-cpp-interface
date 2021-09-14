@@ -25,7 +25,17 @@ https://stackoverflow.com/tags/fortran-iso-c-binding/info
 In general, CMake >= 3.14 has better link resolution than CMake 3.13.
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`
 
-## MacOS
+## build
+
+```sh
+cmake -B build
+
+cmake --build build
+
+ctest --test-dir build
+```
+
+### MacOS
 
 For MacOS with Apple's Clang and Homebrew GCC,
 be sure you have in ~/.zshrc like the following:
@@ -38,12 +48,7 @@ export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
 export CFLAGS=$CXXFLAGS
 ```
 
-## build
+## Error handling in Fortran with C/C++ main program
 
-```sh
-cmake -B build
-
-cmake --build build
-
-ctest --test-dir build
-```
+Using Fortran statement "stop" or "error stop" with a C/C++ main program results in segmentation fault across compilers and operating systems.
+Instead, return an error code from Fortran subroutine to the C/C++ main program, and let C/C++ handle the error.
