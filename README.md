@@ -49,7 +49,6 @@ export CFLAGS=$CXXFLAGS
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
 The "error*" examples show this.
 
-
 ## References
 
 * [StackOverflow](

@@ -5,7 +5,7 @@ implicit none (type, external)
 
 contains
 
-subroutine error_fortran(value) bind(C)
+pure subroutine error_fortran(value) bind(C)
 
   integer(c_int), intent(in) :: value
 
