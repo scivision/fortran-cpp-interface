@@ -1,4 +1,5 @@
 #include <cstring>
+#include <cstdlib>
 
 struct params {
   // order and lengths must match in Fortran and C
@@ -10,7 +11,7 @@ struct params {
 
 extern "C" void struct_check(struct params *);
 
-int main(void) {
+int main() {
 
 struct params s;
 
@@ -21,6 +22,6 @@ s.Lmy_char = strlen(s.my_char);
 
 struct_check(&s);
 
-return 0;
+return EXIT_SUCCESS;
 
 }

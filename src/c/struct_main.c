@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct params {
   // order and lengths must match in Fortran and C
@@ -22,6 +23,6 @@ s.Lmy_char = strlen(s.my_char);
 
 struct_check(&s);
 
-return 0;
+return EXIT_SUCCESS;
 
 }
