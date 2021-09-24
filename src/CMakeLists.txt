@@ -5,14 +5,14 @@ add_subdirectory(cxx)
 add_subdirectory(fortran)
 
 # -- Fortran calling C++
-add_executable(fortran_call_cxx fortran/main.f90)
+add_executable(fortran_call_cxx fortran/math_main.f90)
 target_link_libraries(fortran_call_cxx PRIVATE math_cxx)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(fortran_call_cxx PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_call_C++ COMMAND fortran_call_cxx)
 
 # -- Fortran calling C
-add_executable(fortran_call_c fortran/main.f90)
+add_executable(fortran_call_c fortran/math_main.f90)
 target_link_libraries(fortran_call_c PRIVATE math_c)
 add_test(NAME Fortran_call_C COMMAND fortran_call_c)
 
