@@ -30,6 +30,15 @@ test('C Fortran error', c_fortran_error,
   timeout: 5,
   should_fail: true)
 
+c_fortran_struct = executable('c_fortran_struct',
+  sources: files('c/struct_main.c'),
+  link_with: struct_fortran,
+  link_language: 'fortran'
+)
+test('C Fortran struct', c_fortran_struct,
+  timeout: 5
+)
+
 # -- C++ calling Fortran
 cxx_call_fortran = executable('cxx_call_fortran',
   sources: files('cxx/main.cxx'),
@@ -45,3 +54,12 @@ cxx_fortran_error = executable('cxx_fortran_error',
 test('C++ Fortran error', cxx_fortran_error,
   timeout: 5,
   should_fail: true)
+
+cxx_fortran_struct = executable('cxx_fortran_struct',
+  sources: files('cxx/struct_main.cxx'),
+  link_with: struct_fortran,
+  link_language: 'fortran'
+)
+test('C++ Fortran struct', cxx_fortran_struct,
+  timeout: 5
+)
