@@ -12,13 +12,14 @@ endif()
 
 # --- compiler options
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  # this helps show the options are/aren't conflicting between C and Fortran
-  # at build time
-  string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
-  add_compile_options(-Wextra -Wall)
-endif()
+add_compile_options(
+"$<$<COMPILE_LANG_AND_ID:C,GNU>:-mtune=native;-Wall;-Wextra>"
+"$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-mtune=native;-Wall;-Wextra>"
+"$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-mtune=native;-Wall;-Wextra;-fimplicit-none>"
+"$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
+"$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:RelWithDebInfo>>:-Wno-maybe-uninitialized>"
 
+)
 
 if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
   file(WRITE ${PROJECT_BINARY_DIR}/.gitignore "*")
