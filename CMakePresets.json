@@ -16,7 +16,7 @@
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icx",
-    "FC": "ifx"
+    "FC": "ifort"
   }
 }
 ],
