@@ -13,6 +13,7 @@ add_test(NAME Fortran_C++_math COMMAND fortran_cxx_math)
 
 add_executable(fortran_cxx_struct fortran/struct_main.f90)
 target_link_libraries(fortran_cxx_struct PRIVATE struct_cxx)
+set_target_properties(fortran_cxx_struct PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_struct COMMAND fortran_cxx_struct)
 
 # -- Fortran calling C
