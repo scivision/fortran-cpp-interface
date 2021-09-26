@@ -30,4 +30,9 @@ if (s.Lmy_char != 5) {
   exit(EXIT_FAILURE);
 }
 
+if (strcmp(s.my_char, "Hello") != 0) {
+  fprintf(stderr, "Error: my_char != Hello: %s\n", s.my_char);
+  exit(EXIT_FAILURE);
+}
+
 }

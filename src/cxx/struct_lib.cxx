@@ -29,4 +29,9 @@ if (s.Lmy_char != 5) {
   exit(EXIT_FAILURE);
 }
 
+if (strcmp(s.my_char, "Hello") != 0) {
+  std::cerr << "Error: my_char != Hello " << s.my_char << std::endl;
+  exit(EXIT_FAILURE);
+}
+
 }
