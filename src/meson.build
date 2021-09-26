@@ -41,7 +41,7 @@ test('C Fortran struct', c_fortran_struct,
 
 # -- C++ calling Fortran
 cxx_call_fortran = executable('cxx_call_fortran',
-  sources: files('cxx/main.cxx'),
+  sources: files('cxx/math_main.cxx'),
   link_with: math_fortran
 )
 test('C++ call Fortran', cxx_call_fortran, timeout: 5)

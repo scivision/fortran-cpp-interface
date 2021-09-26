@@ -1,1 +1,1 @@
-add_library(math_c OBJECT math.c)
+add_library(math_c OBJECT math_lib.c)

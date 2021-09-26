@@ -31,7 +31,7 @@ set_target_properties(c_fortran_struct PROPERTIES LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_struct COMMAND $<TARGET_FILE:c_fortran_struct>)
 
 # -- C++ calling Fortran
-add_executable(cxx_call_fortran cxx/main.cxx)
+add_executable(cxx_call_fortran cxx/math_main.cxx)
 target_link_libraries(cxx_call_fortran PRIVATE math_fortran)
 add_test(NAME C++_Fortran_math COMMAND cxx_call_fortran)
 
