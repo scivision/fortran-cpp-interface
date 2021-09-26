@@ -15,7 +15,7 @@ int main()
 
   for (auto i=0u; i < x2.size(); i++){
     if (x2[i] != 2*x[i]){
-      fprintf(stderr, "value %d != %d", x2[i], x[i]);
+      std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
       return EXIT_FAILURE;
     }
   }

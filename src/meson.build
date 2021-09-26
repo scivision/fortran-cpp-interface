@@ -5,20 +5,27 @@ subdir('cxx')
 subdir('fortran')
 
 # -- Fortran calling C++
-fortran_call_cxx = executable('fortran_call_cxx',
+fortran_cxx_math = executable('fortran_call_cxx',
   sources: files('fortran/math_main.f90'),
   link_with: math_cxx,
   link_language: 'fortran'
 )
-test('Fortran call C++', fortran_call_cxx, timeout: 5)
+test('Fortran C++ math', fortran_cxx_math, timeout: 5)
 
 # -- Fortran calling C
-fortran_call_c = executable('fortran_call_c',
+fortran_c_math = executable('fortran_c_math',
   sources: files('fortran/math_main.f90'),
   link_with: math_c,
   link_language: 'fortran'
 )
-test('Fortran call C', fortran_call_c,  timeout: 5)
+test('Fortran C math', fortran_c_math,  timeout: 5)
+
+fortran_c_struct = executable('fortran_call_c',
+  sources: files('fortran/struct_main.f90'),
+  link_with: struct_c,
+  link_language: 'fortran'
+)
+test('Fortran C struct', fortran_c_struct,  timeout: 5)
 
 # -- C calling Fortran
 c_fortran_error = executable('c_fortran_error',
