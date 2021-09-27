@@ -7,7 +7,6 @@ struct params {
   // order and lengths must match in Fortran and C
   int my_int;
   bool my_bool;
-  int Lmy_char;
   char my_char[1000];
 };
 
@@ -25,12 +24,7 @@ if (! s.my_bool) {
   exit(EXIT_FAILURE);
 }
 
-if (s.Lmy_char != 5) {
-  fprintf(stderr, "Error: my_char wrong length %d\n", s.Lmy_char);
-  exit(EXIT_FAILURE);
-}
-
-if (strcmp(s.my_char, "Hello") != 0) {
+if (strncmp(s.my_char, "Hello", 5) != 0) {
   fprintf(stderr, "Error: my_char != Hello: %s\n", s.my_char);
   exit(EXIT_FAILURE);
 }

@@ -6,11 +6,10 @@ struct params {
   // order and lengths must match in Fortran and C
   int my_int;
   bool my_bool;
-  int Lmy_char;
   char my_char[1000];
 };
 
-void struct_check(struct params);
+extern "C" void struct_check(struct params);
 
 void struct_check(struct params s) {
 
@@ -24,12 +23,7 @@ if (! s.my_bool) {
   exit(EXIT_FAILURE);
 }
 
-if (s.Lmy_char != 5) {
-  std::cerr << "Error: my_char wrong length " << s.Lmy_char << std::endl;
-  exit(EXIT_FAILURE);
-}
-
-if (strcmp(s.my_char, "Hello") != 0) {
+if (strncmp(s.my_char, "Hello", 5) != 0) {
   std::cerr << "Error: my_char != Hello " << s.my_char << std::endl;
   exit(EXIT_FAILURE);
 }
