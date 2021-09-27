@@ -58,6 +58,11 @@ set_target_properties(cxx_fortran_struct PROPERTIES LINKER_LANGUAGE CXX)
 add_test(NAME C++_Fortran_struct COMMAND $<TARGET_FILE:cxx_fortran_struct>)
 
 # -- test wrapup
-set_tests_properties(C++_Fortran_math C++_Fortran_error Fortran_C_math Fortran_C++_math PROPERTIES
+set_tests_properties(
+C_Fortran_error C_Fortran_struct
+C++_Fortran_math C++_Fortran_error C++_Fortran_struct
+Fortran_C_math Fortran_C_struct
+Fortran_C++_math Fortran_C++_struct
+PROPERTIES
 TIMEOUT 5
 )
