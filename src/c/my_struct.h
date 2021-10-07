@@ -11,7 +11,7 @@ struct params {
   char my_char[LMAX];
 };
 
-void struct_check(struct params);
+void struct_check(struct params *);
 
 #ifdef __cplusplus
 }

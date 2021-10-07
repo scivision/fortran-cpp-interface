@@ -6,20 +6,22 @@
 #include "my_struct.h"
 
 
-void struct_check(struct params s) {
+void struct_check(struct params *s) {
 
-if (s.my_int != 123) {
-  fprintf(stderr, "Error: my_int = %d\n", s.my_int);
+struct params *p = s;
+
+if (p->my_int != 123) {
+  fprintf(stderr, "Error: my_int = %d\n", p->my_int);
   exit(EXIT_FAILURE);
 }
 
-if (! s.my_bool) {
+if (! p->my_bool) {
   fprintf(stderr, "Error: my_bool is false\n");
   exit(EXIT_FAILURE);
 }
 
-if (strncmp(s.my_char, "Hello", 5) != 0) {
-  fprintf(stderr, "Error: my_char != Hello: %s\n", s.my_char);
+if (strncmp(p->my_char, "Hello", 5) != 0) {
+  fprintf(stderr, "Error: my_char != Hello: %s\n", p->my_char);
   exit(EXIT_FAILURE);
 }
 
