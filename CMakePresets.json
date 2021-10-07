@@ -8,15 +8,16 @@
 },
 {
   "name": "multi", "inherits": "default",
+  "displayName": "Ninja Multi-Config",
   "generator": "Ninja Multi-Config"
 },
 {
   "name": "intel", "inherits": "default",
-  "displayName": "Intel oneAPI LLVM",
+  "displayName": "Intel oneAPI compiler",
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icx",
-    "FC": "ifort"
+    "FC": "ifx"
   }
 }
 ],

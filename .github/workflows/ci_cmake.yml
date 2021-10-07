@@ -3,6 +3,7 @@ name: ci_cmake
 env:
     CMAKE_BUILD_PARALLEL_LEVEL: 2
     CTEST_PARALLEL_LEVEL: 2
+    CMAKE_BUILD_TYPE: Release
 
 on:
   push:
@@ -40,6 +41,7 @@ jobs:
 
 
   windows:
+    needs: linux
     runs-on: windows-latest
     env:
       CMAKE_GENERATOR: MinGW Makefiles
