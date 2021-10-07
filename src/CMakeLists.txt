@@ -53,6 +53,7 @@ add_test(NAME C++_Fortran_error
 )
 
 add_executable(cxx_fortran_struct cxx/struct_main.cxx)
+target_include_directories(cxx_fortran_struct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/c)
 target_link_libraries(cxx_fortran_struct PRIVATE struct_fortran)
 set_target_properties(cxx_fortran_struct PROPERTIES LINKER_LANGUAGE CXX)
 add_test(NAME C++_Fortran_struct COMMAND $<TARGET_FILE:cxx_fortran_struct>)
