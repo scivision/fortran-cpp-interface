@@ -21,9 +21,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default
-    - run: cmake --build --preset default
-    - run: ctest --preset default
+    - run: cmake -Bbuild
+    - run: cmake --build build
+    - run: ctest --test-dir build --preset default
 
 
   macos:
@@ -35,10 +35,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default
-    - run: cmake --build --preset default
-    - run: ctest --preset default
-
+    - run: cmake -Bbuild
+    - run: cmake --build build
+    - run: ctest --test-dir build --preset default
 
   windows:
     needs: linux
@@ -49,6 +48,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default
-    - run: cmake --build --preset default
-    - run: ctest --preset default
+    - run: cmake -Bbuild
+    - run: cmake --build build
+    - run: ctest --test-dir build --preset default
