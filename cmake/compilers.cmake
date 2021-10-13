@@ -18,6 +18,9 @@ add_compile_options(
 "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-mtune=native;-Wall;-Wextra;-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
 "$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:RelWithDebInfo>>:-Wno-maybe-uninitialized>"
+"$<$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>:-warn>"
+"$<$<COMPILE_LANG_AND_ID:C,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
+"$<$<COMPILE_LANG_AND_ID:CXX,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
 )
 
 if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)

@@ -45,8 +45,6 @@ jobs:
         printenv >> $GITHUB_ENV
 
     - name: Configure multi
-      env:
-        MPI_ROOT: ${{ env.I_MPI_ROOT }}
       run: cmake --preset multi
 
     - name: print config log
