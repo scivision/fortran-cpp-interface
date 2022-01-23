@@ -16,32 +16,103 @@ on:
 
 jobs:
 
-  linux:
+  linux-gcc:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        gcc-version: [7, 8, 9, 10, 11]
+
+    env:
+      CC: gcc-${{ matrix.gcc-version }}
+      CXX: g++-${{ matrix.gcc-version }}
+      FC: gfortran-${{ matrix.gcc-version }}
+
+    steps:
+
+    - name: install ninja and compilers
+      run: |
+        sudo apt update
+        sudo apt install ninja-build gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
+
+
+    - uses: actions/checkout@v2
+
+
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug -V
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release -V
+
+
+  linux-clang:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        clang-version: ["6.0", 7, 8, 9, 10]
+
+    env:
+      CC: clang-${{ matrix.clang-version }}
+      CXX: clang++-${{ matrix.clang-version }}
+      FC: gfortran
+
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake -Bbuild
-    - run: cmake --build build
-    - run: ctest --test-dir build --preset default
+    - name: install ninja and compilers
+      run: |
+        sudo apt update
+        sudo apt install ninja-build clang-${{ matrix.clang-version }}
+
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug -V
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release -V
 
 
   macos:
-    needs: linux
+    needs: linux-clang
     runs-on: macos-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        compiler: [ {cpp: g++-11, c: gcc-11}, {cpp: clang++, c: clang} ]
+
     env:
       FC: gfortran-11
+      CC: ${{ matrix.compiler.c }}
+      CXX: ${{ matrix.compiler.cpp }}
+
 
     steps:
+    - run: brew install ninja
+
     - uses: actions/checkout@v2
 
-    - run: cmake -Bbuild
-    - run: cmake --build build
-    - run: ctest --test-dir build --preset default
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug -V
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release -V
+
 
   windows:
-    needs: linux
+    needs: linux-gcc
     runs-on: windows-latest
+    timeout-minutes: 10
+
     env:
       CMAKE_GENERATOR: MinGW Makefiles
 
