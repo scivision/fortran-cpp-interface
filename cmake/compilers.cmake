@@ -12,16 +12,21 @@ endif()
 
 # --- compiler options
 
-add_compile_options(
-"$<$<COMPILE_LANG_AND_ID:C,GNU>:-mtune=native;-Wall;-Wextra>"
-"$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-mtune=native;-Wall;-Wextra>"
-"$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-mtune=native;-Wall;-Wextra;-fimplicit-none>"
-"$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
-"$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<CONFIG:RelWithDebInfo>>:-Wno-maybe-uninitialized>"
-"$<$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>:-warn>"
-"$<$<COMPILE_LANG_AND_ID:C,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
-"$<$<COMPILE_LANG_AND_ID:CXX,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
+if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
+add_compile_options(-mtune=native -Wall -Wextra
+"$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:RelWithDebInfo>>:-Wno-maybe-uninitialized>"
 )
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
+add_compile_options(
+$<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
+"$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
+"$<$<COMPILE_LANGUAGE:C>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
+"$<$<COMPILE_LANGUAGE:CXX>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
+)
+endif()
 
 if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
   file(WRITE ${PROJECT_BINARY_DIR}/.gitignore "*")
