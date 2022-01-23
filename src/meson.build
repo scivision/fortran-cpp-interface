@@ -14,7 +14,7 @@ test('Fortran C++ math', fortran_cxx_math, timeout: 5)
 
 fortran_cxx_struct = executable('fortran_cxx_struct',
   sources: files('fortran/struct_main.f90'),
-  include_directories: meson.current_source_dir() / 'c',
+  include_directories: 'c',
   link_with: struct_cxx
 )
 test('Fortran C++ struct', fortran_cxx_struct,  timeout: 5)
@@ -89,7 +89,7 @@ test('C++ Fortran error', cxx_fortran_error,
 
 cxx_fortran_struct = executable('cxx_fortran_struct',
   sources: files('cxx/struct_main.cxx'),
-  include_directories: meson.current_source_dir() / 'c',
+  include_directories: 'c',
   link_with: struct_fortran,
   link_language: 'fortran'
 )
