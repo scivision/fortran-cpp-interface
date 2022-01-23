@@ -71,9 +71,14 @@ c_fortran_struct = executable('c_fortran_struct',
   link_with: struct_fortran,
   link_language: 'fortran'
 )
-test('C Fortran struct', c_fortran_struct,
-  timeout: 5
+test('C Fortran struct', c_fortran_struct, timeout: 5)
+
+c_fortran_string_array = executable('c_fortran_string_array',
+  sources: files('c/string_array_main.c'),
+  link_with: string_array_fortran,
+  link_language: 'fortran'
 )
+test('C Fortran string array', c_fortran_string_array, timeout: 5)
 
 # -- C++ calling Fortran
 cxx_call_fortran = executable('cxx_call_fortran',

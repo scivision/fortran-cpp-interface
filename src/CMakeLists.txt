@@ -53,6 +53,10 @@ set_target_properties(c_fortran_struct PROPERTIES LINKER_LANGUAGE C)
 target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
 
+add_executable(c_fortran_string_array c/string_array_main.c)
+target_link_libraries(c_fortran_string_array PRIVATE string_array_fortran)
+set_target_properties(c_fortran_string_array PROPERTIES LINKER_LANGUAGE C)
+add_test(NAME C_Fortran_string_array COMMAND c_fortran_string_array)
 
 # -- C++ calling Fortran
 add_executable(cxx_call_fortran cxx/math_main.cxx)
