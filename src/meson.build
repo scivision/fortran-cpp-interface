@@ -15,7 +15,8 @@ test('Fortran C++ math', fortran_cxx_math, timeout: 5)
 fortran_cxx_struct = executable('fortran_cxx_struct',
   sources: files('fortran/struct_main.f90'),
   include_directories: 'c',
-  link_with: struct_cxx
+  link_with: struct_cxx,
+  link_language: 'fortran'
 )
 test('Fortran C++ struct', fortran_cxx_struct,  timeout: 5)
 
