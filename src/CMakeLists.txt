@@ -16,6 +16,13 @@ target_link_libraries(fortran_cxx_struct PRIVATE struct_cxx)
 set_target_properties(fortran_cxx_struct PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_struct COMMAND fortran_cxx_struct)
 
+add_executable(fortran_cxx_error fortran/error_main.f90)
+target_link_libraries(fortran_cxx_error PRIVATE error_cxx)
+set_target_properties(fortran_cxx_error PROPERTIES LINKER_LANGUAGE Fortran)
+add_test(NAME Fortran_C++_error
+COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_cxx_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
+)
+
 # -- Fortran calling C
 add_executable(fortran_c_math fortran/math_main.f90)
 target_link_libraries(fortran_c_math PRIVATE math_c)
@@ -25,19 +32,27 @@ add_executable(fortran_c_struct fortran/struct_main.f90)
 target_link_libraries(fortran_c_struct PRIVATE struct_c)
 add_test(NAME Fortran_C_struct COMMAND fortran_c_struct)
 
+add_executable(fortran_c_error fortran/error_main.f90)
+target_link_libraries(fortran_c_error PRIVATE error_c)
+add_test(NAME Fortran_C_error
+COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_c_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
+)
+
 # -- C calling Fortran
 add_executable(c_fortran_error c/error_main.c)
 target_link_libraries(c_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(c_fortran_error PROPERTIES LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_error
-  COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:c_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
+COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:c_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 
 add_executable(c_fortran_struct c/struct_main.c)
 target_link_libraries(c_fortran_struct PRIVATE struct_fortran)
 set_target_properties(c_fortran_struct PROPERTIES LINKER_LANGUAGE C)
+target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
+
 
 # -- C++ calling Fortran
 add_executable(cxx_call_fortran cxx/math_main.cxx)
@@ -56,6 +71,7 @@ add_executable(cxx_fortran_struct cxx/struct_main.cxx)
 target_include_directories(cxx_fortran_struct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/c)
 target_link_libraries(cxx_fortran_struct PRIVATE struct_fortran)
 set_target_properties(cxx_fortran_struct PROPERTIES LINKER_LANGUAGE CXX)
+target_compile_definitions(cxx_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C++_Fortran_struct COMMAND cxx_fortran_struct)
 
 # -- test wrapup
