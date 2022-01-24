@@ -1,4 +1,4 @@
-# Call Fortran from C++
+# Interoperability examples between C, C++ and Fortran
 
 ![cmake](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_cmake/badge.svg)
 ![meson](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_meson/badge.svg)
@@ -19,6 +19,13 @@ Demonstrate linking of
 * C and C++ program calling Fortran libraries
 * Fortran program calling C and C++ libraries
 
+We assume the compilers are C++11 and Fortran 2018 capable.
+We CI test with compilers including:
+
+* GCC &ge; 7
+* Clang &ge; 6
+* Intel oneAPI
+
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`
 
 ## build
@@ -30,6 +37,16 @@ cmake --build build
 
 ctest --test-dir build
 ```
+
+OR from Meson
+
+```sh
+meson build
+meson compile -C build
+meson test -C build
+```
+
+
 
 ### MacOS
 
