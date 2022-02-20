@@ -1,8 +1,4 @@
-program call_c
-!! Demonstrate Fortran calling C or C++.
-!!
-!! Normally BIND(C) should be used after the function name in the interface block,
-!! rather than postpending underscore(s).
+program vector
 
 use, intrinsic :: iso_c_binding, only: c_int
 implicit none (type, external)

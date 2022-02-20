@@ -68,3 +68,11 @@ link_language: 'fortran'
 test('C++ Fortran struct', cxx_fortran_struct,
 timeout: 5
 )
+
+cxx_fortran_pointer = executable('cxx_fortran_pointer',
+sources: files('cxx/pointer_main.cxx'),
+link_with: pointer_fortran
+)
+test('C++ Fortran pointer', cxx_fortran_pointer,
+timeout: 5
+)

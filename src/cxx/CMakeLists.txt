@@ -19,6 +19,10 @@ add_executable(cxx_fortran_vector vector_main.cxx)
 target_link_libraries(cxx_fortran_vector PRIVATE vector_fortran)
 add_test(NAME C++_Fortran_vector COMMAND cxx_fortran_vector)
 
+add_executable(cxx_fortran_pointer pointer_main.cxx)
+target_link_libraries(cxx_fortran_pointer PRIVATE pointer_fortran)
+add_test(NAME C++_Fortran_pointer COMMAND cxx_fortran_pointer)
+
 add_executable(cxx_fortran_error error_main.cxx)
 target_link_libraries(cxx_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
