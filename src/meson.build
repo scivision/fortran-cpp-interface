@@ -60,8 +60,7 @@ should_fail: true)
 c_fortran_submod = executable('c_fortran_submodule',
 sources: files('c/submodule_main.c'),
 link_with: submodule_fortran,
-link_language: 'fortran',
-c_args: '-D_USE_MATH_DEFINES'
+link_language: 'fortran'
 )
 test('C Fortran Submodule', c_fortran_submod, timeout: 5)
 
