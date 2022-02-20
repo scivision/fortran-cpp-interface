@@ -1,4 +1,4 @@
-math_cxx = library('math_cxx', 'math_lib.cxx')
+vector_cxx = library('vector_cxx', 'vector_lib.cxx')
 
 struct_cxx = library('struct_cxx', 'struct_lib.cxx',
 include_directories: '../c')

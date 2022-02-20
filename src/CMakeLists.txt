@@ -5,11 +5,11 @@ add_subdirectory(cxx)
 add_subdirectory(fortran)
 
 # -- Fortran calling C++
-add_executable(fortran_cxx_math fortran/math_main.f90)
-target_link_libraries(fortran_cxx_math PRIVATE math_cxx)
+add_executable(fortran_cxx_vector fortran/vector_main.f90)
+target_link_libraries(fortran_cxx_vector PRIVATE vector_cxx)
 # LINKER_LANGUAGE option is necessary for ifort at least
-set_target_properties(fortran_cxx_math PROPERTIES LINKER_LANGUAGE Fortran)
-add_test(NAME Fortran_C++_math COMMAND fortran_cxx_math)
+set_target_properties(fortran_cxx_vector PROPERTIES LINKER_LANGUAGE Fortran)
+add_test(NAME Fortran_C++_vector COMMAND fortran_cxx_vector)
 
 add_executable(fortran_cxx_struct fortran/struct_main.f90)
 target_link_libraries(fortran_cxx_struct PRIVATE struct_cxx)
@@ -24,9 +24,9 @@ COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_cxx_error> -Dexp_code=42 -P
 )
 
 # -- Fortran calling C
-add_executable(fortran_c_math fortran/math_main.f90)
-target_link_libraries(fortran_c_math PRIVATE math_c)
-add_test(NAME Fortran_C_math COMMAND fortran_c_math)
+add_executable(fortran_c_vector fortran/vector_main.f90)
+target_link_libraries(fortran_c_vector PRIVATE vector_c)
+add_test(NAME Fortran_C_vector COMMAND fortran_c_vector)
 
 add_executable(fortran_c_struct fortran/struct_main.f90)
 target_link_libraries(fortran_c_struct PRIVATE struct_c)
@@ -39,6 +39,11 @@ COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_c_error> -Dexp_code=42 -P $
 )
 
 # -- C calling Fortran
+add_executable(c_fortran_submodule c/submodule_main.c)
+target_link_libraries(c_fortran_submodule PRIVATE submodule_fortran)
+set_target_properties(c_fortran_submodule PROPERTIES LINKER_LANGUAGE C)
+add_test(NAME C_Fortran_submodule COMMAND c_fortran_submodule)
+
 add_executable(c_fortran_error c/error_main.c)
 target_link_libraries(c_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
@@ -54,9 +59,18 @@ target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECUR
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
 
 # -- C++ calling Fortran
-add_executable(cxx_call_fortran cxx/math_main.cxx)
-target_link_libraries(cxx_call_fortran PRIVATE math_fortran)
-add_test(NAME C++_Fortran_math COMMAND cxx_call_fortran)
+add_executable(cxx_fortran_submodule cxx/submodule_main.cxx)
+target_link_libraries(cxx_fortran_submodule PRIVATE submodule_fortran)
+target_compile_definitions(cxx_fortran_submodule PRIVATE _USE_MATH_DEFINES)
+add_test(NAME C++_Fortran_submodule COMMAND cxx_fortran_submodule)
+
+add_executable(cxx_fortran_array cxx/array_main.cxx)
+target_link_libraries(cxx_fortran_array PRIVATE vector_fortran)
+add_test(NAME C++_Fortran_array COMMAND cxx_fortran_array)
+
+add_executable(cxx_fortran_vector cxx/vector_main.cxx)
+target_link_libraries(cxx_fortran_vector PRIVATE vector_fortran)
+add_test(NAME C++_Fortran_vector COMMAND cxx_fortran_vector)
 
 add_executable(cxx_fortran_error cxx/error_main.cxx)
 target_link_libraries(cxx_fortran_error PRIVATE error_fortran)
@@ -76,9 +90,9 @@ add_test(NAME C++_Fortran_struct COMMAND cxx_fortran_struct)
 # -- test wrapup
 set_tests_properties(
 C_Fortran_error C_Fortran_struct
-C++_Fortran_math C++_Fortran_error C++_Fortran_struct
-Fortran_C_math Fortran_C_struct
-Fortran_C++_math Fortran_C++_struct
+C++_Fortran_vector C++_Fortran_error C++_Fortran_struct
+Fortran_C_vector Fortran_C_struct
+Fortran_C++_vector Fortran_C++_struct
 PROPERTIES
 TIMEOUT 5
 )

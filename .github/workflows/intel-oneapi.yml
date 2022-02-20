@@ -20,6 +20,10 @@ on:
 jobs:
 
   linux-intel-oneapi:
+    strategy:
+      matrix:
+        shared: [true,false]
+
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -45,7 +49,7 @@ jobs:
         printenv >> $GITHUB_ENV
 
     - name: Configure multi
-      run: cmake --preset multi
+      run: cmake --preset multi -DBUILD_SHARED_LIBS:BOOL=${{ matrix.shared }}
 
     - name: print config log
       if: ${{ failure() }}

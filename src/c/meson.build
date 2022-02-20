@@ -1,4 +1,4 @@
-math_c = library('math_c', 'math_lib.c')
+vector_c = library('vector_c', 'vector_lib.c')
 
 struct_c = library('struct_c', 'struct_lib.c')
 

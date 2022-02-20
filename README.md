@@ -26,7 +26,13 @@ We CI test with compilers including:
 * Clang &ge; 6
 * Intel oneAPI
 
-In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`
+In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`.
+
+## Examples
+
+C++ examples include [./cxx/vector_main.cxx](vector_main.cxx) that shows using a C++ contiguous
+[std::vector](https://en.cppreference.com/w/cpp/container/vector)
+to pass 1-D arrays to/from Fortran.
 
 ## build
 
@@ -45,8 +51,6 @@ meson build
 meson compile -C build
 meson test -C build
 ```
-
-
 
 ### MacOS
 
