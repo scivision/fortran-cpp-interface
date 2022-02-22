@@ -1,7 +1,6 @@
 # Interoperability examples between C, C++ and Fortran
 
 ![cmake](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_cmake/badge.svg)
-![meson](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_meson/badge.svg)
 [![intel-oneapi](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml/badge.svg)](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml)
 
 Fortran subroutines and functions are easily called from C and C++.
@@ -34,7 +33,7 @@ C++ examples include [./cxx/vector_main.cxx](vector_main.cxx) that shows using a
 [std::vector](https://en.cppreference.com/w/cpp/container/vector)
 to pass 1-D arrays to/from Fortran.
 
-## build
+Build by:
 
 ```sh
 cmake -B build
@@ -42,14 +41,6 @@ cmake -B build
 cmake --build build
 
 ctest --test-dir build
-```
-
-OR from Meson
-
-```sh
-meson build
-meson compile -C build
-meson test -C build
 ```
 
 ### MacOS
