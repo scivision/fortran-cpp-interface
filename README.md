@@ -1,6 +1,6 @@
 # Interoperability examples between C, C++ and Fortran
 
-![cmake](https://github.com/scivision/fortran-c-cpp-interface/workflows/ci_cmake/badge.svg)
+[![ci](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/ci.yml/badge.svg)](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/ci.yml)
 [![intel-oneapi](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml/badge.svg)](https://github.com/scivision/fortran-c-cpp-interface/actions/workflows/intel-oneapi.yml)
 
 Fortran subroutines and functions are easily called from C and C++.
