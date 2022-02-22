@@ -6,6 +6,10 @@ target_include_directories(struct_cxx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../c)
 add_library(error_cxx OBJECT error_lib.cxx)
 
 # -- C++ calling Fortran
+add_executable(cxx_fortran_bool bool_main.cxx)
+target_link_libraries(cxx_fortran_bool PRIVATE bool_fortran)
+add_test(NAME C++_Fortran_bool COMMAND cxx_fortran_bool)
+
 add_executable(cxx_fortran_submodule submodule_main.cxx)
 target_link_libraries(cxx_fortran_submodule PRIVATE submodule_fortran)
 target_compile_definitions(cxx_fortran_submodule PRIVATE _USE_MATH_DEFINES)

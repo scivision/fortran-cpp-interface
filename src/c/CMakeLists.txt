@@ -6,6 +6,10 @@ add_library(error_c OBJECT error_lib.c)
 
 
 # -- C calling Fortran
+add_executable(c_fortran_bool bool_main.c)
+target_link_libraries(c_fortran_bool PRIVATE bool_fortran)
+add_test(NAME C_Fortran_bool COMMAND c_fortran_bool)
+
 add_executable(c_fortran_submodule submodule_main.c)
 target_link_libraries(c_fortran_submodule PRIVATE submodule_fortran)
 set_target_properties(c_fortran_submodule PROPERTIES LINKER_LANGUAGE C)
