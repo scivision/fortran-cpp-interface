@@ -18,7 +18,7 @@ endif()
 # --- compiler options
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-add_compile_options(-mtune=native -Wall -Wextra
+add_compile_options(-Wall -Wextra
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:RelWithDebInfo>>:-Wno-maybe-uninitialized>"
