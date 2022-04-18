@@ -25,6 +25,8 @@ We CI test with compilers including:
 * Clang &ge; 6
 * Intel oneAPI
 
+This repo's examples also work with Cray compilers.
+
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`.
 
 ## Examples
