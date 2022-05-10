@@ -6,6 +6,10 @@ target_include_directories(struct_cxx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../c)
 add_library(error_cxx OBJECT error_lib.cxx)
 
 # -- C++ calling Fortran
+add_executable(cpp_opaque opaque_main.cxx)
+target_link_libraries(cpp_opaque PRIVATE opaque_fortran)
+add_test(NAME C++_Fortran_opaque COMMAND cpp_opaque)
+
 add_executable(cpp_poly_fcn poly_fcn_main.cpp)
 target_link_libraries(cpp_poly_fcn PRIVATE poly_fcn_fortran)
 add_test(NAME C++_Fortran_poly_fcn COMMAND cpp_poly_fcn)
