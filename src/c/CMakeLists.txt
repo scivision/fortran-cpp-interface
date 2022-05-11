@@ -29,8 +29,14 @@ set_target_properties(c_fortran_struct PROPERTIES LINKER_LANGUAGE C)
 target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
 
-set_tests_properties(
-C_Fortran_error C_Fortran_struct C_Fortran_submodule
-PROPERTIES
-TIMEOUT 5
-)
+# --- props
+
+get_property(targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
+
+foreach(t IN LISTS targets)
+  target_compile_features(${t} PRIVATE c_std_99)
+endforeach()
+
+get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
+
+set_tests_properties(${test_names} PROPERTIES TIMEOUT 5)

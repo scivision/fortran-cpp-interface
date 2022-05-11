@@ -51,9 +51,8 @@ add_test(NAME Fortran_C_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_c_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 
-set_tests_properties(
-Fortran_C_vector Fortran_C_struct Fortran_C_error
-Fortran_C++_vector Fortran_C++_struct Fortran_C++_error
-PROPERTIES
-TIMEOUT 5
-)
+# --- props
+
+get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
+
+set_tests_properties(${test_names} PROPERTIES TIMEOUT 5)
