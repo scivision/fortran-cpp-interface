@@ -5,16 +5,35 @@ use, intrinsic :: iso_c_binding, only : C_PTR, c_loc, c_int, c_f_pointer
 implicit none (type, external)
 
 type, abstract :: base
-integer(c_int) :: A, C
+
+  integer(c_int) :: A, C
+
+  contains
+
+  procedure(constructor), deferred :: init
+
 end type base
 
 type, extends(base) :: vthree
-  integer(c_int) :: B = 3
+  integer(c_int) :: B
+
+  contains
+  procedure :: init => init_three
 end type vthree
 
 type, extends(base) :: vfour
-  integer(c_int) :: B = 4
+  integer(c_int) :: B
+  contains
+  procedure :: init => init_four
 end type vfour
+
+
+abstract interface
+  subroutine constructor(self)
+    import base
+    class(base), intent(inout) :: self
+  end subroutine constructor
+end interface
 
 contains
 
@@ -40,7 +59,25 @@ subroutine init_type(xtype, xC) bind(C)
     error stop "unknown init type"
   end select
 
+  x%C = 0
+
+  call x%init()
+
 end subroutine init_type
+
+
+subroutine init_three(self)
+  class(vthree), intent(inout) :: self
+
+  self%B = 3
+end subroutine
+
+
+subroutine init_four(self)
+  class(vfour), intent(inout) :: self
+
+  self%B = 4
+end subroutine
 
 
 function assoc_type(xtype, xC) result(x)
