@@ -29,14 +29,6 @@ This repo's examples also work with Cray compilers.
 
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`.
 
-## Examples
-
-C++ examples include [./cxx/vector_main.cxx](vector_main.cxx) that shows using a C++ contiguous
-[std::vector](https://en.cppreference.com/w/cpp/container/vector)
-to pass 1-D arrays to/from Fortran.
-
-Build by:
-
 ```sh
 cmake -B build
 
@@ -45,7 +37,7 @@ cmake --build build
 ctest --test-dir build
 ```
 
-### MacOS
+## MacOS
 
 For MacOS with Apple's Clang and Homebrew GCC,
 be sure you have in ~/.zshrc like the following:
@@ -61,7 +53,7 @@ export CFLAGS=$CXXFLAGS
 ## Error handling in Fortran with C/C++ main program
 
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
-The "error*" examples show this.
+The "error" examples show this.
 
 ## References
 

@@ -4,8 +4,21 @@ project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
 VERSION 1.3.0)
 
-include(CTest)
+enable_testing()
 
 include (cmake/compilers.cmake)
 
-add_subdirectory(src)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+foreach(d array bool error opaque pointer poly_function poly_type struct submodule tictoc vector)
+  set(td src/${d})
+  add_subdirectory(${td})
+  get_property(targets DIRECTORY ${td} PROPERTY BUILDSYSTEM_TARGETS)
+
+  foreach(t IN LISTS targets)
+    target_compile_features(${t} PRIVATE c_std_99)
+    target_compile_features(${t} PRIVATE cxx_std_11)
+  endforeach()
+endforeach()
+
+# --- props
