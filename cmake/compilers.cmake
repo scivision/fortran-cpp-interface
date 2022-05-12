@@ -30,7 +30,7 @@ add_compile_options(-Wall -Wextra
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
-"$<$<COMPILE_LANGUAGE:C,CXX>:-Wall>"
+"$<$<COMPILE_LANGUAGE:C,CXX>:-Wall;-Wextra>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
 )
 endif()
