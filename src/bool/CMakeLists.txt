@@ -1,6 +1,6 @@
 set_directory_properties(PROPERTIES LABELS bool)
 
-add_library(bool_fortran lib.f90)
+add_library(bool_fortran OBJECT lib.f90)
 
 add_executable(c_fortran_bool main.c)
 target_link_libraries(c_fortran_bool PRIVATE bool_fortran)

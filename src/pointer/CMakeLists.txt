@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS opaque)
+set_directory_properties(PROPERTIES LABELS pointer)
 
 add_library(pointer_fortran OBJECT lib.f90)
 
