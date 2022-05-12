@@ -1,6 +1,13 @@
 set_directory_properties(PROPERTIES LABELS poly_type)
 
-add_executable(cpp_poly_type main.cpp lib.f90)
+add_library(poly_type_lib OBJECT lib.f90)
+
+add_executable(c_poly_type main.c)
+target_link_libraries(c_poly_type PRIVATE poly_type_lib)
+add_test(NAME C_Fortran_poly_type COMMAND c_poly_type)
+
+add_executable(cpp_poly_type main.cpp)
+target_link_libraries(cpp_poly_type PRIVATE poly_type_lib)
 add_test(NAME C++_Fortran_poly_type COMMAND cpp_poly_type)
 
 get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
