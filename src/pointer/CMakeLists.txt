@@ -3,6 +3,7 @@ set_directory_properties(PROPERTIES LABELS pointer)
 add_library(pointer_fortran OBJECT lib.f90)
 
 add_executable(c_fortran_pointer main.c)
+set_target_properties(c_fortran_pointer PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries(c_fortran_pointer PRIVATE pointer_fortran)
 add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
 

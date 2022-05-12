@@ -3,6 +3,7 @@ set_directory_properties(PROPERTIES LABELS opaque)
 add_library(opaque_fortran OBJECT lib.f90)
 
 add_executable(c_opaque main.c)
+set_target_properties(c_opaque PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries(c_opaque PRIVATE opaque_fortran)
 add_test(NAME C_Fortran_opaque COMMAND c_opaque)
 
