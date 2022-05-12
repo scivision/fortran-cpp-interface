@@ -1,6 +1,6 @@
 module poly_type
 
-use, intrinsic :: iso_c_binding, only : C_PTR, c_loc, c_int, c_f_pointer
+use, intrinsic :: iso_c_binding, only : C_PTR, c_loc, c_int, c_f_pointer, c_associated
 
 implicit none (type, external)
 
@@ -49,8 +49,11 @@ subroutine init_type(xtype, xC) bind(C)
   select case (xtype)
   case (3)
     allocate(three)
+    if(.not.associated(three)) error stop "three not associated with Fortran"
     xC = c_loc(three)
+    if (.not. c_associated(xC)) error stop "three not associated with C"
     x=>three
+    if(.not.associated(x, three)) error stop "x Fortran pointer not associated"
   case (4)
     allocate(four)
     xC = c_loc(four)
