@@ -17,6 +17,10 @@ endif()
 
 # --- compiler options
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options("$<$<COMPILE_LANGUAGE:C,CXX>:-Wall;-Wextra>")
+endif()
+
 if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 add_compile_options(-Wall -Wextra
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
@@ -25,7 +29,6 @@ add_compile_options(-Wall -Wextra
 )
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
-$<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
 "$<$<COMPILE_LANGUAGE:C,CXX>:-Wall>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
