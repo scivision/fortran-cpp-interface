@@ -2,6 +2,10 @@ set_directory_properties(PROPERTIES LABELS pointer)
 
 add_library(pointer_fortran OBJECT lib.f90)
 
+add_executable(c_fortran_pointer main.c)
+target_link_libraries(c_fortran_pointer PRIVATE pointer_fortran)
+add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
+
 add_executable(cxx_fortran_pointer main.cpp)
 target_link_libraries(cxx_fortran_pointer PRIVATE pointer_fortran)
 add_test(NAME C++_Fortran_pointer COMMAND cxx_fortran_pointer)

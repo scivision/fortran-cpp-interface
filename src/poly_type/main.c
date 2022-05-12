@@ -39,7 +39,7 @@ int main(){
   add_one_C(&xtype, &x4, &A, &C);
   printf("C:4 = %d\n", C);
 
-  printf("OK: poly_type\n");
+  printf("OK: C poly_type\n");
 
   return 0;
 }

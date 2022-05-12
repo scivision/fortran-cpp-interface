@@ -39,7 +39,7 @@ int main(){
   add_one_C(&xtype, &x4, &A, &C);
   std::cout << "C:4 = " << C << std::endl;
 
-  std::cout << "OK: poly_type" << std::endl;
+  std::cout << "OK: C++ poly_type" << std::endl;
 
   return EXIT_SUCCESS;
 }
