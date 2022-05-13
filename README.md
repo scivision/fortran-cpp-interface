@@ -50,7 +50,16 @@ export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
 export CFLAGS=$CXXFLAGS
 ```
 
-## Error handling in Fortran with C/C++ main program
+## Examples
+
+While the examples prioritize C++, there are also several companion C examples to go with the C++ examples.
+There are also some Fortran main programs calling C or C++.
+
+### arrays
+
+The examples "array", "malloc", "vector" show distinct ways to send arrays to/from Fortran with C and C++.
+
+### Error handling
 
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
 The "error" examples show this.
