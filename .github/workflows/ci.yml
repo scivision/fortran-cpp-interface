@@ -10,6 +10,8 @@ on:
     paths:
       - "**.f90"
       - "**.F90"
+      - "**.c"
+      - "**.cpp"
       - "**.cmake"
       - "**/CMakeLists.txt"
       - ".github/workflows/ci.yml"
