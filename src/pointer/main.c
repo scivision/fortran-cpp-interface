@@ -20,6 +20,9 @@ int main(void)
     return 1;
   }
 
+  free(a);
+  free(b);
+
   printf("OK: C to Fortran pointer\n");
   return 0;
 }
