@@ -6,10 +6,14 @@ extern void timestwo(int [], int [], const size_t*);
 
 int main()
 {
-  const size_t N = 3;
+  size_t N = 3;
 
   int* x = malloc(N*sizeof(int));
   int* x2 = malloc(N*sizeof(int));
+
+  for (size_t i=0; i < N; i++){
+    x[i] = i+1;
+  }
 
   timestwo(&x[0], &x2[0], &N);
 

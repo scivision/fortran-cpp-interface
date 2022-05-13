@@ -7,7 +7,7 @@ int main()
 {
   const size_t N = 3;
 
-  auto x = new int[N];
+  auto x = new int[N]{1, 2, 3};
   auto x2 = new int[N];
 
   timestwo(&x[0], &x2[0], &N);
