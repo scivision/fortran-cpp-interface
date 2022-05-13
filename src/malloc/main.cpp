@@ -1,5 +1,4 @@
 #include <iostream>
-#include <array>
 
 extern "C" void timestwo(int [], int [], const size_t*);
 
@@ -8,19 +7,22 @@ int main()
 {
   const size_t N = 3;
 
-  std::array<int, N> x = {0, 1, 2};
-  std::array<int, N> x2;
+  auto x = new int[N];
+  auto x2 = new int[N];
 
-  timestwo(&x.front(), &x2.front(), &N);
+  timestwo(&x[0], &x2[0], &N);
 
-  for (auto i=0u; i < x2.size(); i++){
+  for (auto i=0u; i < N; i++){
     if (x2[i] != 2*x[i]){
       std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
       return EXIT_FAILURE;
     }
   }
 
-  std::cout << "OK: array" << std::endl;
+  delete[] x;
+  delete[] x2;
+
+  std::cout << "OK: C++ malloc new" << std::endl;
 
   return EXIT_SUCCESS;
 }

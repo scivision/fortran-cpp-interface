@@ -20,5 +20,7 @@ int main()
     }
   }
 
+  std::cout << "OK: vector" << std::endl;
+
   return EXIT_SUCCESS;
 }

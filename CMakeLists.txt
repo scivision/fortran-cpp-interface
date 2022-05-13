@@ -10,7 +10,7 @@ include (cmake/compilers.cmake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
-foreach(d array bool error opaque pointer poly_function poly_type struct submodule tictoc vector)
+foreach(d array bool error malloc opaque pointer poly_function poly_type struct submodule tictoc vector)
   set(td src/${d})
   add_subdirectory(${td})
   get_property(targets DIRECTORY ${td} PROPERTY BUILDSYSTEM_TARGETS)
