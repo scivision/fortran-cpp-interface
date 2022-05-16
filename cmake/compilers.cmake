@@ -10,7 +10,7 @@ if(NOT abi_ok)
   endif()
 endif()
 
-# fixes errors about needing -fPIE
+# --- fix errors about needing -fPIE
 if(CMAKE_SYSTEM_NAME STREQUAL Linux AND CMAKE_CXX_COMPILER_ID STREQUAL Clang)
   set(CMAKE_POSITION_INDEPENDENT_CODE true)
 endif()
