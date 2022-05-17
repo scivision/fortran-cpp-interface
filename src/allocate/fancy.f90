@@ -1,5 +1,7 @@
 module fancy
-use, intrinsic ::  iso_c_binding, only : c_ptr, c_size_t, c_null_ptr, c_loc, c_f_pointer
+
+use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
+use, intrinsic::  iso_c_binding, only: c_ptr, c_size_t, c_null_ptr, c_loc, c_f_pointer
 
 implicit none (type, external)
 
@@ -33,17 +35,27 @@ type(c_ptr), intent(inout) :: Ac
 
 type(array_t), pointer :: At
 integer :: ierr
-character(500) :: errmsg
+character(200) :: emsg
 
 call c_f_pointer(Ac, At)
 
 print *, "delloc1: dealloc array"
-deallocate(At%A1, stat=ierr, errmsg=errmsg)
-if(ierr /= 0) error stop "dealloc1: array: " // errmsg
+deallocate(At%A1, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " array failed: " // emsg
+  !if(ierr == 173 .or. ierr == 4412) error stop 77
+  !! Intel: 173.  Cray: 4412.
+  error stop
+end if
 
 print *, "delloc1: dealloc array_t"
-deallocate(At, stat=ierr, errmsg=errmsg)
-if(ierr /= 0) error stop "dealloc1: array_t: " // errmsg
+deallocate(At, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " array_t failed: " // emsg
+  !if(ierr == 173 .or. ierr == 4412) error stop 77
+  !! Intel: 173.  Cray: 4412.
+  error stop
+end if
 
 end subroutine dealloc1
 

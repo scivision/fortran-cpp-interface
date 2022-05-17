@@ -90,7 +90,7 @@ integer(c_size_t), intent(in) :: dims(1)
 
 real(c_float), pointer, dimension(:) :: A, B
 integer :: ierr
-character(100) :: emsg
+character(200) :: emsg
 
 call c_f_pointer(Ac, A, dims)
 call c_f_pointer(Bc, B, dims)
