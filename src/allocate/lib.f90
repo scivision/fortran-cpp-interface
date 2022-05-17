@@ -97,6 +97,7 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " deallocation failed: " // emsg
+  error stop 77
 end if
 
 end subroutine dealloc1
@@ -107,10 +108,16 @@ type(c_ptr), intent(inout) :: Ac, Bc
 integer(c_size_t), intent(in) :: dims(2)
 
 real(c_float), pointer, dimension(:,:) :: A, B
+integer :: ierr
+character(100) :: emsg
 
 call c_f_pointer(Ac, A, dims)
 call c_f_pointer(Bc, B, dims)
-deallocate(A, B)
+deallocate(A, B, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc2: error", ierr, " deallocation failed: " // emsg
+  error stop 77
+end if
 end subroutine dealloc2
 
 
@@ -119,10 +126,16 @@ type(c_ptr), intent(inout) :: Ac, Bc
 integer(c_size_t), intent(in) :: dims(3)
 
 real(c_float), pointer, dimension(:,:,:) :: A, B
+integer :: ierr
+character(100) :: emsg
 
 call c_f_pointer(Ac, A, dims)
 call c_f_pointer(Bc, B, dims)
-deallocate(A, B)
+deallocate(A, B, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc3: error", ierr, " deallocation failed: " // emsg
+  error stop 77
+end if
 end subroutine dealloc3
 
 
@@ -131,10 +144,16 @@ type(c_ptr), intent(inout) :: Ac, Bc
 integer(c_size_t), intent(in) :: dims(4)
 
 real(c_float), pointer, dimension(:,:,:,:) :: A, B
+integer :: ierr
+character(100) :: emsg
 
 call c_f_pointer(Ac, A, dims)
 call c_f_pointer(Bc, B, dims)
-deallocate(A, B)
+deallocate(A, B, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc4: error", ierr, " deallocation failed: " // emsg
+  error stop 77
+end if
 end subroutine dealloc4
 
 

@@ -27,10 +27,9 @@ Ac = c_loc(At)
 end subroutine alloc1
 
 
-subroutine dealloc1(Ac, dims) bind(C)
+subroutine dealloc1(Ac) bind(C)
 
 type(c_ptr), intent(inout) :: Ac
-integer(c_size_t), intent(in) :: dims(1)
 
 type(array_t), pointer :: At
 integer :: ierr

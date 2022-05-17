@@ -2,7 +2,7 @@
 #include <cstring>
 
 extern "C" void alloc1(float**, size_t*);
-extern "C" void dealloc1(float**, size_t*);
+extern "C" void dealloc1(float**);
 
 int main(){
 
@@ -17,7 +17,7 @@ int main(){
   std::cout << "press enter to deallocate 1D" << std::endl;
   std::cin.get();
 
-  dealloc1(&A1, d1);
+  dealloc1(&A1);
   std::cout << "1D: deallocated" << std::endl;
 
   std::cout << "press enter to continue" << std::endl;
