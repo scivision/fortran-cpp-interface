@@ -33,7 +33,7 @@ type(c_ptr), intent(inout) :: Ac
 
 type(array_t), pointer :: At
 integer :: ierr
-character(200) :: errmsg
+character(500) :: errmsg
 
 call c_f_pointer(Ac, At)
 

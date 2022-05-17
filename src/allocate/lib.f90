@@ -97,7 +97,8 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " deallocation failed: " // emsg
-  if(ierr == 173) error stop 77
+  if(ierr == 173 .or. ierr == 4412) error stop 77
+  !! Intel: 173.  Cray: 4412.
   error stop
 end if
 
