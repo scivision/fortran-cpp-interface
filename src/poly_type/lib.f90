@@ -53,7 +53,6 @@ subroutine init_type(xtype, xC) bind(C)
     xC = c_loc(three)
     if (.not. c_associated(xC)) error stop "three not associated with C"
     x=>three
-    if(.not.associated(x, three)) error stop "x Fortran pointer not associated"
   case (4)
     allocate(four)
     xC = c_loc(four)
