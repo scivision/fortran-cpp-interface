@@ -4,7 +4,7 @@ project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
 )
 
-enable_testing()
+include(CTest)
 
 include (cmake/compilers.cmake)
 
