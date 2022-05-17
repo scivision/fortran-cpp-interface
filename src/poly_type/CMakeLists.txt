@@ -1,6 +1,6 @@
 set_directory_properties(PROPERTIES LABELS poly_type)
 
-add_library(poly_type_lib OBJECT lib.f90)
+add_library(poly_type_lib OBJECT lib.f90 base.f90 three.f90 four.f90)
 
 add_executable(c_poly_type main.c)
 set_target_properties(c_poly_type PROPERTIES LINKER_LANGUAGE C)

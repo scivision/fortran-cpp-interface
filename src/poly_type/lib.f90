@@ -2,38 +2,11 @@ module poly_type
 
 use, intrinsic :: iso_c_binding, only : C_PTR, c_loc, c_int, c_f_pointer, c_associated
 
+use base_mod, only: base
+use three, only: vthree
+use four, only: vfour
+
 implicit none (type, external)
-
-type, abstract :: base
-
-  integer(c_int) :: A, C
-
-  contains
-
-  procedure(constructor), deferred :: init
-
-end type base
-
-type, extends(base) :: vthree
-  integer(c_int) :: B
-
-  contains
-  procedure :: init => init_three
-end type vthree
-
-type, extends(base) :: vfour
-  integer(c_int) :: B
-  contains
-  procedure :: init => init_four
-end type vfour
-
-
-abstract interface
-  subroutine constructor(self)
-    import base
-    class(base), intent(inout) :: self
-  end subroutine constructor
-end interface
 
 contains
 
@@ -68,20 +41,6 @@ subroutine init_type(xtype, xC) bind(C)
 end subroutine init_type
 
 
-subroutine init_three(self)
-  class(vthree), intent(inout) :: self
-
-  self%B = 3
-end subroutine
-
-
-subroutine init_four(self)
-  class(vfour), intent(inout) :: self
-
-  self%B = 4
-end subroutine
-
-
 function assoc_type(xtype, xC) result(x)
   integer(c_int) :: xtype
   type(C_PTR), intent(inout) :: xC
@@ -102,6 +61,27 @@ function assoc_type(xtype, xC) result(x)
   end select
 
 end function assoc_type
+
+
+subroutine dealloc_type(xtype, xC) bind(C)
+  integer(c_int) :: xtype
+  type(C_PTR), intent(inout) :: xC
+
+  type(vthree), pointer :: three
+  type(vfour), pointer :: four
+
+  select case (xtype)
+  case (3)
+    call c_f_pointer(xC, three)
+    deallocate(three)
+  case (4)
+    call c_f_pointer(xC, four)
+    deallocate(four)
+  case default
+    error stop "unknown dealloc type"
+  end select
+
+end subroutine dealloc_type
 
 
 subroutine add_one_C(xtype, xC, val, accum) bind(C, name='add_one_C')

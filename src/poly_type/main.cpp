@@ -2,6 +2,7 @@
 
 extern "C" void init_type(int*, void**);
 extern "C" void add_one_C(int*, void**, int*, int*);
+extern "C" void dealloc_type(int*, void**);
 
 
 int main(){
@@ -38,6 +39,11 @@ int main(){
   std::cout << "C:4 = " << C << std::endl;
   add_one_C(&xtype, &x4, &A, &C);
   std::cout << "C:4 = " << C << std::endl;
+
+  dealloc_type(&xtype, &x3);
+  std::cout << "three deallocated" << std::endl;
+  dealloc_type(&xtype, &x4);
+  std::cout << "four deallocated" << std::endl;
 
   std::cout << "OK: C++ poly_type" << std::endl;
 

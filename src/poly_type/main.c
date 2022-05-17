@@ -2,7 +2,7 @@
 
 extern void init_type(int*, void**);
 extern void add_one_C(int*, void**, int*, int*);
-
+extern void dealloc_type(int*, void**);
 
 int main(){
 
@@ -38,6 +38,11 @@ int main(){
   printf("C:4 = %d\n", C);
   add_one_C(&xtype, &x4, &A, &C);
   printf("C:4 = %d\n", C);
+
+  dealloc_type(&xtype, &x3);
+  printf("three deallocated\n");
+  dealloc_type(&xtype, &x4);
+  printf("four deallocated\n");
 
   printf("OK: C poly_type\n");
 
