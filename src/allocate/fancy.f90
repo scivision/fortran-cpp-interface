@@ -43,7 +43,7 @@ print *, "delloc1: dealloc array"
 deallocate(At%A1, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " array failed: " // emsg
-  !if(ierr == 4412) error stop 77  !< Cray ftn
+  if(ierr == 4412) error stop 77  !< Cray ftn
   error stop
 end if
 
@@ -51,7 +51,7 @@ print *, "delloc1: dealloc array_t"
 deallocate(At, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " array_t failed: " // emsg
-  !if(ierr == 4412) error stop 77  !< Cray ftn
+  if(ierr == 4412) error stop 77  !< Cray ftn
   error stop
 end if
 
