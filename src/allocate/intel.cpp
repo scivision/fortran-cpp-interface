@@ -1,23 +1,29 @@
 #include <iostream>
 #include <cstring>
 
-extern "C" void alloc1(float**, float**, size_t*);
-extern "C" void dealloc1(float**, float**, size_t*);
+extern "C" void alloc1(float**, size_t*);
+extern "C" void dealloc1(float**, size_t*);
 
 int main(){
 
-  size_t d1[1] = {1};
+  size_t d1[1] = {100000000};
 
-  float *A1, *B1;
+  float *A1;
 
 
-  alloc1(&A1, &B1, d1);
-  std::cout << "1D: A and B allocated" << std::endl;
+  alloc1(&A1, d1);
+  std::cout << "1D: allocated" << std::endl;
 
-  dealloc1(&A1, &B1, d1);
-  std::cout << "1D: A and B deallocated" << std::endl;
+  std::cout << "press enter to deallocate 1D" << std::endl;
+  std::cin.get();
 
-  std::cout << "OK: allocate test" << std::endl;
+  dealloc1(&A1, d1);
+  std::cout << "1D: deallocated" << std::endl;
+
+  std::cout << "press enter to continue" << std::endl;
+  std::cin.get();
+
+  std::cout << "OK: fancy allocate test" << std::endl;
 
   return EXIT_SUCCESS;
 }

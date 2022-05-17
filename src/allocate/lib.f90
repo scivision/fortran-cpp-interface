@@ -1,6 +1,8 @@
 module f_alloc
 
 use, intrinsic:: iso_c_binding, only: c_float, c_size_t, c_loc, c_ptr, c_f_pointer
+use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
+
 implicit none (type, external)
 
 contains
@@ -87,10 +89,16 @@ type(c_ptr), intent(inout) :: Ac, Bc
 integer(c_size_t), intent(in) :: dims(1)
 
 real(c_float), pointer, dimension(:) :: A, B
+integer :: ierr
+character(100) :: emsg
 
 call c_f_pointer(Ac, A, dims)
 call c_f_pointer(Bc, B, dims)
-deallocate(A, B)
+deallocate(A, B, stat=ierr, errmsg=emsg)
+if (ierr /= 0) then
+  write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " deallocation failed: " // emsg
+end if
+
 end subroutine dealloc1
 
 
