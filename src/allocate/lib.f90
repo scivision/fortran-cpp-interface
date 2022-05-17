@@ -97,7 +97,8 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc1: error", ierr, " deallocation failed: " // emsg
-  error stop 77
+  if(ierr == 173) error stop 77
+  error stop
 end if
 
 end subroutine dealloc1
@@ -116,7 +117,8 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc2: error", ierr, " deallocation failed: " // emsg
-  error stop 77
+  if(ierr == 173) error stop 77
+  error stop
 end if
 end subroutine dealloc2
 
@@ -134,7 +136,8 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc3: error", ierr, " deallocation failed: " // emsg
-  error stop 77
+  if(ierr == 173) error stop 77
+  error stop
 end if
 end subroutine dealloc3
 
@@ -152,7 +155,8 @@ call c_f_pointer(Bc, B, dims)
 deallocate(A, B, stat=ierr, errmsg=emsg)
 if (ierr /= 0) then
   write(stderr,'(a,i0,a)') "dealloc4: error", ierr, " deallocation failed: " // emsg
-  error stop 77
+  if(ierr == 173) error stop 77
+  error stop
 end if
 end subroutine dealloc4
 
