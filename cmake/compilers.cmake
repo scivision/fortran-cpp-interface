@@ -1,7 +1,7 @@
 # check C and Fortran compiler ABI compatibility
 
 if(NOT abi_ok)
-  message(CHECK_START "checking that C and Fortran compilers can link")
+message(CHECK_START "checking that C ${CMAKE_C_COMPILER_ID} and Fortran ${CMAKE_Fortran_COMPILER_ID} link")
   try_compile(abi_ok ${CMAKE_CURRENT_BINARY_DIR}/abi_check ${CMAKE_CURRENT_LIST_DIR}/abi_check abi_check)
   if(abi_ok)
     message(CHECK_PASS "OK")
@@ -23,7 +23,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_compile_options("$<$<COMPILE_LANGUAGE:C,CXX>:/W3>")
 endif()
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL Cray)
+  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 add_compile_options(-Wall -Wextra
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
