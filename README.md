@@ -11,7 +11,7 @@ This project is also a way to quickly check if compilers you have are ABI-compat
 For example:
 
 * Clang and Gfortran
-* (Windows) MSVC and Intel oneAPI ifort
+* (Windows) MSVC and Intel oneAPI ifx
 
 Demonstrate linking of
 
@@ -29,25 +29,20 @@ This repo's examples also work with Cray compilers.
 
 In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`.
 
+Other real-world examples include
+[fortran-filesystem](https://github.com/scivision/fortran-filesystem) using C++ stdlib filesystem from Fortran
+and
+[fortran-sleep](https://github.com/scivision/fortran-sleep) standard sleep implementation as used in
+[blocktran](https://github.com/fortran-gaming/blocktran) and Fortran Standard Library.
+
+## Build
+
 ```sh
 cmake -B build
 
 cmake --build build
 
 ctest --test-dir build
-```
-
-## MacOS
-
-For MacOS with Apple's Clang and Homebrew GCC,
-be sure you have in ~/.zshrc like the following:
-(check directory / versions on your Mac)
-
-```sh
-export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
-export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
-export CFLAGS=$CXXFLAGS
 ```
 
 ## Examples
@@ -63,6 +58,21 @@ The examples "array", "malloc", "vector" show distinct ways to send arrays to/fr
 
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
 The "error" examples show this.
+
+## Notes
+
+### MacOS
+
+For MacOS with Apple's Clang and Homebrew GCC,
+it MAY be needed to have in ~/.zprofile like the following:
+(check directory / versions on your Mac)
+
+```sh
+export LIBRARY_PATH=$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+export CXXFLAGS=-I$CPLUS_INCLUDE_PATH
+export CFLAGS=$CXXFLAGS
+```
 
 ## References
 
