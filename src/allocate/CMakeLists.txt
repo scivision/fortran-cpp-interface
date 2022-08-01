@@ -11,7 +11,7 @@ add_test(NAME FancyAllocate COMMAND fancy_allocate)
 
 add_executable(cxx_fortran_allocate main.cpp lib.f90)
 add_test(NAME C++_Fortran_allocate COMMAND cxx_fortran_allocate)
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Cray OR CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray" OR CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   set_tests_properties(C++_Fortran_allocate PROPERTIES SKIP_RETURN_CODE 77)
 endif()
 

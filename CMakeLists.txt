@@ -4,19 +4,28 @@ project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
 )
 
-include(CTest)
+enable_testing()
+
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED true)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 include (cmake/compilers.cmake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
-foreach(d allocate array bool error malloc opaque pointer poly_function poly_type struct submodule tictoc vector)
-  set(td src/${d})
-  add_subdirectory(${td})
-  get_property(targets DIRECTORY ${td} PROPERTY BUILDSYSTEM_TARGETS)
-
-  foreach(t IN LISTS targets)
-    target_compile_features(${t} PRIVATE c_std_99)
-    target_compile_features(${t} PRIVATE cxx_std_11)
-  endforeach()
-endforeach()
+add_subdirectory(src/allocate)
+add_subdirectory(src/array)
+add_subdirectory(src/bool)
+add_subdirectory(src/error)
+add_subdirectory(src/malloc)
+add_subdirectory(src/opaque)
+add_subdirectory(src/pointer)
+add_subdirectory(src/poly_function)
+add_subdirectory(src/poly_type)
+add_subdirectory(src/struct)
+add_subdirectory(src/submodule)
+add_subdirectory(src/tictoc)
+add_subdirectory(src/vector)
