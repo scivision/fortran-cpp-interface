@@ -1,9 +1,9 @@
-set_directory_properties(PROPERTIES LABELS pointer)
+set_property(DIRECTORY PROPERTY LABELS pointer)
 
 add_library(pointer_fortran OBJECT lib.f90)
 
 add_executable(c_fortran_pointer main.c)
-set_target_properties(c_fortran_pointer PROPERTIES LINKER_LANGUAGE C)
+set_property(TARGET c_fortran_pointer PROPERTY LINKER_LANGUAGE C)
 target_link_libraries(c_fortran_pointer PRIVATE pointer_fortran)
 add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
 
@@ -12,4 +12,4 @@ target_link_libraries(cxx_fortran_pointer PRIVATE pointer_fortran)
 add_test(NAME C++_Fortran_pointer COMMAND cxx_fortran_pointer)
 
 get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
-set_tests_properties(${test_names} PROPERTIES TIMEOUT 5)
+set_property(TEST ${test_names} PROPERTY TIMEOUT 5)

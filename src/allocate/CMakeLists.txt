@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS allocate)
+set_property(DIRECTORY PROPERTY LABELS allocate)
 
 add_library(fancy OBJECT fancy.f90)
 
@@ -12,8 +12,8 @@ add_test(NAME FancyAllocate COMMAND fancy_allocate)
 add_executable(cxx_fortran_allocate main.cpp lib.f90)
 add_test(NAME C++_Fortran_allocate COMMAND cxx_fortran_allocate)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray" OR CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
-  set_tests_properties(C++_Fortran_allocate PROPERTIES SKIP_RETURN_CODE 77)
+set_property(TEST C++_Fortran_allocate PROPERTY SKIP_RETURN_CODE 77)
 endif()
 
 get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
-set_tests_properties(${test_names} PROPERTIES TIMEOUT 5)
+set_property(TEST ${test_names} PROPERTY TIMEOUT 5)

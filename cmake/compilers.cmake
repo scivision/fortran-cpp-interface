@@ -11,7 +11,7 @@ message(CHECK_START "checking that C ${CMAKE_C_COMPILER_ID} and Fortran ${CMAKE_
 endif()
 
 # --- fix errors about needing -fPIE
-if(CMAKE_SYSTEM_NAME STREQUAL Linux AND CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   set(CMAKE_POSITION_INDEPENDENT_CODE true)
 endif()
 
@@ -23,9 +23,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_compile_options("$<$<COMPILE_LANGUAGE:C,CXX>:/W3>")
 endif()
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Cray)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
   add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")
-elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 add_compile_options(-Wall -Wextra
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
