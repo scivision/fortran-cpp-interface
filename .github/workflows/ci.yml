@@ -1,9 +1,7 @@
 name: ci
 
 env:
-    CTEST_PARALLEL_LEVEL: 2
-    CMAKE_BUILD_TYPE: Release
-    HOMEBREW_NO_INSTALL_CLEANUP: 1
+  HOMEBREW_NO_INSTALL_CLEANUP: 1
 
 on:
   push:
@@ -33,7 +31,7 @@ jobs:
 
     steps:
 
-    - name: install ninja and compilers
+    - name: install compilers
       run: |
         sudo apt update
         sudo apt install ninja-build gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
@@ -65,7 +63,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: install ninja and compilers
+    - name: install compilers
       run: |
         sudo apt update
         sudo apt install ninja-build clang-${{ matrix.clang-version }}
@@ -79,9 +77,9 @@ jobs:
     - run: ctest --preset release -V
 
 
-  macos:
-    needs: linux-clang
+  mac:
     runs-on: macos-latest
+    needs: linux-clang
     timeout-minutes: 10
 
     strategy:
@@ -89,13 +87,13 @@ jobs:
         compiler: [ {cpp: g++-11, c: gcc-11}, {cpp: clang++, c: clang} ]
 
     env:
-      FC: gfortran-11
       CC: ${{ matrix.compiler.c }}
       CXX: ${{ matrix.compiler.cpp }}
 
-
     steps:
-    - run: brew install ninja
+    - run: |
+        brew install ninja
+        brew reinstall gcc
 
     - uses: actions/checkout@v3
 
@@ -109,8 +107,8 @@ jobs:
 
 
   windows:
-    needs: linux-gcc
     runs-on: windows-latest
+    needs: linux-gcc
     timeout-minutes: 10
 
     strategy:
@@ -124,7 +122,6 @@ jobs:
       CXX: ${{ matrix.compiler.cpp }}
 
     steps:
-
     - uses: msys2/setup-msys2@v2
       with:
         update: true
@@ -132,7 +129,8 @@ jobs:
           mingw-w64-x86_64-gcc-fortran
 
     - name: Put MSYS2_MinGW64 on PATH
-      run: echo "D:/a/_temp/msys64/mingw64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      run: echo "${{ runner.temp }}/msys64/mingw64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
     - uses: actions/checkout@v3
 
     - run: cmake -Bbuild

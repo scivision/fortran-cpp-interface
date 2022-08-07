@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.7...3.25)
+
+set(CMAKE_PROJECT_INCLUDE_BEFORE cmake/find_compilers.cmake)
 
 project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
@@ -12,9 +14,8 @@ set(CMAKE_C_STANDARD_REQUIRED true)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-include (cmake/compilers.cmake)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+include(cmake/options.cmake)
+include(cmake/compilers.cmake)
 
 add_subdirectory(src/allocate)
 add_subdirectory(src/array)
