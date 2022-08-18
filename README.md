@@ -25,15 +25,22 @@ We CI test with compilers including:
 * Clang &ge; 6
 * Intel oneAPI
 
-This repo's examples also work with Cray compilers.
+This repo's examples are also known to work with:
 
-In general, strongly avoid the FortranCInterface of CMake and mangling function names--just use Fortran 2003 standard `bind(C)`.
+* NVidia HPC SDK (nvc++, nvfortran)
+* AOCC AMD Optimizing Compliers
+* Cray compilers (cc, ftn)
+
+In general, avoid the FortranCInterface of CMake and mangling function names.
+Instead, use Fortran 2003 standard `bind(C)`.
 
 Other real-world examples include
-[fortran-filesystem](https://github.com/scivision/fortran-filesystem) using C++ stdlib filesystem from Fortran
-and
-[fortran-sleep](https://github.com/scivision/fortran-sleep) standard sleep implementation as used in
-[blocktran](https://github.com/fortran-gaming/blocktran) and Fortran Standard Library.
+[fortran-filesystem](https://github.com/scivision/fortran-filesystem)
+using C++ stdlib filesystem from Fortran and
+[fortran-sleep](https://github.com/scivision/fortran-sleep)
+standard sleep implementation as used in
+[blocktran](https://github.com/fortran-gaming/blocktran)
+and Fortran Standard Library.
 
 ## Build
 
