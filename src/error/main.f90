@@ -2,7 +2,7 @@ program error_c
 
 use, intrinsic :: iso_c_binding, only: C_INT
 
-implicit none (type, external)
+implicit none
 
 interface
 subroutine err(code) bind(C)

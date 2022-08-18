@@ -2,7 +2,7 @@ module opaque
 
 use, intrinsic :: iso_c_binding, only : C_PTR, c_loc, c_f_pointer
 
-implicit none (type, external)
+implicit none
 
 type :: mytype
   integer :: secret

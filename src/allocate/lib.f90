@@ -3,7 +3,7 @@ module f_alloc
 use, intrinsic:: iso_c_binding, only: c_float, c_size_t, c_loc, c_ptr, c_f_pointer
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
-implicit none (type, external)
+implicit none
 
 contains
 

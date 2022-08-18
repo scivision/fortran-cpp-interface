@@ -3,7 +3,7 @@ module datamod_poly
 
 use, intrinsic :: iso_c_binding, only : c_float, c_int
 
-implicit none (type, external)
+implicit none
 
 type, abstract :: dataobj_poly
 !! derived type definition containing data and procedures

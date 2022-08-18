@@ -1,7 +1,7 @@
 module bindmod
 
 use, intrinsic :: iso_c_binding, only : c_float
-implicit none (type, external)
+implicit none
 
 interface
 module pure real(c_float) function pi() bind(c)
@@ -12,7 +12,7 @@ end module bindmod
 
 submodule (bindmod) bindsub
 
-implicit none (type, external)
+implicit none
 
 contains
 module procedure pi

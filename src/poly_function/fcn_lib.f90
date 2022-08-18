@@ -4,7 +4,7 @@ module c_interface_poly
 
   use datamod_poly, only: dataobj_poly,data1,data2
   use, intrinsic :: iso_c_binding, only: c_loc,c_ptr,c_f_pointer,c_int, c_float, c_size_t
-  implicit none (type, external)
+  implicit none
 
 contains
 

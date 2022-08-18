@@ -3,7 +3,7 @@ module fancy
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 use, intrinsic::  iso_c_binding, only: c_ptr, c_size_t, c_null_ptr, c_loc, c_f_pointer
 
-implicit none (type, external)
+implicit none
 
 type :: array_t
   integer, dimension(:), pointer :: A1

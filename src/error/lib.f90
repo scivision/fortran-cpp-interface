@@ -1,7 +1,7 @@
 module utils
 
 use, intrinsic :: iso_c_binding, only : c_int
-implicit none (type, external)
+implicit none
 
 contains
 

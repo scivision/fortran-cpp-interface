@@ -2,7 +2,7 @@ module logbool
 
 use, intrinsic :: iso_c_binding, only : c_bool
 
-implicit none (type, external)
+implicit none
 
 contains
 

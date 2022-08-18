@@ -3,7 +3,7 @@ module four
 use, intrinsic:: iso_c_binding, only: c_int
 use base_mod, only: base
 
-implicit none (type, external)
+implicit none
 
 
 type, extends(base) :: vfour

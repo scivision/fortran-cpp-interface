@@ -2,7 +2,7 @@ module clock
 
 use, intrinsic :: iso_c_binding, only : C_LONG_LONG
 
-implicit none (type, external)
+implicit none
 
 contains
 

@@ -4,7 +4,7 @@
 module p
 
 use, intrinsic :: iso_c_binding, only : C_FLOAT, C_SIZE_T, C_PTR, c_f_pointer, c_associated
-implicit none (type, external)
+implicit none
 
 contains
 

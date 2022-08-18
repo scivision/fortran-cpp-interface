@@ -2,7 +2,7 @@ program array
 
 use, intrinsic :: iso_c_binding, only : C_INT, C_SIZE_T
 
-implicit none (type, external)
+implicit none
 
 interface
 subroutine timestwo(A, N) bind(C)

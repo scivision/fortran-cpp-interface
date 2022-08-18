@@ -2,7 +2,7 @@ program struct_tx
 
 use, intrinsic :: iso_c_binding, only : c_int, c_bool, c_char, c_null_char
 
-implicit none (type, external)
+implicit none
 
 
 type, bind(C) :: my_struct

@@ -6,7 +6,7 @@ use base_mod, only: base
 use three, only: vthree
 use four, only: vfour
 
-implicit none (type, external)
+implicit none
 
 contains
 
