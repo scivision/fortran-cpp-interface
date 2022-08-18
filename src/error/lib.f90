@@ -5,11 +5,11 @@ implicit none
 
 contains
 
-pure subroutine error_fortran(value) bind(C)
+pure subroutine error_fortran(x) bind(C)
 
-  integer(c_int), intent(in) :: value
+integer(c_int), intent(in) :: x
 
-  error stop value
+error stop x
 
 end subroutine error_fortran
 
