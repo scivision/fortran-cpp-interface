@@ -42,5 +42,7 @@ s%my_char(i+1) = c_null_char
 
 call struct_check(s)
 
+deallocate(my_char)
+
 print *, "OK: Fortran => C struct"
 end program

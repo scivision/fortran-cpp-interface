@@ -11,50 +11,48 @@ end type mytype
 contains
 
 subroutine init_opaque(my)
-
-  type(mytype), intent(out) :: my
-
-  my%secret = 42
-
-end subroutine init_opaque
+type(mytype), intent(out) :: my
+my%secret = 42
+end subroutine
 
 
 subroutine use_opaque(my)
-
-  type(mytype), intent(in) :: my
-
-  if (my%secret /= 42) error stop "opaque not initialized"
-
-end subroutine use_opaque
+type(mytype), intent(in) :: my
+if (my%secret /= 42) error stop "opaque not initialized"
+end subroutine
 
 !> C shims
 
 subroutine init_opaque_C(myC) bind(C, name="init_opaque_C")
 
-  type(C_PTR), intent(out) :: myC
+type(C_PTR), intent(out) :: myC
+type(mytype), pointer :: my
 
-  type(mytype), pointer :: my
+allocate(my)
+!! Note: allocate is necessary or heap error results
+myC = c_loc(my)
 
-  allocate(my)
-  !! Note: allocate is necessary or heap error results
-  myC = c_loc(my)
+call init_opaque(my)
 
-  call init_opaque(my)
-
-  ! print *, "Fortran:init_opaque_C: my%secret=", my%secret
-
-end subroutine init_opaque_C
+! print *, "Fortran:init_opaque_C: my%secret=", my%secret
+end subroutine
 
 
 subroutine use_opaque_C(myC) bind(C, name="use_opaque_C")
+type(C_PTR), intent(in) :: myC
+type(mytype), pointer :: my
 
-  type(C_PTR), intent(in) :: myC
+call c_f_pointer(myC, my)
+call use_opaque(my)
+end subroutine
 
-  type(mytype), pointer :: my
 
-  call c_f_pointer(myC, my)
-  call use_opaque(my)
+subroutine destruct_C(myC) bind(C, name="destruct_C")
+type(C_PTR), intent(inout) :: myC
+type(mytype), pointer :: my
 
-end subroutine use_opaque_C
+call c_f_pointer(myC, my)
+deallocate(my)
+end subroutine
 
 end module opaque

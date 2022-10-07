@@ -1,9 +1,6 @@
 // passing a Fortran-only type to/from C where only Fortran operates on opaque type
 #include <stdio.h>
-
-extern void init_opaque_C(void**);
-
-extern void use_opaque_C(void**);
+#include "my_opaque.h"
 
 int main(){
 
@@ -12,6 +9,8 @@ int main(){
   init_opaque_C(&myf);
 
   use_opaque_C(&myf);
+
+  destruct_C(&myf);
 
   printf("OK: opaque\n");
 

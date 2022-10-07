@@ -1,9 +1,9 @@
 // passing a Fortran-only type to/from C++ where only Fortran operates on opaque type
 #include <iostream>
+#include <cstdlib>
 
-extern "C" void init_opaque_C(void**);
+#include "my_opaque.h"
 
-extern "C" void use_opaque_C(void**);
 
 int main(){
 
@@ -12,6 +12,8 @@ int main(){
   init_opaque_C(&myf);
 
   use_opaque_C(&myf);
+
+  destruct_C(&myf);
 
   std::cout << "OK: opaque" << std::endl;
 
