@@ -1,0 +1,8 @@
+{
+   poly-dealloc
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:objconstruct_C
+   fun:main
+}
