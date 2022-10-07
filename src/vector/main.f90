@@ -28,4 +28,6 @@ call timestwo(x, x2, N)
 
 if (any(2*x /= x2)) error stop 'x2 /= 2*x'
 
+deallocate(x, x2)
+
 end program

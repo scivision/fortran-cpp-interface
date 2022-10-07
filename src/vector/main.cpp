@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
-extern "C" void timestwo(int [], int [], size_t*);
-
+#include "my_vector.h"
 
 int main()
 {

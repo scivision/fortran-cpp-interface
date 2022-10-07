@@ -1,6 +1,7 @@
 #include <iostream>
+#include <cstdlib>
 
-extern "C" void point23(float [], float [], size_t*);
+#include "my_pointer.h"
 
 
 int main()

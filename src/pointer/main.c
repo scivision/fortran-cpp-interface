@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-extern void point23(float [], float [], size_t*);
+#include "my_pointer.h"
 
 
 int main(void)
@@ -12,6 +13,8 @@ int main(void)
 
   float* a = malloc(N * sizeof(float));
   float* b = malloc(M * sizeof(float));
+
+  memcpy(a, (float[]){0, 1, 2}, N * sizeof(float));
 
   point23(&a[0], &b[0], &N);
 
