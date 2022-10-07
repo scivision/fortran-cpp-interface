@@ -28,6 +28,7 @@ type(my_struct) :: s
 integer :: i
 character(:), allocatable :: my_char
 
+allocate(character(5) :: my_char)
 my_char = "Hello"
 
 
