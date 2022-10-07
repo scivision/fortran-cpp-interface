@@ -47,20 +47,20 @@ jobs:
     - run: ctest --preset release -V
 
 
-  # valgrind-memory:
-  #   runs-on: ubuntu-22.04
-  #   needs: linux-gcc
-  #   timeout-minutes: 10
+  valgrind-memory:
+    runs-on: ubuntu-22.04
+    needs: linux-gcc
+    timeout-minutes: 10
 
-  #   steps:
-  #   - name: install valgrind
-  #     run: |
-  #       sudo apt update
-  #       sudo apt install --no-install-recommends valgrind
+    steps:
+    - name: install valgrind
+      run: |
+        sudo apt update
+        sudo apt install --no-install-recommends valgrind
 
-  #   - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-  #   - run: ctest -S memcheck.cmake -V
+    - run: ctest -S memcheck.cmake -V
 
 
   linux-clang:

@@ -2,9 +2,10 @@
 // based on https://github.com/mattzett/fortran_tests
 #include <array>
 #include <iostream>
+#include <cstdlib>
 
-extern "C" void objconstruct_C(int*, void**, float**, const size_t*, const size_t*);
-extern "C" void objuse_C(int*, void*);
+#include "my_polyfcn.h"
+
 
 int main() {
 
@@ -45,6 +46,9 @@ objuse_C(&objtype, &objptr1);
 std::cout << "Use object 2 again" << std::endl;
 objtype=2;
 objuse_C(&objtype, &objptr2);
+
+destruct_C(&objtype, &objptr1);
+destruct_C(&objtype, &objptr2);
 
 return EXIT_SUCCESS;
 }

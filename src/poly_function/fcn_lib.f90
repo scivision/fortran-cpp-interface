@@ -76,8 +76,22 @@ function set_pointer_dyntype(objtype, objC) result(obj)
       call c_f_pointer(objC,obj2)
       obj=>obj2
     case default
-      error stop 'unable to identify object type during conversion from C to fortran class pointer'
+      error stop 'ERROR: set_pointer_dyntype: unable to identify object type during conversion from C to fortran class pointer'
   end select
 end function set_pointer_dyntype
+
+
+subroutine destruct_C(objtype, objC) bind(C, name='destruct_C')
+type(c_ptr), intent(inout) :: objC
+integer(c_int), intent(in) :: objtype
+
+class(dataobj_poly),pointer :: obj
+
+obj=>set_pointer_dyntype(objtype,objC)
+
+deallocate(obj%dataval)
+deallocate(obj)
+
+end subroutine
 
 end module c_interface_poly
