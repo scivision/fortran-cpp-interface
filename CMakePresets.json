@@ -3,16 +3,23 @@
 
 "configurePresets": [
 {
-  "name": "multi",
+  "name": "default",
   "binaryDir": "${sourceDir}/build",
-  "displayName": "Ninja Multi-Config",
-  "generator": "Ninja Multi-Config"
+  "cacheVariables": {
+    "CMAKE_COMPILE_WARNING_AS_ERROR": true
+  }
 },
 {
-  "name": "phony"
+  "name": "multi", "inherits": "default",
+  "displayName": "Ninja Multi-Config",
+  "generator": "Ninja Multi-Config"
 }
 ],
 "buildPresets": [
+  {
+    "name": "default",
+    "configurePreset": "default"
+  },
   {
     "name": "release",
     "configurePreset": "multi",
@@ -21,7 +28,8 @@
   {
     "name": "reldebug",
     "configurePreset": "multi",
-    "configuration": "RelWithDebInfo"
+    "configuration": "RelWithDebInfo",
+    "displayName": "Release with Debug Info"
   },
   {
     "name": "debug",
@@ -32,14 +40,16 @@
 "testPresets": [
 {
   "name": "default",
-  "configurePreset": "phony",
+  "configurePreset": "default",
   "output": {
     "outputOnFailure": true,
-    "verbosity": "default"
+    "verbosity": "verbose"
   },
   "execution": {
     "noTestsAction": "error",
-    "stopOnFailure": false
+    "scheduleRandom": true,
+    "stopOnFailure": false,
+    "timeout": 60
   }
 },
 {
@@ -50,7 +60,8 @@
 {
   "name": "reldebug", "inherits": "default",
   "configurePreset": "multi",
-  "configuration": "RelWithDebInfo"
+  "configuration": "RelWithDebInfo",
+  "displayName": "Release with Debug Info"
 },
 {
   "name": "debug", "inherits": "default",

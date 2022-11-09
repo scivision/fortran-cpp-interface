@@ -2,7 +2,6 @@ name: intel-oneapi
 
 env:
   CTEST_PARALLEL_LEVEL: 2
-  CMAKE_BUILD_TYPE: Release
   CC: icx
   CXX: icpx
   FC: ifx
@@ -61,11 +60,11 @@ jobs:
       run: cmake --build --preset debug
 
     - name: Debug test
-      run: ctest --preset debug --output-junit test-debug-oneapi.xml
+      run: ctest --preset debug
 
 
     - name: Release build
       run: cmake --build --preset release
 
     - name: Release unit test
-      run: ctest --preset release --output-junit test-release-oneapi.xml
+      run: ctest --preset release
