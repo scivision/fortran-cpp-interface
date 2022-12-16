@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.7...3.25)
+cmake_minimum_required(VERSION 3.15...3.25)
+# 3.15+ for COMPILE_LANGAGE multiple languages, COMPILE_LANG_AND_ID
 
 set(CMAKE_PROJECT_INCLUDE_BEFORE cmake/find_compilers.cmake)
 
@@ -9,10 +10,7 @@ LANGUAGES C CXX Fortran
 enable_testing()
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED true)
-
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 include(cmake/options.cmake)
 include(cmake/compilers.cmake)
