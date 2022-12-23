@@ -88,14 +88,6 @@ jobs:
     needs: linux-clang
     timeout-minutes: 10
 
-    strategy:
-      matrix:
-        compiler: [ {cpp: g++, c: gcc}, {cpp: clang++, c: clang} ]
-
-    env:
-      CC: ${{ matrix.compiler.c }}
-      CXX: ${{ matrix.compiler.cpp }}
-
     steps:
     - run: |
         brew install ninja
