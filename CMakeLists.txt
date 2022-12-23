@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.15...3.25)
 # 3.15+ for COMPILE_LANGAGE multiple languages, COMPILE_LANG_AND_ID
 
-set(CMAKE_PROJECT_INCLUDE_BEFORE cmake/find_compilers.cmake)
-
 project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
 )
