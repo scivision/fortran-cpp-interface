@@ -105,8 +105,8 @@ jobs:
     timeout-minutes: 10
 
     defaults:
-    run:
-      shell: msys2 {0}
+      run:
+        shell: msys2 {0}
 
     steps:
     - uses: msys2/setup-msys2@v2
