@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 extern "C" void init_type(int*, void**);
 extern "C" void add_one_C(int*, void**, int*, int*);

@@ -12,6 +12,8 @@ add_executable(cpp_fortran_allocate main.cpp $<TARGET_OBJECTS:alloc_fortran>)
 add_test(NAME C++_Fortran_allocate COMMAND cpp_fortran_allocate)
 
 add_executable(c_fortran_allocate main.c $<TARGET_OBJECTS:alloc_fortran>)
+# LINKER_LANGUAGE option is necessary for Linux oneAPI
+set_property(TARGET c_fortran_allocate PROPERTY LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_allocate COMMAND c_fortran_allocate)
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray" OR CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")

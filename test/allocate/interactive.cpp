@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cstdlib>
 
 extern "C" void alloc1(float**, size_t*);
 extern "C" void dealloc1(float**);
