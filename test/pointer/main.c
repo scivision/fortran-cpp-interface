@@ -20,12 +20,12 @@ int main(void)
 
   if (b[0] != a[1] || b[1] != a[2]){
     fprintf(stderr, "value %f != %f or %f != %f\n", b[0], a[1], b[1], a[2]);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   free(a);
   free(b);
 
   printf("OK: C to Fortran pointer\n");
-  return 0;
+  return EXIT_SUCCESS;
 }

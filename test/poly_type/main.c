@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 extern void init_type(int*, void**);
 extern void add_one_C(int*, void**, int*, int*);
@@ -17,7 +18,7 @@ int main(){
   add_one_C(&xtype, &x3, &A, &C);
   if(A != 4) {
     fprintf(stderr, "Error: %d != 4\n", A);
-    return 1;
+    return EXIT_FAILURE;
   }
   printf("C:3 = %d\n", C);
   add_one_C(&xtype, &x3, &A, &C);
@@ -31,7 +32,7 @@ int main(){
   add_one_C(&xtype, &x4, &A, &C);
   if(A != 5) {
     fprintf(stderr, "Error: %d != 5\n", A);
-    return 1;
+    return EXIT_FAILURE;
   }
   printf("C:4 = %d\n", C);
   add_one_C(&xtype, &x4, &A, &C);
@@ -46,5 +47,5 @@ int main(){
 
   printf("OK: C poly_type\n");
 
-  return 0;
+  return EXIT_SUCCESS;
 }

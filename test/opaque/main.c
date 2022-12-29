@@ -1,5 +1,6 @@
 // passing a Fortran-only type to/from C where only Fortran operates on opaque type
 #include <stdio.h>
+#include <stdlib.h>
 #include "my_opaque.h"
 
 int main(){
@@ -14,5 +15,5 @@ int main(){
 
   printf("OK: opaque\n");
 
-  return 0;
+  return EXIT_SUCCESS;
 }

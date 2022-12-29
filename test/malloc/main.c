@@ -20,7 +20,7 @@ int main()
   for (size_t i=0; i < N; i++){
     if (x2[i] != 2*x[i]){
       fprintf(stderr, "value %d != %d\n", x2[i], x[i]);
-      return 1;
+      return EXIT_FAILURE;
     }
   }
 
@@ -29,5 +29,5 @@ int main()
 
   printf("OK: C malloc new\n");
 
-  return 0;
+  return EXIT_SUCCESS;
 }
