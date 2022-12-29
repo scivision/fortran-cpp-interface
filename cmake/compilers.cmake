@@ -38,9 +38,6 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
 endif()
 
 if(WIN32)
-  if(CMAKE_C_COMPILER_ID MATCHES "^Intel|MSVC")
-    add_compile_options($<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:/Od>)
-  endif()
   if(CMAKE_COMPILE_WARNING_AS_ERROR AND CMAKE_C_COMPILER_ID MATCHES "^Intel")
     add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Wno-unused-command-line-argument>)
     # sometimes CMake leaks compiler standard flags
@@ -49,9 +46,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^Intel")
   add_compile_options($<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:-O0>)
 endif()
 
-if(WIN32)
-  add_compile_options($<$<AND:$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>,$<CONFIG:Debug>>:/Od>)
-else()
+if(NOT WIN32)
   add_compile_options($<$<AND:$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>,$<CONFIG:Debug>>:-O0>)
 endif()
 
