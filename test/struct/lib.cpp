@@ -4,7 +4,7 @@
 
 #include "my_struct.h"
 
-void struct_check(struct params *s) {
+void struct_check_cpp(struct params *s) {
 
 struct params *p = s;
 

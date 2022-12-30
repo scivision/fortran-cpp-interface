@@ -1,6 +1,6 @@
 set_property(DIRECTORY PROPERTY LABELS error)
 
-add_library(error_fortran OBJECT error.f90)
+add_library(error_fortran OBJECT ${PROJECT_SOURCE_DIR}/app/error/error.f90)
 
 add_executable(c_fortran_error ${PROJECT_SOURCE_DIR}/app/error/main.c $<TARGET_OBJECTS:error_fortran>)
 # LINKER_LANGUAGE option is necessary for ifort at least
@@ -17,13 +17,13 @@ add_test(NAME C++_Fortran_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:cxx_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 
-add_executable(fortran_cxx_error error_cpp.f90 lib.cpp)
+add_executable(fortran_cxx_error ${PROJECT_SOURCE_DIR}/app/error/error_cpp.f90 ${PROJECT_SOURCE_DIR}/src/error/lib.cpp)
 set_property(TARGET fortran_cxx_error PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_cxx_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 
-add_executable(fortran_c_error error_c.f90 lib.c)
+add_executable(fortran_c_error ${PROJECT_SOURCE_DIR}/app/error/error_c.f90 ${PROJECT_SOURCE_DIR}/src/error/lib.c)
 add_test(NAME Fortran_C_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_c_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )

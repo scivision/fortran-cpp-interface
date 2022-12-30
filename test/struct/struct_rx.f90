@@ -19,7 +19,7 @@ end type my_struct
 contains
 
 
-pure subroutine struct_check(s) bind(C)
+pure subroutine struct_check_f(s) bind(C)
 
 type(my_struct), intent(in) :: s
 
@@ -43,7 +43,7 @@ end block
 
 if(my_char /= "Hello") error stop "my_char /= 'Hello'"
 
-end subroutine struct_check
+end subroutine struct_check_f
 
 
 end module struct_rx

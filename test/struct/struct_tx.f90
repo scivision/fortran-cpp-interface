@@ -17,10 +17,15 @@ end type my_struct
 
 
 interface
-subroutine struct_check(p) bind(C)
+subroutine struct_check_c(p) bind(C)
 import my_struct
 type(my_struct), intent(in) :: p
-end subroutine struct_check
+end subroutine
+
+subroutine struct_check_cpp(p) bind(C)
+import my_struct
+type(my_struct), intent(in) :: p
+end subroutine
 end interface
 
 
@@ -40,7 +45,8 @@ do i = 1, len(my_char)
 end do
 s%my_char(i+1) = c_null_char
 
-call struct_check(s)
+call struct_check_c(s)
+call struct_check_cpp(s)
 
 deallocate(my_char)
 

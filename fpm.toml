@@ -4,7 +4,5 @@ description = "Examples of modern Fortran C C++ interfaces"
 [build]
 auto-executables = false
 
-
-[[executable]]
-name = "dummy"
-main = "dummy.f90"
+[library]
+include-dir = ['src/vector']
