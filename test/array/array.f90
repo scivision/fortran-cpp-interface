@@ -32,6 +32,6 @@ if(any(A /= [4,8,12])) then
   error stop "fortran call timestwo_cpp failed"
 endif
 
-print *, "OK: Fortran call timestwo()"
+print *, "OK: Fortran array"
 
 end program
