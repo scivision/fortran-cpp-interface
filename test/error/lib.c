@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-void err(int);
+void err_c(int);
 
-void err(int code){
+void err_c(int code){
   exit(code);
 }
