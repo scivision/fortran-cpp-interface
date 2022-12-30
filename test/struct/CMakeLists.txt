@@ -5,12 +5,14 @@ add_library(struct_cxx OBJECT lib.cpp)
 add_library(struct_fortran OBJECT struct_rx.f90)
 
 
-add_executable(c_fortran_struct main.c $<TARGET_OBJECTS:struct_fortran>)
+add_executable(c_fortran_struct ${PROJECT_SOURCE_DIR}/app/struct/main.c $<TARGET_OBJECTS:struct_fortran>)
+target_include_directories(c_fortran_struct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET c_fortran_struct PROPERTY LINKER_LANGUAGE C)
 target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
 
-add_executable(cxx_fortran_struct main.cpp $<TARGET_OBJECTS:struct_fortran>)
+add_executable(cxx_fortran_struct ${PROJECT_SOURCE_DIR}/app/struct/main.cpp $<TARGET_OBJECTS:struct_fortran>)
+target_include_directories(cxx_fortran_struct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(cxx_fortran_struct PRIVATE ${PROJECT_SOURCE_DIR}/src/c)
 set_property(TARGET cxx_fortran_struct PROPERTY LINKER_LANGUAGE CXX)
 target_compile_definitions(cxx_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)

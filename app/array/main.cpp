@@ -2,17 +2,17 @@
 #include <cstdlib>
 #include <array>
 
-extern "C" void timestwo(int [], int [], const size_t*);
-
+#include "my_vector.h"
 
 int main()
 {
-  const size_t N = 3;
+  const std::size_t Nc = 3;
+  std::size_t N = Nc;
 
-  std::array<int, N> x = {0, 1, 2};
-  std::array<int, N> x2;
+  std::array<int, Nc> x = {0, 1, 2};
+  std::array<int, Nc> x2;
 
-  timestwo(&x.front(), &x2.front(), &N);
+  timestwo_f(&x.front(), &x2.front(), &N);
 
   for (auto i=0u; i < x2.size(); i++){
     if (x2[i] != 2*x[i]){

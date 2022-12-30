@@ -6,7 +6,7 @@ implicit none
 
 contains
 
-pure subroutine timestwo(z, z2, N) bind(c)
+pure subroutine timestwo_f(z, z2, N) bind(c)
 ! elemental is not allowed with BIND(C)
 
 integer(C_SIZE_T), intent(in) :: N
@@ -15,6 +15,6 @@ integer(c_int),intent(out) :: z2(N)
 
 z2 = 2*z
 
-end subroutine timestwo
+end subroutine
 
 end module mathv

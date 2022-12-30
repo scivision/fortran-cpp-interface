@@ -1,6 +1,7 @@
 program array
 
 use, intrinsic :: iso_c_binding, only : C_INT, C_SIZE_T
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 
 implicit none
 
@@ -26,7 +27,10 @@ call timestwo_c(A, size(A, kind=C_SIZE_T))
 if(any(A /= [2,4,6])) error stop "fortran call timestwo_c failed"
 
 call timestwo_cpp(A, size(A, kind=C_SIZE_T))
-if(any(A /= [2,4,6])) error stop "fortran call timestwo_cpp failed"
+if(any(A /= [4,8,12])) then
+  write(stderr,*) "A = ", A
+  error stop "fortran call timestwo_cpp failed"
+endif
 
 print *, "OK: Fortran call timestwo()"
 

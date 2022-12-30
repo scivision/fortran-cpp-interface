@@ -11,7 +11,7 @@ int main()
   auto N = x.size();
   std::vector<int> x2(N);
 
-  timestwo(&x.front(), &x2.front(), &N);
+  timestwo_f(&x.front(), &x2.front(), &N);
 
   for (auto i=0u; i < x2.size(); i++){
     if (x2[i] != 2*x[i]){
