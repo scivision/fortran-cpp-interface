@@ -2,7 +2,7 @@ set_property(DIRECTORY PROPERTY LABELS pointer)
 
 add_library(pointer_fortran OBJECT pmod.f90)
 
-add_executable(fortran_pointer_lubound main.f90)
+add_executable(fortran_pointer_lubound pointer_bounds.f90)
 add_test(NAME Fortran_pointer_lubound COMMAND fortran_pointer_lubound)
 
 add_executable(c_fortran_pointer main.c $<TARGET_OBJECTS:pointer_fortran>)

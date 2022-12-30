@@ -8,10 +8,10 @@ add_executable(cxx_fortran_vector main.cpp $<TARGET_OBJECTS:vector_fortran>)
 target_include_directories(cxx_fortran_vector PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 add_test(NAME C++_Fortran_vector COMMAND cxx_fortran_vector)
 
-add_executable(fortran_cxx_vector main.f90 $<TARGET_OBJECTS:vector_cxx>)
+add_executable(fortran_cxx_vector vector.f90 $<TARGET_OBJECTS:vector_cxx>)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_property(TARGET fortran_cxx_vector PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_vector COMMAND fortran_cxx_vector)
 
-add_executable(fortran_c_vector main.f90 $<TARGET_OBJECTS:vector_c>)
+add_executable(fortran_c_vector vector.f90 $<TARGET_OBJECTS:vector_c>)
 add_test(NAME Fortran_C_vector COMMAND fortran_c_vector)

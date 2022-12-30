@@ -16,9 +16,9 @@ set_property(TARGET cxx_fortran_struct PROPERTY LINKER_LANGUAGE CXX)
 target_compile_definitions(cxx_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C++_Fortran_struct COMMAND cxx_fortran_struct)
 
-add_executable(fortran_cxx_struct main.f90 $<TARGET_OBJECTS:struct_cxx>)
+add_executable(fortran_cxx_struct struct_tx.f90 $<TARGET_OBJECTS:struct_cxx>)
 set_property(TARGET fortran_cxx_struct PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_struct COMMAND fortran_cxx_struct)
 
-add_executable(fortran_c_struct main.f90 $<TARGET_OBJECTS:struct_c>)
+add_executable(fortran_c_struct struct_tx.f90 $<TARGET_OBJECTS:struct_c>)
 add_test(NAME Fortran_C_struct COMMAND fortran_c_struct)

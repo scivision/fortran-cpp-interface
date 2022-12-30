@@ -1,4 +1,4 @@
-program main
+program pointer_bounds
 !! explore lbound, ubound vis-a-vis pointer
 !! Fortran allows arbitrary lbound, ubound.
 !! In C array index starts at 0, but pointers can start in middle of array and then validly use negative indices.
