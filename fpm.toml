@@ -3,6 +3,3 @@ description = "Examples of modern Fortran C C++ interfaces"
 
 [build]
 auto-executables = false
-
-[library]
-include-dir = ['src/vector']

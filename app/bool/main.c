@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern bool logical_not(bool);
+#include "my_bool.h"
 
 int main(void){
 

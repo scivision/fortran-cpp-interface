@@ -1,7 +1,7 @@
 // Example of Fortran erroring with C main
 #include <stdlib.h>
 
-extern void error_fortran(int*);
+#include "my_error.h"
 
 int main(void) {
   int code = 42;

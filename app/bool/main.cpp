@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 
-extern "C" bool logical_not(bool);
+#include "my_bool.h"
 
 int main(){
 

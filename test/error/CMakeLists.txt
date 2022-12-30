@@ -1,8 +1,10 @@
 set_property(DIRECTORY PROPERTY LABELS error)
 
-add_library(error_fortran OBJECT ${PROJECT_SOURCE_DIR}/app/error/error.f90)
+add_library(error_fortran ${PROJECT_SOURCE_DIR}/src/error/error.f90)
+target_include_directories(error_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/error)
 
-add_executable(c_fortran_error ${PROJECT_SOURCE_DIR}/app/error/main.c $<TARGET_OBJECTS:error_fortran>)
+add_executable(c_fortran_error ${PROJECT_SOURCE_DIR}/app/error/main.c)
+target_link_libraries(c_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_property(TARGET c_fortran_error PROPERTY LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_error
@@ -10,7 +12,8 @@ COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:c_fortran_error> -Dexp_code=42 -P $
 )
 
 
-add_executable(cxx_fortran_error ${PROJECT_SOURCE_DIR}/app/error/main.cpp $<TARGET_OBJECTS:error_fortran>)
+add_executable(cxx_fortran_error ${PROJECT_SOURCE_DIR}/app/error/main.cpp)
+target_link_libraries(cxx_fortran_error PRIVATE error_fortran)
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_property(TARGET cxx_fortran_error PROPERTY LINKER_LANGUAGE CXX)
 add_test(NAME C++_Fortran_error
