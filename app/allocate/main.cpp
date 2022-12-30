@@ -1,15 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 
-extern "C" void alloc1(float**, float**, size_t*);
-extern "C" void alloc2(float**, float**, size_t*);
-extern "C" void alloc3(float**, float**, size_t*);
-extern "C" void alloc4(float**, float**, size_t*);
-
-extern "C" void dealloc1(float**, float**, size_t*);
-extern "C" void dealloc2(float**, float**, size_t*);
-extern "C" void dealloc3(float**, float**, size_t*);
-extern "C" void dealloc4(float**, float**, size_t*);
+#include "my_alloc.h"
 
 int main(){
 

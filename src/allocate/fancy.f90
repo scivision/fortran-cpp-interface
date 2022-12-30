@@ -12,7 +12,7 @@ end type array_t
 
 contains
 
-subroutine alloc1(Ac, dims) bind(C)
+subroutine falloc1(Ac, dims) bind(C)
 
 type(c_ptr), intent(inout) :: Ac
 integer(c_size_t), intent(in) :: dims(1)
@@ -26,10 +26,10 @@ At%ptr = c_loc(A)
 At%A1 => A
 Ac = c_loc(At)
 
-end subroutine alloc1
+end subroutine falloc1
 
 
-subroutine dealloc1(Ac) bind(C)
+subroutine fdealloc1(Ac) bind(C)
 
 type(c_ptr), intent(inout) :: Ac
 
@@ -55,6 +55,6 @@ if (ierr /= 0) then
   error stop
 end if
 
-end subroutine dealloc1
+end subroutine fdealloc1
 
 end module fancy

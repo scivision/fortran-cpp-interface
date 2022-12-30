@@ -2,8 +2,7 @@
 #include <cstring>
 #include <cstdlib>
 
-extern "C" void alloc1(float**, size_t*);
-extern "C" void dealloc1(float**);
+#include "my_alloc.h"
 
 int main(){
 
@@ -11,10 +10,10 @@ int main(){
 
   float *A1;
 
-  alloc1(&A1, d1);
+  falloc1(&A1, d1);
   std::cout << "1D: allocated" << std::endl;
 
-  dealloc1(&A1);
+  fdealloc1(&A1);
   std::cout << "1D: deallocated" << std::endl;
 
   std::cout << "OK: fancy allocate test" << std::endl;
