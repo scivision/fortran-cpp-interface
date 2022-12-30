@@ -6,7 +6,7 @@
 // #define _USE_MATH_DEFINES  // Windows oneAPI needs as compiler define
 #include <cmath>
 
-extern "C" float pi();
+#include "my_submodule.h"
 
 int main() {
 

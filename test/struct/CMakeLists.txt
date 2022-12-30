@@ -11,13 +11,11 @@ target_include_directories(struct_cpp PUBLIC ${PROJECT_SOURCE_DIR}/src/struct)
 
 add_executable(c_fortran_struct ${PROJECT_SOURCE_DIR}/app/struct/main.c)
 target_link_libraries(c_fortran_struct PRIVATE struct_fortran)
-set_property(TARGET c_fortran_struct PROPERTY LINKER_LANGUAGE C)
 target_compile_definitions(c_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C_Fortran_struct COMMAND c_fortran_struct)
 
 add_executable(cxx_fortran_struct ${PROJECT_SOURCE_DIR}/app/struct/main.cpp)
 target_link_libraries(cxx_fortran_struct PRIVATE struct_fortran)
-set_property(TARGET cxx_fortran_struct PROPERTY LINKER_LANGUAGE CXX)
 target_compile_definitions(cxx_fortran_struct PRIVATE $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>)
 add_test(NAME C++_Fortran_struct COMMAND cxx_fortran_struct)
 

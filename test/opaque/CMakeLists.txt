@@ -5,7 +5,6 @@ target_include_directories(opaque_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/op
 
 add_executable(c_opaque ${PROJECT_SOURCE_DIR}/app/opaque/main.c)
 target_link_libraries(c_opaque PRIVATE opaque_fortran)
-set_property(TARGET c_opaque PROPERTY LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_opaque COMMAND c_opaque)
 
 add_executable(cpp_opaque ${PROJECT_SOURCE_DIR}/app/opaque/main.cpp)

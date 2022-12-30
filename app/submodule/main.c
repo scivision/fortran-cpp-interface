@@ -6,7 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-extern float pi();
+#include "my_submodule.h"
 
 int main() {
 

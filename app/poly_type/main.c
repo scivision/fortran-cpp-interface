@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern void init_type(int*, void**);
-extern void add_one_C(int*, void**, int*, int*);
-extern void dealloc_type(int*, void**);
+#include "my_poly_type.h"
 
 int main(){
 

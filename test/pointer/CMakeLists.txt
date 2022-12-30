@@ -8,7 +8,6 @@ add_test(NAME Fortran_pointer_lubound COMMAND fortran_pointer_lubound)
 
 add_executable(c_fortran_pointer ${PROJECT_SOURCE_DIR}/app/pointer/main.c)
 target_link_libraries(c_fortran_pointer PRIVATE pointer_fortran)
-set_property(TARGET c_fortran_pointer PROPERTY LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
 
 add_executable(cxx_fortran_pointer ${PROJECT_SOURCE_DIR}/app/pointer/main.cpp)
