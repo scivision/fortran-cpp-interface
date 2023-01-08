@@ -3,7 +3,7 @@
 
 #include "my_vector.h"
 
-int main()
+int main(void)
 {
   size_t N = 3;
 

@@ -8,7 +8,7 @@
 
 #include "my_submodule.h"
 
-int main() {
+int main(void) {
 
   if (fabs(pi() - M_PI) > 1e-4) {
     fprintf(stderr, "pi() unexpected value: %f\n", pi());

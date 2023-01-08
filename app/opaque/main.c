@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "my_opaque.h"
 
-int main(){
+int main(void){
 
   void* myf;
 

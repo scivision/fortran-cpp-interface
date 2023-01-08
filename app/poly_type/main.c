@@ -3,7 +3,7 @@
 
 #include "my_poly_type.h"
 
-int main(){
+int main(void){
 
   void* x3;
   void* x4;
