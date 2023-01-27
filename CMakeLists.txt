@@ -13,7 +13,8 @@ set(CMAKE_CXX_STANDARD 11)
 include(cmake/options.cmake)
 include(cmake/compilers.cmake)
 
-foreach(a IN ITEMS allocate array bool error malloc
+foreach(a IN ITEMS allocate array bool error
+  glibc malloc
   opaque pointer poly_function poly_type struct
   submodule tictoc vector)
   add_subdirectory(test/${a})
