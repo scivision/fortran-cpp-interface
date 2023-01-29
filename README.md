@@ -66,6 +66,15 @@ The examples "array", "malloc", "vector" show distinct ways to send arrays to/fr
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
 The "error" examples show this.
 
+### ISO_Fortran_binding.h
+
+On 2019-01-12 [a GCC commit](https://github.com/gcc-mirror/gcc/commit/bbf18dc5d248a79a20ebf4b3a751669cd75485fd)
+from Paul Thomas brought ISO_Fortran_binding.h to
+[GCC 9](https://gcc.gnu.org/gcc-9/changes.html).
+
+This means if using Clang compiler e.g. on macOS, you may need to switch to GCC (till Clang/Flang someday includes ISO_Fortran_binding.h).
+
+
 ## Notes
 
 ### MacOS

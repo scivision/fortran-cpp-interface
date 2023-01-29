@@ -1,3 +1,5 @@
+include(CheckIncludeFile)
+
 # check C and Fortran compiler ABI compatibility
 
 if(NOT abi_ok)
@@ -19,6 +21,9 @@ if(NOT abi_ok)
     )
   endif()
 endif()
+
+# --- header
+check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
 
 # --- fix errors about needing -fPIE
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
