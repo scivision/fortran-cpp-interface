@@ -34,7 +34,7 @@ int main ( )
   arrays.c = (float *) malloc( 100*sizeof(float) );
   arrays.f = NULL;
   for(i=0; i<100; i++ ) {
-     arrays.c[i] = 2*(i+1);
+     arrays.c[i] = (float) 2*(i+1);
   }
 
   //  reference the Fortran subroutine
