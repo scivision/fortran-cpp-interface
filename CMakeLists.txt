@@ -14,7 +14,7 @@ include(cmake/options.cmake)
 include(cmake/compilers.cmake)
 
 foreach(a IN ITEMS
-  allocate cfi_allocate cfi_establish
+  allocate cfi_allocate cfi_establish cfi_setpointer
   array bool error
   glibc malloc
   opaque pointer poly_function poly_type struct
