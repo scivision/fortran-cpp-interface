@@ -14,8 +14,8 @@ include(cmake/options.cmake)
 include(cmake/compilers.cmake)
 
 foreach(a IN ITEMS
-  allocate array bool
-  derived error
+  allocate cfi_allocate
+  array bool error
   glibc malloc
   opaque pointer poly_function poly_type struct
   submodule tictoc vector)

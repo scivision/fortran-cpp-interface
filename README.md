@@ -89,6 +89,7 @@ from Paul Thomas brought ISO_Fortran_binding.h to
 
 This means if using Clang compiler e.g. on macOS, you may need to switch to GCC (till Clang/Flang someday includes ISO_Fortran_binding.h).
 
+GCC &ge; 9 and Intel oneAPI have ISO_Fortran_binding.h
 
 ## Notes
 

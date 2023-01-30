@@ -1,25 +1,25 @@
 // c program that calls the Fortran subroutine with struct argument, f2008 C.11.3
+// https://www.hpe.com/psnow/resources/ebooks/a00113908en_us_v2/Interlanguage_Communication.html
 //*********************************************************************
 #include <stdio.h>
 #include <stdlib.h>
-#include <ISO_Fortran_binding.h>
 
   //  declare the structure type
-struct pass {
+struct passer {
 int lenc, lenf;
 float *c, *f;
 };
 
   //  prototype for the Fortran function
-void simulation(long alpha, double *beta, long *gamma, double delta[], struct pass *arrays);
+void simulation(long alpha, double *beta, long *gamma, double delta[], struct passer *arrays);
 
 //  program that calls the Fortran subroutine
-int main ( )
+int main(void)
 {
   int i;
   long alpha, gamma;
   double beta, delta[100];
-  struct pass arrays;
+  struct passer arrays;
 
   alpha = 1234L;
   gamma = 5678L;

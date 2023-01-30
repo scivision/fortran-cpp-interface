@@ -1,4 +1,5 @@
 ! Example derived type/structure interoperability, f2008 C.11.3
+!! https://www.hpe.com/psnow/resources/ebooks/a00113908en_us_v2/Interlanguage_Communication.html
 !**************************************************************
 subroutine simulation(alpha, beta, gamma, delta, arrays) bind(c)
 
@@ -11,12 +12,12 @@ real (c_double), intent(inout) :: beta
 integer (c_long), intent(out) :: gamma
 real (c_double),dimension(*),intent(in) :: delta
 
-type, bind(c) :: pass
+type, bind(c) :: passer
   integer (c_int) :: lenc, lenf
   type (c_ptr) :: c, f
-end type pass
+end type passer
 
-type (pass), intent(inout) :: arrays
+type (passer), intent(inout) :: arrays
 
 real (c_float), allocatable, target, save :: eta(:)
 real (c_float), pointer :: c_array(:)
@@ -27,7 +28,7 @@ print *, "  alpha: ", alpha, ", beta: ", beta
 print *, "  delta(1),(100): ", delta(1), delta(100)
 
 ! associate c_array with an array allocated in c
-call c_f_pointer (arrays%c, c_array, [arrays%lenc])
+call c_f_pointer(arrays%c, c_array, [arrays%lenc])
 print *, "  c_array(1),(arrays%lenc): ", c_array(1), c_array(arrays%lenc)
 
 ! allocate an array and make it available in c
