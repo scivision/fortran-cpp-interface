@@ -5,5 +5,5 @@ if(NOT HAVE_ISO_FORTRAN_BINDING_H)
   return()
 endif()
 
-add_executable(cfi_allocate cfi_allocate.c cfi_allocate.f90)
-add_test(NAME CFI_allocate COMMAND cfi_allocate)
+add_executable(cfi_establish_string main.f90 string.c)
+add_test(NAME CFI_establish_string COMMAND cfi_establish_string)
