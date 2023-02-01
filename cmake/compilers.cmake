@@ -1,4 +1,5 @@
 include(CheckIncludeFile)
+include(CheckFortranSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
 
@@ -22,8 +23,25 @@ if(NOT abi_ok)
   endif()
 endif()
 
-# --- header
+# --- ISO_Fortran_binding.h header
 check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
+
+# --- GCC < 12 can't do this
+check_fortran_source_compiles("
+program cstr
+use, intrinsic :: iso_c_binding, only : c_char
+implicit none
+interface
+subroutine fun(s) bind(C)
+import :: c_char
+character(kind=c_char, len=:), pointer, intent(out) :: s
+end subroutine
+end interface
+end program
+"
+HAVE_C_CHAR_PTR
+SRC_EXT f90
+)
 
 # --- fix errors about needing -fPIE
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

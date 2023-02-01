@@ -1,13 +1,13 @@
 !! https://fortran-lang.discourse.group/t/experiment-dealing-with-a-pointer-to-a-string-from-c/930/3
-program string
+program cfi_est
 
 use, intrinsic :: iso_c_binding, only : c_int, c_char
 implicit none
 
 interface
 integer(c_int) function getstr( str ) bind(C, name="getstr")
-  import :: c_int, c_char
-  character(kind=c_char, len=:), pointer, intent(out) :: str
+import :: c_int, c_char
+character(kind=c_char, len=:), pointer, intent(out) :: str
 end function
 end interface
 
@@ -20,6 +20,5 @@ irc = getstr( s )
 if (irc /= 0) error stop "getstr function returned an error."
 if(s /= "Hello") error stop "expected: Hello  got " // s
 if(len(s) /= 5) error stop "expected length 5"
-
 
 end program
