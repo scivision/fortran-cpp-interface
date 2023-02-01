@@ -14,12 +14,12 @@ end interface
 character(kind=c_char, len=:), pointer :: s
 integer(c_int) :: irc
 
+nullify(s) !< avoid unintialized nuisance warning
+
 irc = getstr( s )
-if ( irc == 0 ) then
-   print *, "s: ", s, "; expected is Hello"
-   print *, "len: ", len(s), "; expected is 5"
-else
-   print *, "getstr function returned an error."
-end if
+if (irc /= 0) error stop "getstr function returned an error."
+if(s /= "Hello") error stop "expected: Hello  got " // s
+if(len(s) /= 5) error stop "expected length 5"
+
 
 end program
