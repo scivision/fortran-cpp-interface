@@ -13,3 +13,11 @@ add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
 add_executable(cxx_fortran_pointer ${PROJECT_SOURCE_DIR}/app/pointer/main.cpp)
 target_link_libraries(cxx_fortran_pointer PRIVATE pointer_fortran)
 add_test(NAME C++_Fortran_pointer COMMAND cxx_fortran_pointer)
+
+add_executable(fortran_cxx_null null_c.f90 ${PROJECT_SOURCE_DIR}/src/pointer/null.cpp)
+add_test(NAME Fortran_C++_null COMMAND fortran_cxx_null)
+
+add_executable(fortran_c_null null_c.f90 ${PROJECT_SOURCE_DIR}/src/pointer/null.c)
+add_test(NAME Fortran_C_null COMMAND fortran_c_null)
+
+set_property(TARGET fortran_c_null fortran_cxx_null PROPERTY LINKER_LANGUAGE Fortran)
