@@ -18,6 +18,7 @@ foreach(a IN ITEMS
   array bool error
   glibc malloc
   opaque pointer poly_function poly_type struct
-  submodule tictoc vector)
+  submodule
+  time vector)
   add_subdirectory(test/${a})
 endforeach()

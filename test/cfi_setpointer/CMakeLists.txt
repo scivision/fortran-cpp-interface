@@ -11,7 +11,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   # this bug was introduced in GCC 12. At least 12.1 and 12.2 are broken.
   set(CMAKE_REQUIRED_FLAGS "-Werror")
   file(READ main.f90 src)
-  check_fortran_source_compiles("${str}"
+  check_fortran_source_compiles("${src}"
   HAVE_NO_MAYBE_UNINITIALIZED
   SRC_EXT f90
   )
