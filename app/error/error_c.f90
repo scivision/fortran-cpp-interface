@@ -8,7 +8,7 @@ interface
 subroutine err_c(code) bind(C)
 import
 integer(C_INT), intent(in), value :: code
-end subroutine err_c
+end subroutine
 end interface
 
 call err_c(42)

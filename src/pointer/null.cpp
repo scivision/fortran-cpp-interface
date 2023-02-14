@@ -2,9 +2,8 @@
 #include <iostream>
 #include <cstring>
 
-extern "C" char* get_null(char*);
 
-char* get_null(char* c){
+extern "C" char* get_null(char* c){
   if (std::strlen(c) == 0){
     std::cout << "C++ got empty string from Fortran" << std::endl;
     return nullptr;

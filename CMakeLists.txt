@@ -7,7 +7,9 @@ LANGUAGES C CXX Fortran
 
 enable_testing()
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 23)
+# mostly C11, but optional "unreachable()" is C23
+
 set(CMAKE_CXX_STANDARD 11)
 
 include(cmake/options.cmake)
