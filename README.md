@@ -37,8 +37,8 @@ Instead, use Fortran 2003 standard `bind(C)`.
 Other real-world examples include
 [fortran-filesystem](https://github.com/scivision/fortran-filesystem)
 using C++ stdlib filesystem from Fortran and
-[fortran-sleep](https://github.com/scivision/fortran-sleep)
-standard sleep implementation as used in
+[standard sleep implementation](./src/sleep)
+as used in
 [blocktran](https://github.com/fortran-gaming/blocktran)
 and Fortran Standard Library.
 

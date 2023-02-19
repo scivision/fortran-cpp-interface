@@ -60,18 +60,6 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
   add_compile_options("$<$<COMPILE_LANGUAGE:C,CXX>:/W3>")
 endif()
 
-if(WIN32)
-  if(CMAKE_COMPILE_WARNING_AS_ERROR AND CMAKE_C_COMPILER_ID MATCHES "^Intel")
-    add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Wno-unused-command-line-argument>)
-    # sometimes CMake leaks compiler standard flags
-  endif()
-elseif(CMAKE_C_COMPILER_ID MATCHES "^Intel")
-  add_compile_options($<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:-O0>)
-endif()
-
-if(NOT WIN32)
-  add_compile_options($<$<AND:$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>,$<CONFIG:Debug>>:-O0>)
-endif()
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
 
@@ -88,5 +76,6 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
+$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-O0>
 )
 endif()
