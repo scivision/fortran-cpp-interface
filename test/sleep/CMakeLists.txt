@@ -47,4 +47,5 @@ set_property(TEST Fortran_nano_sleep PROPERTY DISABLED $<BOOL:${MINGW}>)
 endif()
 
 get_property(tests DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
-set_property(TEST ${tests} PROPERTY TIMEOUT 1.0)
+set_property(TEST ${tests} PROPERTY TIMEOUT 5)
+# allow extra time for valgrind. Have some timeout b/c macOS can hang for example.
