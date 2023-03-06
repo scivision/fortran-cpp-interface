@@ -14,6 +14,7 @@ add_test(NAME Fortran_c_sleep COMMAND fortran_c_sleep)
 add_executable(fortran_cpp_sleep test_sleep.f90)
 target_link_libraries(fortran_cpp_sleep PRIVATE cpp_f_sleep)
 add_test(NAME Fortran_cpp_sleep COMMAND fortran_cpp_sleep)
+set_property(TARGET fortran_cpp_sleep PROPERTY LINKER_LANGUAGE Fortran)
 
 # reference -- above methods recommended instead
 if(WIN32)
