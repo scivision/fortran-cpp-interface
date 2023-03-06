@@ -93,10 +93,18 @@ GCC &ge; 9 and Intel oneAPI have ISO_Fortran_binding.h
 
 ## Notes
 
+### struct memory alignment
+
+Some examples use scalar C struct.
+ISO_C_BINDING handles mapping struct to/from Fortran TYPE.
+For arrays of struct, compiler
+[pragma may be needed](https://stackoverflow.com/questions/53161673/data-alignment-inside-a-structure-in-intel-fortran).
+
+Valgrind needed suppression to avoid memory alignment (uninitialized memory) warnings for C struct input to nanosleep.
 ### MacOS
 
 For MacOS with Apple's Clang and Homebrew GCC,
-it MAY be needed to have in ~/.zprofile like the following:
+it MAY be needed to have in ~/.zshrc like the following:
 (check directory / versions on your Mac)
 
 ```sh

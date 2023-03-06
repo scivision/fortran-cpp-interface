@@ -89,6 +89,7 @@ INCLUDE ${include}
 INCLUDE_LABEL ${include_label}
 EXCLUDE ${exclude}
 EXCLUDE_LABEL ${exclude_label}
+PARALLEL_LEVEL ${Ncpu}
 RETURN_VALUE ret
 CAPTURE_CMAKE_ERROR err
 DEFECT_COUNT count

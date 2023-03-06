@@ -6,3 +6,12 @@
    fun:objconstruct_C
    fun:main
 }
+{
+   nanosleep-isinit-req
+   Memcheck:Param
+   nanosleep(req)
+   fun:nanosleep
+   fun:__sleep_std_MOD_sleep_ms
+   fun:MAIN__
+   fun:main
+}

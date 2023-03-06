@@ -1,4 +1,5 @@
 module sleep_std
+!! https://man7.org/linux/man-pages/man2/nanosleep.2.html
 use, intrinsic :: iso_c_binding, only : C_INT, C_LONG
 implicit none
 
