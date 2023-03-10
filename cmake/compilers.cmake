@@ -60,6 +60,7 @@ endif()
 if(CMAKE_C_COMPILER_ID MATCHES "^Intel")
   add_compile_options("$<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:-Rno-debug-disables-optimization>")
 endif()
+
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
 
 add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")

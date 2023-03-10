@@ -19,11 +19,6 @@ Demonstrate linking of
 * Fortran program calling C and C++ libraries
 
 We assume the compilers are C++11 and Fortran 2018 capable.
-We CI test with compilers including:
-
-* GCC &ge; 7
-* Clang &ge; 6
-* Intel oneAPI
 
 This repo's examples are also known to work with:
 
