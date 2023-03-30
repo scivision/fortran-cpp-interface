@@ -16,10 +16,10 @@ include(cmake/compilers.cmake)
 foreach(a IN ITEMS
   allocate cfi_allocate cfi_establish cfi_setpointer
   contiguous
-  array bool error
+  array bool  error
   glibc malloc
   opaque pointer poly_function poly_type struct
-  sleep submodule
+  sleep string submodule
   time vector)
   add_subdirectory(test/${a})
 endforeach()
