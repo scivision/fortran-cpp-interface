@@ -3,7 +3,7 @@ set_property(DIRECTORY PROPERTY LABELS vector)
 add_library(vector_fortran ${PROJECT_SOURCE_DIR}/src/vector/mathv.f90)
 target_include_directories(vector_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/vector)
 
-add_executable(cxx_fortran_vector ${PROJECT_SOURCE_DIR}/app/vector/main.cpp)
+add_executable(cxx_fortran_vector main.cpp)
 target_link_libraries(cxx_fortran_vector PRIVATE vector_fortran)
 
 add_test(NAME C++_Fortran_vector COMMAND cxx_fortran_vector)
