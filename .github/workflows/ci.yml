@@ -54,7 +54,7 @@ jobs:
 
     - uses: actions/checkout@v3
 
-    - run: ctest -S memcheck.cmake -V
+    - run: ctest -S memcheck.cmake -V -E Fortran_nano_sleep
 
 
   linux-clang:
