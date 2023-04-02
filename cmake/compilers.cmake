@@ -1,4 +1,5 @@
 include(CheckIncludeFile)
+include(CheckSymbolExists)
 include(CheckFortranSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
@@ -21,7 +22,26 @@ if(NOT abi_ok)
 endif()
 
 # --- ISO_Fortran_binding.h header
+block()
 check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
+
+# here we assume C and Fortran compilers are from the same vendor
+# otherwise, we'd need to use try_compile() with a project for each symbol
+# IntelLLVM didn't need this trick
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_REQUIRED_LIBRARIES "gfortran")
+elseif(CMAKE_C_COMPILER_ID STREQUAL "NVHPC")
+  set(CMAKE_REQUIRED_LIBRARIES "nvf")
+endif()
+
+# some compilers (e.g. NVHPC) have ISO_Fortran_binding.h but don't
+# have all the functions
+if(HAVE_ISO_FORTRAN_BINDING_H)
+check_symbol_exists(CFI_is_contiguous "ISO_Fortran_binding.h" HAVE_CFI_IS_CONTIGUOUS)
+check_symbol_exists(CFI_setpointer "ISO_Fortran_binding.h" HAVE_CFI_SETPOINTER)
+endif()
+
+endblock()
 
 # --- GCC < 12 can't do this
 check_fortran_source_compiles("

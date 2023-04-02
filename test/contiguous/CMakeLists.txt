@@ -12,7 +12,7 @@ SRC_EXT f90
 )
 
 if(NOT HAVE_IS_CONTIGUOUS)
-  message(WARNING "Fortran compiler does not support is_contiguous")
+  message(STATUS "Fortran compiler does not support is_contiguous")
   return()
 endif()
 
