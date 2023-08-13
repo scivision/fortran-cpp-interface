@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <cstdlib>
 
 #include "my_vector.h"
@@ -8,20 +9,20 @@ int main()
 {
   std::size_t N = 3;
 
-  auto x = new int[N]{1, 2, 3};
-  auto x2 = new int[N];
+  auto x = std::make_unique<int>(N);
+  auto x2 = std::make_unique<int>(N);
 
-  timestwo_f(&x[0], &x2[0], &N);
+  for (size_t i = 0; i < 3; ++i)
+    x.get()[i] = i+1;
+
+  timestwo_f(&x.get()[0], &x2.get()[0], &N);
 
   for (auto i=0u; i < N; i++){
-    if (x2[i] != 2*x[i]){
-      std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
+    if (x2.get()[i] != 2*x.get()[i]){
+      std::cerr << "value " <<  x2.get()[i] << "!=" << x.get()[i] << std::endl;
       return EXIT_FAILURE;
     }
   }
-
-  delete[] x;
-  delete[] x2;
 
   std::cout << "OK: C++ malloc new" << std::endl;
 

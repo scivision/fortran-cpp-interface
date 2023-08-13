@@ -9,7 +9,7 @@ LANGUAGES C CXX Fortran
 enable_testing()
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 include(cmake/options.cmake)
 include(cmake/compilers.cmake)
@@ -17,7 +17,7 @@ include(cmake/compilers.cmake)
 foreach(a IN ITEMS
   allocate cfi_allocate cfi_establish cfi_setpointer
   contiguous
-  array bool  error
+  array bool error
   glibc malloc
   opaque pointer poly_function poly_type struct
   sleep string submodule
