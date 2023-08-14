@@ -24,7 +24,7 @@ int main()
     }
   }
 
-  std::cout << "OK: C++ malloc new\n";
+  std::cout << "OK: C++ make_unique\n";
 
   return EXIT_SUCCESS;
 }
