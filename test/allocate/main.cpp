@@ -14,30 +14,30 @@ int main(){
 
 
   alloc1(&A1, &B1, d1);
-  std::cout << "1D: A and B allocated" << std::endl;
+  std::cout << "1D: A and B allocated\n";
 
   dealloc1(&A1, &B1, d1);
-  std::cout << "1D: A and B deallocated" << std::endl;
+  std::cout << "1D: A and B deallocated\n";
 
   alloc2(&A2, &B2, d2);
-  std::cout << "2D: A and B allocated" << std::endl;
+  std::cout << "2D: A and B allocated\n";
 
   dealloc2(&A2, &B2, d2);
-  std::cout << "2D: A and B deallocated" << std::endl;
+  std::cout << "2D: A and B deallocated\n";
 
   alloc3(&A3, &B3, d3);
-  std::cout << "3D: A and B allocated" << std::endl;
+  std::cout << "3D: A and B allocated\n";
 
   dealloc3(&A3, &B3, d3);
-  std::cout << "3D: A and B deallocated" << std::endl;
+  std::cout << "3D: A and B deallocated\n";
 
   alloc4(&A4, &B4, d4);
-  std::cout << "4D: A and B allocated" << std::endl;
+  std::cout << "4D: A and B allocated\n";
 
   dealloc4(&A4, &B4, d4);
-  std::cout << "4D: A and B deallocated" << std::endl;
+  std::cout << "4D: A and B deallocated\n";
 
-  std::cout << "OK: allocate test" << std::endl;
+  std::cout << "OK: allocate test\n";
 
   return EXIT_SUCCESS;
 }

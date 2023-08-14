@@ -13,18 +13,18 @@ int main(){
 
 
   falloc1(&A1, d1);
-  std::cout << "1D: allocated" << std::endl;
+  std::cout << "1D: allocated\n";
 
-  std::cout << "press enter to deallocate 1D" << std::endl;
+  std::cout << "press enter to deallocate 1D\n";
   std::cin.get();
 
   fdealloc1(&A1);
-  std::cout << "1D: deallocated" << std::endl;
+  std::cout << "1D: deallocated\n";
 
-  std::cout << "press enter to continue" << std::endl;
+  std::cout << "press enter to continue\n";
   std::cin.get();
 
-  std::cout << "OK: fancy allocate test" << std::endl;
+  std::cout << "OK: fancy allocate test\n";
 
   return EXIT_SUCCESS;
 }

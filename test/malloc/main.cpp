@@ -24,7 +24,7 @@ int main()
     }
   }
 
-  std::cout << "OK: C++ malloc new" << std::endl;
+  std::cout << "OK: C++ malloc new\n";
 
   return EXIT_SUCCESS;
 }

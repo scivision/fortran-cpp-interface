@@ -16,7 +16,7 @@ int main(){
 
   add_one_C(&xtype, &x3, &A, &C);
   if(A != 4) {
-    std::cerr << "Error: " << A << " != 4" << std::endl;
+    std::cerr << "Error: " << A << " != 4\n";
     return EXIT_FAILURE;
   }
   std::cout << "C:3 = " << C << std::endl;
@@ -30,7 +30,7 @@ int main(){
 
   add_one_C(&xtype, &x4, &A, &C);
   if(A != 5) {
-    std::cerr << "Error: " << A << " != 5" << std::endl;
+    std::cerr << "Error: " << A << " != 5\n";
     return EXIT_FAILURE;
   }
   std::cout << "C:4 = " << C << std::endl;
@@ -40,11 +40,11 @@ int main(){
   std::cout << "C:4 = " << C << std::endl;
 
   dealloc_type(&xtype, &x3);
-  std::cout << "three deallocated" << std::endl;
+  std::cout << "three deallocated\n";
   dealloc_type(&xtype, &x4);
-  std::cout << "four deallocated" << std::endl;
+  std::cout << "four deallocated\n";
 
-  std::cout << "OK: C++ poly_type" << std::endl;
+  std::cout << "OK: C++ poly_type\n";
 
   return EXIT_SUCCESS;
 }

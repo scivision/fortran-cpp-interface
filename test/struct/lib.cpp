@@ -14,7 +14,7 @@ if (p->my_int != 123) {
 }
 
 if (! p->my_bool) {
-  std::cerr << "Error: my_bool is false" << std::endl;
+  std::cerr << "Error: my_bool is false\n";
   exit(EXIT_FAILURE);
 }
 

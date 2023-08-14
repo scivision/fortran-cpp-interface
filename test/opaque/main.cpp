@@ -15,7 +15,7 @@ int main(){
 
   destruct_C(&myf);
 
-  std::cout << "OK: opaque" << std::endl;
+  std::cout << "OK: opaque\n";
 
   return EXIT_SUCCESS;
 }

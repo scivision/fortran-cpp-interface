@@ -21,7 +21,7 @@ int main()
     }
   }
 
-  std::cout << "OK: array" << std::endl;
+  std::cout << "OK: array\n";
 
   return EXIT_SUCCESS;
 }

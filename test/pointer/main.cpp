@@ -21,6 +21,6 @@ int main()
     return EXIT_FAILURE;
   }
 
-  std::cout << "OK: C++ to Fortran pointer" << std::endl;
+  std::cout << "OK: C++ to Fortran pointer\n";
   return EXIT_SUCCESS;
 }
