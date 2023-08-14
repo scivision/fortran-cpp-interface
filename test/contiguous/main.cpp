@@ -8,7 +8,7 @@ int main(){
 
 size_t dims[1] = {3};
 
-auto a = std::make_unique<float>(3);
+auto a = std::make_unique<float[]>(3);
 
 for (size_t i = 0; i < 3; ++i)
   a.get()[i] = i+1;

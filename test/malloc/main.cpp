@@ -9,8 +9,8 @@ int main()
 {
   std::size_t N = 3;
 
-  auto x = std::make_unique<int>(N);
-  auto x2 = std::make_unique<int>(N);
+  auto x = std::make_unique<int[]>(N);
+  auto x2 = std::make_unique<int[]>(N);
 
   for (size_t i = 0; i < 3; ++i)
     x.get()[i] = i+1;

@@ -8,8 +8,8 @@
 int main()
 {
   size_t N = 3;
-  auto a = std::make_unique<float>(N);
-  auto b = std::make_unique<float>(N-1);
+  auto a = std::make_unique<float[]>(N);
+  auto b = std::make_unique<float[]>(N-1);
 
   for (size_t i = 0; i < 3; ++i)
     a.get()[i] = i+1;
