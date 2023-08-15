@@ -1,6 +1,6 @@
 include(CheckIncludeFile)
 include(CheckSymbolExists)
-include(CheckFortranSourceCompiles)
+include(CheckSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
 
@@ -44,8 +44,8 @@ endif()
 endblock()
 
 # --- GCC < 12 can't do this
-check_fortran_source_compiles("
-program cstr
+check_source_compiles(Fortran
+"program cstr
 use, intrinsic :: iso_c_binding, only : c_char
 implicit none
 interface
@@ -57,7 +57,6 @@ end interface
 end program
 "
 HAVE_C_CHAR_PTR
-SRC_EXT f90
 )
 
 # --- fix errors about needing -fPIE

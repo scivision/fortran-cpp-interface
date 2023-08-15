@@ -9,7 +9,7 @@ foreach(t IN ITEMS strftime strptime)
 endforeach()
 
 file(READ strptime.f90 src)
-check_fortran_source_compiles("${src}" HAVE_C_STRPTIME SRC_EXT f90)
+check_source_compiles(Fortran "${src}" HAVE_C_STRPTIME)
 
 target_sources(strptime PRIVATE "$<$<NOT:$<BOOL:${HAVE_C_STRPTIME}>>:strptime.cpp>")
 

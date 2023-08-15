@@ -1,14 +1,13 @@
 set_property(DIRECTORY PROPERTY LABELS contiguous)
 
-check_fortran_source_compiles("
-program test
+check_source_compiles(Fortran
+"program test
 implicit none
 real :: a(1)
 print '(L1)', is_contiguous(a)
 end program
 "
 HAVE_IS_CONTIGUOUS
-SRC_EXT f90
 )
 
 if(NOT HAVE_IS_CONTIGUOUS)
