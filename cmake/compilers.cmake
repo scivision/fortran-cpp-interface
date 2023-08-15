@@ -22,7 +22,7 @@ if(NOT abi_ok)
 endif()
 
 # --- ISO_Fortran_binding.h header
-block()
+function(check_iso_fortran_binding)
 check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
 
 # here we assume C and Fortran compilers are from the same vendor
@@ -41,7 +41,8 @@ check_symbol_exists(CFI_is_contiguous "ISO_Fortran_binding.h" HAVE_CFI_IS_CONTIG
 check_symbol_exists(CFI_setpointer "ISO_Fortran_binding.h" HAVE_CFI_SETPOINTER)
 endif()
 
-endblock()
+endfunction()
+check_iso_fortran_binding()
 
 # --- GCC < 12 can't do this
 check_source_compiles(Fortran

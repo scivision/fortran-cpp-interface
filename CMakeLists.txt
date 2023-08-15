@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.25...3.27)
+cmake_minimum_required(VERSION 3.19...3.27)
 # 3.15+ for COMPILE_LANGAGE multiple languages, COMPILE_LANG_AND_ID
-# 3.25+ for block()
+# 3.19 for CheckSourceCompiles
 
 project(Fortran_C_CXX_interface
 LANGUAGES C CXX Fortran
