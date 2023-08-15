@@ -3,13 +3,20 @@ include(CheckSymbolExists)
 include(CheckSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
-
+function(abi_check)
 if(NOT abi_ok)
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
   try_compile(abi_ok
   ${CMAKE_CURRENT_BINARY_DIR}/abi_check ${CMAKE_CURRENT_LIST_DIR}/abi_check
   abi_check
+  OUTPUT_VARIABLE abi_output
   )
+  if(abi_output MATCHES "ld: warning: could not create compact unwind for")
+    if(CMAKE_C_COMPILER_ID MATCHES "AppleClang" AND CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+      set(ldflags_unwind "-Wl,-no_compact_unwind" CACHE STRING "linker flags to disable compact unwind")
+    endif()
+  endif()
+
   if(abi_ok)
     message(CHECK_PASS "OK")
   else()
@@ -19,6 +26,13 @@ if(NOT abi_ok)
     Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
     )
   endif()
+endif()
+endfunction(abi_check)
+abi_check()
+
+if(DEFINED ldflags_unwind)
+  message(STATUS "Disabling ld compact unwind with ${ldflags_unwind}")
+  list(APPEND CMAKE_EXE_LINKER_FLAGS "${ldflags_unwind}")
 endif()
 
 # --- ISO_Fortran_binding.h header
