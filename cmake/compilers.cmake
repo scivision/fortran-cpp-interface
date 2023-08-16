@@ -4,9 +4,9 @@ include(CheckSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
 function(abi_check)
-if(NOT abi_ok)
+if(NOT abi_compile)
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
-  try_compile(abi_ok
+  try_compile(abi_compile
   ${CMAKE_CURRENT_BINARY_DIR}/abi_check ${CMAKE_CURRENT_LIST_DIR}/abi_check
   abi_check
   OUTPUT_VARIABLE abi_output
@@ -17,7 +17,7 @@ if(NOT abi_ok)
     endif()
   endif()
 
-  if(abi_ok)
+  if(abi_compile)
     message(CHECK_PASS "OK")
   else()
     message(FATAL_ERROR "ABI-incompatible compilers:

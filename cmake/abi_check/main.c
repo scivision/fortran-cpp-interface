@@ -11,5 +11,6 @@ int main(void) {
     return EXIT_FAILURE;
   }
 
+  printf("OK: C main Fortran lib\n");
   return EXIT_SUCCESS;
 }

@@ -11,5 +11,6 @@ int main() {
     return EXIT_FAILURE;
   }
 
+  std::cout << "OK: C++ main Fortran lib\n";
   return EXIT_SUCCESS;
 }
