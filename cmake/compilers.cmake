@@ -2,7 +2,8 @@ include(CheckIncludeFile)
 include(CheckSymbolExists)
 include(CheckSourceCompiles)
 
-# check C and Fortran compiler ABI compatibility
+# --- abi check: C++ and Fortran compiler ABI compatibility
+
 function(abi_check)
 if(NOT abi_compile)
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
@@ -12,9 +13,10 @@ if(NOT abi_compile)
   OUTPUT_VARIABLE abi_output
   )
   if(abi_output MATCHES "ld: warning: could not create compact unwind for")
-    if(CMAKE_C_COMPILER_ID MATCHES "AppleClang" AND CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
-      set(ldflags_unwind "-Wl,-w" CACHE STRING "linker flags to disable compact unwind")
-    endif()
+    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers:
+    C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
+    Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
+    )
   endif()
 
   if(abi_compile)
