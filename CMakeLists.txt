@@ -34,7 +34,7 @@ endif()
 foreach(a IN ITEMS
   allocate cfi_allocate cfi_establish cfi_setpointer
   contiguous
-  array bool error
+  array bool error exception
   glibc malloc
   opaque pointer poly_function poly_type struct
   sleep string submodule
