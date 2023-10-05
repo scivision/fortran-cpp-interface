@@ -35,7 +35,7 @@ jobs:
     - name: install ninja
       run: sudo apt install --no-install-recommends ninja-build
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
@@ -52,7 +52,7 @@ jobs:
         sudo apt update
         sudo apt install --no-install-recommends valgrind
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - run: ctest -S memcheck.cmake -V -E Fortran_nano_sleep
 
@@ -63,7 +63,7 @@ jobs:
 
     strategy:
       matrix:
-        clang-version: [12, 13, 14]
+        clang-version: [13, 14]
 
     env:
       CC: clang-${{ matrix.clang-version }}
@@ -71,7 +71,7 @@ jobs:
       FC: gfortran
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: install ninja
       run: sudo apt install --no-install-recommends ninja-build
@@ -91,7 +91,7 @@ jobs:
     steps:
     - run: brew install ninja
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
@@ -115,7 +115,7 @@ jobs:
           mingw-w64-x86_64-ninja
           mingw-w64-x86_64-gcc-fortran
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
