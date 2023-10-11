@@ -6,9 +6,10 @@ include(CheckSourceCompiles)
 
 function(abi_check)
 if(NOT abi_compile)
+
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
   try_compile(abi_compile
-  ${CMAKE_CURRENT_BINARY_DIR}/abi_check ${CMAKE_CURRENT_LIST_DIR}/abi_check
+  ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
   abi_check
   OUTPUT_VARIABLE abi_output
   )
@@ -19,15 +20,35 @@ if(NOT abi_compile)
     )
   endif()
 
-  if(abi_compile)
-    message(CHECK_PASS "OK")
-  else()
-    message(FATAL_ERROR "ABI-incompatible compilers:
-    C compiler ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}
-    C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
-    Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
-    )
-  endif()
+if(abi_compile)
+  message(CHECK_PASS "OK")
+else()
+  message(FATAL_ERROR "ABI-incompatible compilers:
+  C compiler ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}
+  C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
+  Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
+  )
+endif()
+endif()
+
+if(NOT abi_run EQUAL 0)
+
+message(CHECK_START "checking that C++ exception handling works from Fortran")
+try_run(abi_run abi_compile_run
+  ${CMAKE_CURRENT_BINARY_DIR}/abi_run
+  SOURCES ${PROJECT_SOURCE_DIR}/test/exception/exception.f90
+    ${PROJECT_SOURCE_DIR}/test/exception/raise_exception.cpp
+)
+
+if(abi_compile_run AND abi_run EQUAL 0)
+  message(CHECK_PASS "OK")
+else()
+  message(WARNING "Exception handling failed: return code ${abi_run} using compilers:
+  C compiler ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}
+  C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
+  Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
+  )
+endif()
 endif()
 endfunction(abi_check)
 abi_check()

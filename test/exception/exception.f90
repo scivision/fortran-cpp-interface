@@ -9,4 +9,6 @@ end interface
 
 call raise_exception()
 
+print '(a)', "OK: no exception raised"
+
 end program
