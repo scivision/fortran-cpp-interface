@@ -63,7 +63,7 @@ jobs:
 
     strategy:
       matrix:
-        clang-version: [13, 14]
+        clang-version: [13, 14, 15]
 
     env:
       CC: clang-${{ matrix.clang-version }}
