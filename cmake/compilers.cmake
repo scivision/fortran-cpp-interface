@@ -53,10 +53,6 @@ endif()
 endfunction(abi_check)
 abi_check()
 
-if(DEFINED ldflags_unwind)
-  message(STATUS "Disabling ld warnings with ${ldflags_unwind}")
-  list(APPEND CMAKE_EXE_LINKER_FLAGS "${ldflags_unwind}")
-endif()
 
 # --- ISO_Fortran_binding.h header
 function(check_iso_fortran_binding)
