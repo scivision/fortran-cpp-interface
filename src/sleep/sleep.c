@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-extern void c_sleep(int*);
+extern void c_sleep(int);
 
 #ifdef _MSC_VER
 
@@ -18,10 +18,10 @@ void c_sleep(int* milliseconds)
 #include <time.h>
 #include <errno.h>
 // https://linux.die.net/man/3/usleep
-void c_sleep(int* milliseconds)
+void c_sleep(int milliseconds)
 {
 
-  if (*milliseconds <= 0){
+  if (milliseconds <= 0){
     fprintf(stderr, "ERROR:sleep: milliseconds must be strictly positive\n");
     return;
   }
@@ -30,8 +30,8 @@ void c_sleep(int* milliseconds)
 
   struct timespec t;
 
-  t.tv_sec = *milliseconds / 1000;
-  t.tv_nsec = (*milliseconds % 1000) * 1000000;
+  t.tv_sec = milliseconds / 1000;
+  t.tv_nsec = (milliseconds % 1000) * 1000000;
 
   int ierr = nanosleep(&t, NULL);
   if (ierr == 0)

@@ -10,7 +10,7 @@ public :: sleep_ms
 interface
 subroutine c_sleep(millseconds) bind(C, name="c_sleep")
 import C_INT
-integer(C_INT), intent(in) :: millseconds
+integer(C_INT), intent(in), value :: millseconds
 end subroutine
 end interface
 
