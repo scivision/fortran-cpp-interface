@@ -94,7 +94,9 @@ HAVE_C_CHAR_PTR
 )
 
 # --- fix errors about needing -fPIE
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  include(CheckPIESupported)
+  check_pie_supported()
   set(CMAKE_POSITION_INDEPENDENT_CODE true)
 endif()
 
