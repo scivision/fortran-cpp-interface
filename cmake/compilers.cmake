@@ -130,6 +130,7 @@ add_compile_options(-Wall -Wextra
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<NOT:$<BOOL:${WIN32}>>>:-fpscomp;logicals>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
 $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-O0>
 )
