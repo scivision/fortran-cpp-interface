@@ -1,6 +1,8 @@
 name: oneapi-linux
 
 env:
+  CC: icx
+  FC: ifx
   LINUX_CPP_COMPONENTS: intel-oneapi-compiler-dpcpp-cpp
   LINUX_FORTRAN_COMPONENTS: intel-oneapi-compiler-fortran
 # https://github.com/oneapi-src/oneapi-ci/blob/master/.github/workflows/build_all.yml
