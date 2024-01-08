@@ -5,7 +5,7 @@ use, intrinsic ::iso_c_binding, only : C_BOOL
 implicit none
 
 interface
-logical(C_BOOL) function logical_not_cpp(a) bind(C)
+logical(C_BOOL) function logical_not(a) bind(C)
 import
 logical(C_BOOL), intent(in), value :: a
 end function
@@ -16,6 +16,7 @@ logical(C_BOOL) :: t, f
 t = .true.
 f = .false.
 
-if (logical_not_cpp(t)) error stop "logical_not_cpp(.true.) should be .false."
+if (logical_not(t)) error stop "logical_not(.true.) should be .false."
+if (.not. logical_not(f)) error stop "logical_not(.false.) should be .true."
 
 end program

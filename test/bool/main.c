@@ -6,8 +6,13 @@
 
 int main(void){
 
+if(logical_not(true)) {
+  fprintf(stderr, "logical_not(true) should be false");
+  return EXIT_FAILURE;
+}
+
 if (!logical_not(false)) {
-  fprintf(stderr, "expected Fortran to not boolean");
+  fprintf(stderr, "logical_not(false) should be true)");
   return EXIT_FAILURE;
 }
 
