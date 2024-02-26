@@ -10,13 +10,13 @@ int main(void)
   int* x = malloc(N*sizeof(int));
   int* x2 = malloc(N*sizeof(int));
 
-  for (size_t i=0; i < N; i++){
+  for (size_t i=0; i < N; ++i){
     x[i] = i+1;
   }
 
   timestwo_f(&x[0], &x2[0], &N);
 
-  for (size_t i=0; i < N; i++){
+  for (size_t i=0; i < N; ++i){
     if (x2[i] != 2*x[i]){
       fprintf(stderr, "value %d != %d\n", x2[i], x[i]);
       return EXIT_FAILURE;

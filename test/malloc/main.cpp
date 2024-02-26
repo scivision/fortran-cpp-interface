@@ -12,7 +12,7 @@ int main()
   auto x = std::make_unique<int[]>(N);
   auto x2 = std::make_unique<int[]>(N);
 
-  for (size_t i = 0; i < 3; ++i)
+  for (size_t i = 0; i < N; ++i)
     x.get()[i] = i+1;
 
   timestwo_f(&x.get()[0], &x2.get()[0], &N);
