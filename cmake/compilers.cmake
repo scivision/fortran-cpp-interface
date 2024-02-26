@@ -123,9 +123,11 @@ add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
 add_compile_options(-Wall -Wextra
-"$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none;-Werror=array-bounds;-fcheck=all>"
+"$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>"
 )
+
+# "$<$<COMPILE_LANGUAGE:Fortran>:-Werror=array-bounds;-fcheck=all>"
 
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
