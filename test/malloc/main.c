@@ -19,6 +19,8 @@ int main(void)
   for (size_t i=0; i < N; ++i){
     if (x2[i] != 2*x[i]){
       fprintf(stderr, "value %d != %d\n", x2[i], x[i]);
+      free(x);
+      free(x2);
       return EXIT_FAILURE;
     }
   }

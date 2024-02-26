@@ -20,6 +20,8 @@ int main(void)
 
   if (b[0] != a[1] || b[1] != a[2]){
     fprintf(stderr, "value %f != %f or %f != %f\n", b[0], a[1], b[1], a[2]);
+    free(a);
+    free(b);
     return EXIT_FAILURE;
   }
 
