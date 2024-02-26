@@ -1,7 +1,7 @@
 #include <cstdlib>
 
-extern "C" void err_cpp(int);
+extern "C" [[ noreturn ]] void err_cpp(int);
 
-void err_cpp(int code){
+[[ noreturn ]] void err_cpp(int code){
   exit(code);
 }

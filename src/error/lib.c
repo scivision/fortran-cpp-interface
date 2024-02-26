@@ -1,5 +1,5 @@
 #include <stdlib.h>
 
-void err_c(int code){
+_Noreturn void err_c(int code){
   exit(code);
 }
