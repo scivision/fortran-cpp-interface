@@ -1,17 +1,7 @@
 set_property(DIRECTORY PROPERTY LABELS contiguous)
 
-check_source_compiles(Fortran
-"program test
-implicit none
-real :: a(1)
-print '(L1)', is_contiguous(a)
-end program
-"
-HAVE_IS_CONTIGUOUS
-)
-
-if(NOT HAVE_IS_CONTIGUOUS)
-  message(STATUS "Fortran compiler does not support is_contiguous")
+if(NOT f08contiguous)
+  message(STATUS "Fortran compiler ${CMAKE_Fortran_COMPILER_ID} does not support is_contiguous")
   return()
 endif()
 

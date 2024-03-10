@@ -1,5 +1,10 @@
 set_property(DIRECTORY PROPERTY LABELS submodule)
 
+if(NOT f08submod_bind)
+  message(STATUS "Fortran submodule bind(C) is not supported by the compiler")
+  return()
+endif()
+
 add_library(submodule_fortran ${PROJECT_SOURCE_DIR}/src/submodule/bindmod.f90)
 target_include_directories(submodule_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/submodule)
 

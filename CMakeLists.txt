@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19...3.28)
+cmake_minimum_required(VERSION 3.19...3.29)
 # 3.15+ for COMPILE_LANGAGE multiple languages, COMPILE_LANG_AND_ID
 # 3.19 for CheckSourceCompiles
 
@@ -13,8 +13,16 @@ LANGUAGES C CXX Fortran
 
 enable_testing()
 
+include(CheckSourceCompiles)
+
+
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 14)
+
+foreacH(c IN ITEMS f03abstract f03bind
+  f08contiguous f08submod_bind)
+  include(cmake/${c}.cmake)
+endforeach()
 
 include(cmake/compilers.cmake)
 

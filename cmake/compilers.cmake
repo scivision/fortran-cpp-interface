@@ -1,6 +1,5 @@
 include(CheckIncludeFile)
 include(CheckSymbolExists)
-include(CheckSourceCompiles)
 
 # --- abi check: C++ and Fortran compiler ABI compatibility
 

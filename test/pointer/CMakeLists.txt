@@ -3,8 +3,12 @@ set_property(DIRECTORY PROPERTY LABELS pointer)
 add_library(pointer_fortran ${PROJECT_SOURCE_DIR}/src/pointer/pmod.f90)
 target_include_directories(pointer_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/pointer)
 
+if(f03bind)
+
 add_executable(fortran_pointer_lubound pointer_bounds.f90)
 add_test(NAME Fortran_pointer_lubound COMMAND fortran_pointer_lubound)
+
+endif()
 
 add_executable(c_fortran_pointer main.c)
 target_link_libraries(c_fortran_pointer PRIVATE pointer_fortran)
