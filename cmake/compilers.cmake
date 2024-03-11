@@ -4,17 +4,10 @@ include(CheckSymbolExists)
 # --- abi check: C++ and Fortran compiler ABI compatibility
 
 function(abi_check)
-if(NOT DEFINED HAVE_CXX_TRYCATCH)
+if(NOT DEFINED abi_compile)
 
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
-    try_compile(abi_compile ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
-    abi_check OUTPUT_VARIABLE abi_output)
-  if(abi_output MATCHES "ld: warning: could not create compact unwind for")
-    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
-    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
-  else()
-    set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
-  endif()
+  try_compile(abi_compile ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check abi_check)
 
 if(abi_compile)
   message(CHECK_PASS "OK")
@@ -27,16 +20,20 @@ else()
 endif()
 
 # try_run() doesn't adequately detect failed exception handling--it may pass while ctest of the same exe fails
-if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25 AND HAVE_CXX_TRYCATCH)
-  message(CHECK_START "checking that C++ exception handling run works")
-  try_run(abi_run abi_run_compile
-    SOURCES ${PROJECT_SOURCE_DIR}/test/exception/exception.f90 ${PROJECT_SOURCE_DIR}/test/exception/raise_exception.cpp
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25)
+  message(CHECK_START "checking that C++ exception handling works")
+  try_compile(exception_compile
+    PROJECT exception
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/exception_check
+    OUTPUT_VARIABLE abi_output
   )
-  if(abi_run_compile AND abi_run EQUAL 0)
-    message(CHECK_PASS "OK")
+  if(abi_output MATCHES "ld: warning: could not create compact unwind for")
+    message(CHECK_FAIL "no")
+    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
+    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
   else()
-    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken on run" FORCE)
-    message(CHECK_FAIL "failed")
+    message(CHECK_PASS "yes")
+    set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
   endif()
 endif()
 
