@@ -19,6 +19,8 @@ include(CheckSourceCompiles)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 14)
 
+message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
+
 foreacH(c IN ITEMS f03abstract f03bind
   f08contiguous f08submod_bind)
   include(cmake/${c}.cmake)
@@ -48,9 +50,6 @@ foreach(a IN ITEMS
   time vector)
   add_subdirectory(test/${a})
 endforeach()
-
-
-message(STATUS "${PROJECT_NAME} ${PROJECT_VERSION}  CMake ${CMAKE_VERSION}")
 
 # Necessary for shared library with Visual Studio / Windows oneAPI
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)

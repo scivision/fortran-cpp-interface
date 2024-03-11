@@ -32,7 +32,6 @@ jobs:
       FC: gfortran-13
       CC: ${{ matrix.c.cc }}
       CXX: ${{ matrix.c.cxx }}
-      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/
 
     steps:
     - uses: actions/checkout@v4
