@@ -3,6 +3,7 @@ name: ci
 env:
   HOMEBREW_NO_INSTALL_CLEANUP: 1
   CTEST_NO_TESTS_ACTION: error
+  CTEST_PARALLEL_LEVEL: 4
 
 on:
   push:
@@ -23,7 +24,7 @@ jobs:
 
     strategy:
       matrix:
-        gcc-version: [9, 10, 11, 12]
+        gcc-version: [9, 10, 11, 12, 13]
 
     env:
       CC: gcc-${{ matrix.gcc-version }}
@@ -86,7 +87,7 @@ jobs:
     timeout-minutes: 10
 
     env:
-      FC: gfortran-12
+      FC: gfortran-13
 
     steps:
     - run: brew install ninja
