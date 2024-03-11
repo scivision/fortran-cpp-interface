@@ -1,13 +1,14 @@
 #include <iostream>
 #include <cstdlib>
 
-extern "C" int addone(int);
-
+#include "myadd.h"
 
 int main() {
 
-  if(addone(2) != 3) {
-    std::cerr << "2 + 1 != " << addone(2) << std::endl;
+  int i = addone(2);
+
+  if(i != 3) {
+    std::cerr << "2 + 1 != " << i << "\n";
     return EXIT_FAILURE;
   }
 

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern int addone(int);
-
+#include "myadd.h"
 
 int main(void) {
 

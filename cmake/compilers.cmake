@@ -11,10 +11,7 @@ if(NOT DEFINED HAVE_CXX_TRYCATCH)
     abi_check OUTPUT_VARIABLE abi_output)
   if(abi_output MATCHES "ld: warning: could not create compact unwind for")
     set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
-    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers:
-    C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
-    Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
-    )
+    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
   else()
     set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
   endif()
