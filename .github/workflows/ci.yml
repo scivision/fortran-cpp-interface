@@ -81,26 +81,31 @@ jobs:
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
 
+    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
+      if: ${{ failure() }}
+
+
 
   mac:
     runs-on: macos-latest
-    needs: linux-clang
     timeout-minutes: 10
 
     strategy:
       matrix:
-        cc: [clang, gcc-13]
-        cxx: [clang++, g++-13]
+        c: [{cc: clang, cxx: clang++}, {cc: gcc-13, cxx: g++-13}]
 
     env:
       FC: gfortran-13
-      CC: ${{ matrix.cc }}
-      CXX: ${{ matrix.cxx }}
+      CC: ${{ matrix.c.cc }}
+      CXX: ${{ matrix.c.cxx }}
 
     steps:
     - uses: actions/checkout@v4
 
     - run: cmake --workflow --preset default
+
+    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
+      if: ${{ failure() }}
 
 
   windows:
@@ -108,20 +113,18 @@ jobs:
     needs: linux-gcc
     timeout-minutes: 10
 
-    defaults:
-      run:
-        shell: msys2 {0}
-
     steps:
     - uses: msys2/setup-msys2@v2
       with:
         update: true
-        install: >-
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-ninja
-          mingw-w64-x86_64-gcc-fortran
+        install: mingw-w64-x86_64-gcc-fortran
+
+    - name: Put MSYS2_MinGW64 on PATH
+      run: echo "${{ runner.temp }}/msys64/mingw64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - uses: actions/checkout@v4
 
-    - run: cmake --workflow --preset debug
-    - run: cmake --workflow --preset release
+    - run: cmake --workflow --preset default
+
+    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
+      if: ${{ failure() }}
