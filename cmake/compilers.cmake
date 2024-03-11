@@ -4,7 +4,7 @@ include(CheckSymbolExists)
 # --- abi check: C++ and Fortran compiler ABI compatibility
 
 function(abi_check)
-if(NOT abi_compile)
+if(NOT DEFINED HAVE_CXX_TRYCATCH)
 
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
     try_compile(abi_compile ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
@@ -30,6 +30,18 @@ else()
 endif()
 
 # try_run() doesn't adequately detect failed exception handling--it may pass while ctest of the same exe fails
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25 AND HAVE_CXX_TRYCATCH)
+  message(CHECK_START "checking that C++ exception handling run works")
+  try_run(abi_run abi_run_compile
+    SOURCES ${PROJECT_SOURCE_DIR}/test/exception/exception.f90 ${PROJECT_SOURCE_DIR}/test/exception/raise_exception.cpp
+  )
+  if(abi_run_compile AND abi_run EQUAL 0)
+    message(CHECK_PASS "OK")
+  else()
+    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken on run" FORCE)
+    message(CHECK_FAIL "failed")
+  endif()
+endif()
 
 endif()
 
