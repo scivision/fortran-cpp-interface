@@ -10,3 +10,9 @@ add_test(NAME exception_fortran_invalid_arg COMMAND ${CMAKE_COMMAND} -E env $<TA
 set_property(TEST exception_cpp_invalid_arg exception_fortran_invalid_arg
 PROPERTY PASS_REGULAR_EXPRESSION "caught by std::invalid_argument"
 )
+
+if(NOT HAVE_CXX_TRYCATCH)
+  # SKIP is like XFAIL here, showing we can detect and skip in CI
+  message(STATUS "C++ try-catch may fail due to compiler ABI incompatbility for test exception_fortran")
+  set_property(TEST exception_fortran_invalid_arg PROPERTY SKIP_REGULAR_EXPRESSION "SIGABRT;[aA]bort")
+endif()

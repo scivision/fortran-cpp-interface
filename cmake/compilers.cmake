@@ -7,17 +7,16 @@ function(abi_check)
 if(NOT abi_compile)
 
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
-  if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25)
-    try_compile(abi_compile PROJECT abi_check SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/abi_check)
-  else()
     try_compile(abi_compile ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
     abi_check OUTPUT_VARIABLE abi_output)
-  endif()
   if(abi_output MATCHES "ld: warning: could not create compact unwind for")
+    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
     message(WARNING "C++ exception handling will not work reliably due to incompatible compilers:
     C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
     Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
     )
+  else()
+    set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
   endif()
 
 if(abi_compile)
@@ -29,27 +28,12 @@ else()
   Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
   )
 endif()
+
+# try_run() doesn't adequately detect failed exception handling--it may pass while ctest of the same exe fails
+
 endif()
 
-if(NOT abi_run EQUAL 0)
 
-message(CHECK_START "checking that C++ exception handling works from Fortran")
-try_run(abi_run abi_compile_run
-  ${CMAKE_CURRENT_BINARY_DIR}/abi_run
-  SOURCES ${PROJECT_SOURCE_DIR}/test/exception/exception.f90
-    ${PROJECT_SOURCE_DIR}/test/exception/raise_exception.cpp
-)
-
-if(abi_compile_run AND abi_run EQUAL 0)
-  message(CHECK_PASS "OK")
-else()
-  message(WARNING "Exception handling failed: return code ${abi_run} using compilers:
-  C compiler ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}
-  C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
-  Fortran compiler ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}"
-  )
-endif()
-endif()
 endfunction(abi_check)
 abi_check()
 
