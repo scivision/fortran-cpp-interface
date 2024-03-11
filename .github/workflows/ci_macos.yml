@@ -15,7 +15,7 @@ on:
     - "**.cpp"
     - "**.cmake"
     - "**/CMakeLists.txt"
-    - ".github/workflows/ci.yml"
+    - ".github/workflows/ci_macos.yml"
 
 jobs:
 
@@ -37,6 +37,8 @@ jobs:
     - uses: actions/checkout@v4
 
     - run: brew install ninja
+
+    - run: sudo xcode-select --switch /Applications/Xcode_15.1.app
 
     - run: cmake --preset multi
 
