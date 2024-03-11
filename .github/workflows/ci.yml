@@ -4,6 +4,7 @@ env:
   HOMEBREW_NO_INSTALL_CLEANUP: 1
   CTEST_NO_TESTS_ACTION: error
   CTEST_PARALLEL_LEVEL: 4
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 on:
   push:
@@ -86,16 +87,20 @@ jobs:
     needs: linux-clang
     timeout-minutes: 10
 
+    strategy:
+      matrix:
+        cc: [clang, gcc-13]
+        cxx: [clang++, g++-13]
+
     env:
       FC: gfortran-13
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
 
     steps:
-    - run: brew install ninja
-
     - uses: actions/checkout@v4
 
-    - run: cmake --workflow --preset debug
-    - run: cmake --workflow --preset release
+    - run: cmake --workflow --preset default
 
 
   windows:
