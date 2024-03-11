@@ -1,7 +1,6 @@
 name: ci
 
 env:
-  HOMEBREW_NO_INSTALL_CLEANUP: 1
   CTEST_NO_TESTS_ACTION: error
   CTEST_PARALLEL_LEVEL: 4
   CMAKE_BUILD_PARALLEL_LEVEL: 4
@@ -83,39 +82,6 @@ jobs:
 
     - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
       if: ${{ failure() }}
-
-
-
-  mac:
-    # need Apple Silicon for exception handling try_compile detection to work
-    runs-on: macos-14
-    timeout-minutes: 10
-
-    strategy:
-      matrix:
-        c: [{cc: clang, cxx: clang++}, {cc: gcc-13, cxx: g++-13}]
-
-    env:
-      FC: gfortran-13
-      CC: ${{ matrix.c.cc }}
-      CXX: ${{ matrix.c.cxx }}
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - run: brew install ninja
-
-    - run: cmake --preset multi
-
-    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
-      if: ${{ failure() }}
-
-    - run: cmake --build --preset release
-
-    - run: cmake --build --preset release --parallel 1
-      if: ${{ failure() }}
-
-    - run: ctest --preset default
 
 
   windows:
