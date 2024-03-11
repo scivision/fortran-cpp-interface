@@ -7,11 +7,12 @@ function(abi_check)
 if(NOT abi_compile)
 
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
-  try_compile(abi_compile
-  ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
-  abi_check
-  OUTPUT_VARIABLE abi_output
-  )
+  if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25)
+    try_compile(abi_compile PROJECT abi_check SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/abi_check)
+  else()
+    try_compile(abi_compile ${CMAKE_CURRENT_BINARY_DIR}/abi_compile ${CMAKE_CURRENT_LIST_DIR}/abi_check
+    abi_check OUTPUT_VARIABLE abi_output)
+  endif()
   if(abi_output MATCHES "ld: warning: could not create compact unwind for")
     message(WARNING "C++ exception handling will not work reliably due to incompatible compilers:
     C++ compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
