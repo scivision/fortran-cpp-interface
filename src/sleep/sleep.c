@@ -8,9 +8,9 @@ void c_sleep(int);
 #include <windows.h>
 
 // https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
-void c_sleep(int* milliseconds)
+void c_sleep(int milliseconds)
 {
-  Sleep(*milliseconds);
+  Sleep(milliseconds);
 }
 
 #else
