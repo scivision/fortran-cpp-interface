@@ -67,7 +67,7 @@ endif()
 endfunction()
 check_iso_fortran_binding()
 
-# --- GCC < 12 can't do this
+# --- GCC < 12 can't do these
 check_source_compiles(Fortran
 "program cstr
 use, intrinsic :: iso_c_binding, only : c_char
@@ -81,6 +81,20 @@ end interface
 end program
 "
 HAVE_C_CHAR_PTR
+)
+
+check_source_compiles(Fortran
+"program string_view
+use, intrinsic :: iso_c_binding, only : c_char
+implicit none
+interface
+subroutine echo_c( str ) bind(C)
+import :: c_char
+character(kind=c_char, len=:), allocatable, intent(in) :: str
+end subroutine
+end interface
+end program"
+HAVE_C_ALLOC_CHAR
 )
 
 # --- fix errors about needing -fPIE
