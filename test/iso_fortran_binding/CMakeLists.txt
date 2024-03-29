@@ -5,11 +5,15 @@ if(NOT HAVE_ISO_FORTRAN_BINDING_H)
 endif()
 
 
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 12)
+  set(sampling_old TRUE)
+endif()
+
+if(NOT sampling_old)
 add_executable(sampling sampling.cpp sampling.f90)
 set_property(TARGET sampling PROPERTY LINKER_LANGUAGE CXX)
-set_property(TARGET sampling PROPERTY DISABLED $<$<AND:$<Fortran_COMPILER_ID:GNU>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,10>>)
 add_test(NAME sampling COMMAND sampling)
-
+endif()
 
 if(HAVE_CFI_IS_CONTIGUOUS)
   add_executable(cfi_allocate cfi_allocate.c cfi_allocate.f90)
@@ -34,9 +38,12 @@ add_test(NAME CFI_setpointer COMMAND cfi_setpointer)
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   foreach(t IN ITEMS cfi_setpointer sampling)
-  target_compile_options(${t} PRIVATE
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,12>>:-Wno-uninitialized>"
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,13>>:-Wno-maybe-uninitialized>"
-  )
+    if(TARGET ${t})
+      target_compile_options(${t} PRIVATE
+      "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,12>>:-Wno-uninitialized>"
+      -Wno-maybe-uninitialized
+      )
+      # GCC 13.2 on macOS needed -Wno-maybe-uninitialized
+    endif()
   endforeach()
 endif()

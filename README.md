@@ -61,6 +61,9 @@ set_property(f_main PRIVATE LINKER_LANGUAGE Fortran)
 
 add_executable(c_main main.c lib.f90)
 set_property(c_main PRIVATE LINKER_LANGUAGE C)
+
+add_executable(cpp_main main.cpp lib.f90)
+set_property(cpp_main PRIVATE LINKER_LANGUAGE CXX)
 ```
 
 ## Examples
