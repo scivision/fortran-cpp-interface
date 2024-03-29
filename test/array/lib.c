@@ -1,6 +1,6 @@
 #include <stddef.h>
 
-extern void timestwo_c(int*, size_t*);
+void timestwo_c(int*, size_t*);
 
 void timestwo_c(int* A, size_t* N)
 {

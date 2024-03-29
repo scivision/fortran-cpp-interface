@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-extern bool logical_not(bool);
+bool logical_not(bool);
 
 #ifdef __cplusplus
 }

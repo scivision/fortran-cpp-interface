@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-extern float pi();
+float pi();
 
 #ifdef __cplusplus
 }

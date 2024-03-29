@@ -2,9 +2,9 @@
 extern "C" {
 #endif
 
-extern void err_c(int);
-extern void err_cpp(int);
-extern void error_fortran(int*);
+void err_c(int);
+void err_cpp(int);
+void error_fortran(int*);
 
 #ifdef __cplusplus
 }

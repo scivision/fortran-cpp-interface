@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-extern void asub(float [], size_t*);
+void asub(float [], size_t*);
 
 #ifdef __cplusplus
 }

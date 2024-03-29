@@ -3,9 +3,9 @@
 extern "C" {
 #endif
 
-extern void* initIterator_C();
-extern void incrementIterator_C(void*);
-extern int getIteratorValue_C(void*);
+void* initIterator_C();
+void incrementIterator_C(void*);
+int getIteratorValue_C(void*);
 
 #ifdef __cplusplus
 }

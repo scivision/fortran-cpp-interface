@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-extern char* get_null(char*);
+char* get_null(char*);
 
 char* get_null(char* c){
   if (strlen(c) == 0){
