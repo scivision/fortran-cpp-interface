@@ -4,7 +4,7 @@
 #include "f_print.h"
 
 
-int main(){
+int main(void){
     char s[] = "Hello World\0";
 
     f_print(s, strlen(s));

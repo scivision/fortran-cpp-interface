@@ -17,7 +17,9 @@ include(CheckSourceCompiles)
 
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_CXX_STANDARD 20)
+# we use c++20 features in some examples
 
 message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
 
@@ -41,8 +43,8 @@ endif()
 # Targets
 
 foreach(a IN ITEMS
-  allocate cfi_allocate cfi_establish cfi_setpointer
-  contiguous
+  iso_fortran_binding
+  allocate contiguous
   array bool error exception
   glibc malloc
   opaque pointer poly_function poly_type struct
@@ -50,8 +52,5 @@ foreach(a IN ITEMS
   time vector)
   add_subdirectory(test/${a})
 endforeach()
-
-# Necessary for shared library with Visual Studio / Windows oneAPI
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
 
 file(GENERATE OUTPUT .gitignore CONTENT "*")

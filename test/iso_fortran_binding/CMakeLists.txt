@@ -1,0 +1,42 @@
+set_property(DIRECTORY PROPERTY LABELS ISO_Fortran_binding)
+
+if(NOT HAVE_ISO_FORTRAN_BINDING_H)
+  return()
+endif()
+
+
+add_executable(sampling sampling.cpp sampling.f90)
+set_property(TARGET sampling PROPERTY LINKER_LANGUAGE CXX)
+set_property(TARGET sampling PROPERTY DISABLED $<$<AND:$<Fortran_COMPILER_ID:GNU>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,10>>)
+add_test(NAME sampling COMMAND sampling)
+
+
+if(HAVE_CFI_IS_CONTIGUOUS)
+  add_executable(cfi_allocate cfi_allocate.c cfi_allocate.f90)
+  add_test(NAME CFI_allocate COMMAND cfi_allocate)
+endif()
+
+if(HAVE_C_CHAR_PTR)
+  add_executable(cfi_establish_string c_string.f90 c_string.c)
+  add_test(NAME CFI_establish_string COMMAND cfi_establish_string)
+
+  add_executable(string_array string_array.cpp string_array.f90)
+  set_property(TARGET string_array PROPERTY LINKER_LANGUAGE CXX)
+  target_compile_options(string_array PRIVATE "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-uninitialized>")
+  add_test(NAME string_array COMMAND string_array)
+  set_property(TEST string_array PROPERTY PASS_REGULAR_EXPRESSION
+"red[ \n]+green[ \n]+blue")
+endif()
+
+
+add_executable(cfi_setpointer setpointer.f90 setpointer.c)
+add_test(NAME CFI_setpointer COMMAND cfi_setpointer)
+
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+  foreach(t IN ITEMS cfi_setpointer sampling)
+  target_compile_options(${t} PRIVATE
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,12>>:-Wno-uninitialized>"
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,13>>:-Wno-maybe-uninitialized>"
+  )
+  endforeach()
+endif()

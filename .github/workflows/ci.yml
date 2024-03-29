@@ -64,7 +64,8 @@ jobs:
 
     strategy:
       matrix:
-        clang-version: [13, 14, 15]
+        clang-version: [15]
+    # clang < 15 too old for C++20
 
     env:
       CC: clang-${{ matrix.clang-version }}
