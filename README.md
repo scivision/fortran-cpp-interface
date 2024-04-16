@@ -49,21 +49,22 @@ ctest --test-dir build
 ```
 
 Note the use of CMake target property
-[LINKER_LANGUAGE C](https://cmake.org/cmake/help/latest/prop_tgt/LINKER_LANGUAGE.html)
-when a C main program is used with a Fortran library.
-Similarly when C++ code is linked with a Fortran main program, CMake target property "LINKER_LANGUAGE Fortran" is used.
-These is necessary for CMake with Intel oneAPI on Linux / macOS.
+[LINKER_LANGUAGE](https://cmake.org/cmake/help/latest/prop_tgt/LINKER_LANGUAGE.html)
+necessary for CMake with Intel oneAPI on Linux / macOS.
 
+* C main program with Fortran library: `LINKER_LANGUAGE C`
+* C++ main program with Fortran library: `LINKER_LANGUAGE CXX`
+* Fortran main program with C or C++ library: `LINKER_LANGUAGE Fortran`
 
 ```cmake
 add_executable(f_main main.f90 lib.cpp)
-set_property(f_main PRIVATE LINKER_LANGUAGE Fortran)
+set_property(TARGET f_main PROPERTY LINKER_LANGUAGE Fortran)
 
 add_executable(c_main main.c lib.f90)
-set_property(c_main PRIVATE LINKER_LANGUAGE C)
+set_property(TARGET c_main PROPERTY LINKER_LANGUAGE C)
 
 add_executable(cpp_main main.cpp lib.f90)
-set_property(cpp_main PRIVATE LINKER_LANGUAGE CXX)
+set_property(TARGET cpp_main PROPERTY LINKER_LANGUAGE CXX)
 ```
 
 ## Examples
