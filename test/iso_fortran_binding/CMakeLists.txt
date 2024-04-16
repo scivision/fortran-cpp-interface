@@ -42,14 +42,13 @@ endif()
 add_executable(cfi_setpointer setpointer.f90 setpointer.c)
 add_test(NAME CFI_setpointer COMMAND cfi_setpointer)
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
-  foreach(t IN ITEMS cfi_setpointer sampling)
-    if(TARGET ${t})
-      target_compile_options(${t} PRIVATE
-      "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,12>>:-Wno-uninitialized>"
-      -Wno-maybe-uninitialized
-      )
-      # GCC 13.2 on macOS needed -Wno-maybe-uninitialized
-    endif()
-  endforeach()
-endif()
+foreach(t IN ITEMS cfi_setpointer sampling)
+  if(TARGET ${t})
+
+    target_compile_options(${t} PRIVATE
+    "$<$<AND:$<COMPILE_LANG_AND_ID:Fortran,GNU>,$<VERSION_LESS:$<Fortran_COMPILER_VERSION>,12>>:-Wno-uninitialized>"
+    "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-maybe-uninitialized>"
+    )
+    # GCC 13.2 on macOS needed -Wno-maybe-uninitialized
+  endif()
+endforeach()

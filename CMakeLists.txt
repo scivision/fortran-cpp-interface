@@ -23,7 +23,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
 
-foreacH(c IN ITEMS f03abstract f03bind
+foreach(c IN ITEMS f03abstract f03bind
   f08contiguous f08submod_bind)
   include(cmake/${c}.cmake)
 endforeach()
@@ -47,10 +47,12 @@ foreach(a IN ITEMS
   allocate contiguous
   array bool error exception
   glibc malloc
-  opaque pointer poly_function poly_type struct
+  opaque pointer poly_function poly_type real struct
   sleep string submodule
   time vector)
+
   add_subdirectory(test/${a})
+
 endforeach()
 
 file(GENERATE OUTPUT .gitignore CONTENT "*")
