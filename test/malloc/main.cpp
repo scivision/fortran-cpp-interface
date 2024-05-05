@@ -1,5 +1,5 @@
 #include <iostream>
-#include <memory>
+#include <vector>
 #include <cstdlib>
 
 #include "my_vector.h"
@@ -9,22 +9,22 @@ int main()
 {
   std::size_t N = 3;
 
-  auto x = std::make_unique<int[]>(N);
-  auto x2 = std::make_unique<int[]>(N);
+  std::vector<int> x(N);
+  std::vector<int> x2(N);
 
   for (size_t i = 0; i < N; ++i)
-    x.get()[i] = i+1;
+    x[i] = i+1;
 
-  timestwo_f(&x.get()[0], &x2.get()[0], &N);
+  timestwo_f(&x[0], &x2[0], &N);
 
   for (auto i=0u; i < N; i++){
-    if (x2.get()[i] != 2*x.get()[i]){
-      std::cerr << "value " <<  x2.get()[i] << "!=" << x.get()[i] << std::endl;
+    if (x2[i] != 2 * x[i]){
+      std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
       return EXIT_FAILURE;
     }
   }
 
-  std::cout << "OK: C++ make_unique\n";
+  std::cout << "OK: C++ std::vector pre-allocated\n";
 
   return EXIT_SUCCESS;
 }

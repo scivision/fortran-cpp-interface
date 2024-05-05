@@ -16,10 +16,10 @@ float* p = malloc(N * sizeof(float));
 p[0] = a[2];
 p[1] = a[1];
 p[2] = a[0];
+free(a);
 
 asub(&p[0], &N);
 
-free(a);
 free(p);
 
 printf("OK: C contiguous array\n");

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <memory>
+#include <vector>
 #include <cstdlib>
 
 #include "my_pointer.h"
@@ -8,16 +8,16 @@
 int main()
 {
   size_t N = 3;
-  auto a = std::make_unique<float[]>(N);
-  auto b = std::make_unique<float[]>(N-1);
+  std::vector<float> a(N);
+  std::vector<float> b(N-1);
 
   for (size_t i = 0; i < 3; ++i)
-    a.get()[i] = i+1;
+    a[i] = i+1;
 
-  point23(&a.get()[0], &b.get()[0], &N);
+  point23(&a[0], &b[0], &N);
 
-  if (b.get()[0] != a.get()[1] || b.get()[1] != a.get()[2]){
-    std::cerr << "value " <<  b.get()[0] << "!=" << a.get()[1] << " or " << b.get()[1] << "!=" << a.get()[2] << std::endl;
+  if (b[0] != a[1] || b[1] != a[2]){
+    std::cerr << "value " <<  b[0] << "!=" << a[1] << " or " << b[1] << "!=" << a[2] << std::endl;
     return EXIT_FAILURE;
   }
 
