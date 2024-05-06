@@ -30,30 +30,27 @@ static const char *cfi_errstrs[12] = {
 const char* cfiGetErrorString(int stat) {
 
     switch (stat) {
-        case CFI_SUCCESS:                  return cfi_errstrs[0]  ; break;
-        case CFI_ERROR_BASE_ADDR_NULL:     return cfi_errstrs[1]  ; break;
-        case CFI_ERROR_BASE_ADDR_NOT_NULL: return cfi_errstrs[2]  ; break;
-        case CFI_INVALID_ELEM_LEN:         return cfi_errstrs[3]  ; break;
-        case CFI_INVALID_RANK:             return cfi_errstrs[4]  ; break;
-        case CFI_INVALID_TYPE:             return cfi_errstrs[5]  ; break;
-        case CFI_INVALID_ATTRIBUTE:        return cfi_errstrs[6]  ; break;
-        case CFI_INVALID_EXTENT:           return cfi_errstrs[7]  ; break;
-        case CFI_INVALID_DESCRIPTOR:       return cfi_errstrs[8]  ; break;
-        case CFI_ERROR_MEM_ALLOCATION:     return cfi_errstrs[9]  ; break;
-        case CFI_ERROR_OUT_OF_BOUNDS:      return cfi_errstrs[10] ; break;
+        case CFI_SUCCESS:                  return cfi_errstrs[0];
+        case CFI_ERROR_BASE_ADDR_NULL:     return cfi_errstrs[1];
+        case CFI_ERROR_BASE_ADDR_NOT_NULL: return cfi_errstrs[2];
+        case CFI_INVALID_ELEM_LEN:         return cfi_errstrs[3];
+        case CFI_INVALID_RANK:             return cfi_errstrs[4];
+        case CFI_INVALID_TYPE:             return cfi_errstrs[5];
+        case CFI_INVALID_ATTRIBUTE:        return cfi_errstrs[6];
+        case CFI_INVALID_EXTENT:           return cfi_errstrs[7];
+        case CFI_INVALID_DESCRIPTOR:       return cfi_errstrs[8];
+        case CFI_ERROR_MEM_ALLOCATION:     return cfi_errstrs[9];
+        case CFI_ERROR_OUT_OF_BOUNDS:      return cfi_errstrs[10];
     }
 
     return cfi_errstrs[11];
 }
 
-#define CHECK_CFI(func)                                                        \
-{                                                                              \
-    int stat = (func);                                                         \
-    if (stat != CFI_SUCCESS) {                                                 \
-        fprintf(stderr,"%s:%d: CFI API failed with error: (%d) %s",            \
-            __FILE__, __LINE__, stat, cfiGetErrorString(stat));                \
-    }                                                                          \
-}                                                                              \
+void check_cfi(int s)
+{
+  if (s != CFI_SUCCESS)
+    std::cerr << __FILE__ << ":" << __LINE__ << " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
+}
 
 template<typename Action>
 class final_action
@@ -102,18 +99,18 @@ double estimate_pi(int n)
     CFI_CDESC_T(2) samples_;
     const auto samples = (CFI_cdesc_t *) &samples_;
 
-    CHECK_CFI( CFI_establish(samples,
-                             NULL,
+    check_cfi( CFI_establish(samples,
+                             nullptr,
                              CFI_attribute_allocatable,
                              CFI_type_double,
                              0 /* ignored */,
                              (CFI_rank_t) 2,
-                             NULL /* ignored */) )
+                             nullptr /* ignored */) );
 
     // Make sure we don't forget to deallocate
     auto dealloc = finally([&]{
         if (samples->base_addr) {
-            CHECK_CFI( CFI_deallocate(samples) )
+            check_cfi( CFI_deallocate(samples) );
         }
     });
 
