@@ -78,7 +78,21 @@ The examples "array", "malloc", "vector" show distinct ways to send arrays to/fr
 
 ### bool
 
-Made workaround for [nvfortran](https://forums.developer.nvidia.com/t/nvfortran-c-bool-bind-c-not-improper-value/291896).
+Made workaround for
+[nvfortran](https://forums.developer.nvidia.com/t/nvfortran-c-bool-bind-c-not-improper-value/291896)
+not yet supporting F2018 standard.
+In general, one needs to check that `logical(C_BOOL)` works as expected on the compiler because pre-Fortran 2018, the C_BOOL type was compiler-dependent.
+
+Thanks, I see this in these discussions too.
+
+* [ifort might return an incorrect C_BOOL .true. in iso_c_binding - Intel Community](https://community.intel.com/t5/Intel-Fortran-Compiler/ifort-might-return-an-incorrect-C-BOOL-true-in-iso-c-binding/m-p/999050)
+* [Internal representation of LOGICAL variables (The GNU Fortran Compiler](https://gcc.gnu.org/onlinedocs/gfortran/Internal-representation-of-LOGICAL-variables.html#Internal-representation-of-LOGICAL-variables)
+* [Solved: Re: Error #8809: An OPTIONAL or EXTERNAL dummy argument to a BIND(C) procedure is not interoperable - Intel Community](https://community.intel.com/t5/Intel-Fortran-Compiler/Error-8809-An-OPTIONAL-or-EXTERNAL-dummy-argument-to-a-BIND-C/m-p/1250873#M154133)
+* [Branchless conditional arithmetic oddities - #18 by sblionel - Language enhancement - Fortran Discourse](https://fortran-lang.discourse.group/t/branchless-conditional-arithmetic-oddities/5451/18)
+* [oneAPI -standard-semantics](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2024-1/standard-semantics.html)
+* https://www.fortran90.org/src/gotchas.html#c-fortran-interoperability-of-logical
+* https://info.ornl.gov/sites/publications/Files/Pub158443.pdf Section 3.1.2
+* https://shroud.readthedocs.io/_/downloads/en/latest/pdf/ section 11.4
 
 ### Error handling
 
