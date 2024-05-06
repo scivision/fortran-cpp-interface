@@ -76,6 +76,10 @@ There are also some Fortran main programs calling C or C++.
 
 The examples "array", "malloc", "vector" show distinct ways to send arrays to/from Fortran with C and C++.
 
+### bool
+
+Made workaround for [nvfortran](https://forums.developer.nvidia.com/t/nvfortran-c-bool-bind-c-not-improper-value/291896).
+
 ### Error handling
 
 Using Fortran statement "stop" or "error stop" with a C/C++ main program works like with a Fortran main program.
