@@ -19,7 +19,14 @@ i = 0
 ic = 0
 Ld = .false.
 
-logical_not = .not. L
+!> workaround for nvfortran 24.3 etc.
+! logical_not = .not. L
+if(L) then
+  logical_not = .false._C_BOOL
+else
+  logical_not = .true._C_BOOL
+endif
+
 
 print '(/, a, l1, a, l1)', "logical_not(", L, "): ", logical_not
 
