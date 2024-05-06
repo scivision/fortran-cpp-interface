@@ -6,8 +6,22 @@
 
 int main(){
 
-bool b = logical_not(true);
 int c = 0;
+bool b;
+
+b = bool_true();
+if(!b){
+  std::cerr << "bool_true() failed: " << b << "\n";
+  c++;
+}
+
+b = bool_false();
+if(b){
+  std::cerr << "bool_false() failed: " << b << "\n";
+  c++;
+}
+
+b = logical_not(true);
 
 if(b){
   std::cerr << "logical_not(true) failed: " << b << "\n";

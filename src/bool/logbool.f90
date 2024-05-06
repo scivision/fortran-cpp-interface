@@ -31,4 +31,13 @@ print '(a15,i0)', "C_INT: ", storage_size(ic)
 
 end function logical_not
 
+
+logical(C_BOOL) function bool_true() bind(C)
+bool_true = .true._C_BOOL
+end function
+
+logical(C_BOOL) function bool_false() bind(C)
+bool_false = .false._C_BOOL
+end function
+
 end module logbool
