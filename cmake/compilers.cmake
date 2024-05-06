@@ -136,8 +136,9 @@ add_compile_options(-Wall -Wextra
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
-"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<NOT:$<BOOL:${WIN32}>>>:-fpscomp;logicals>"
+"$<$<COMPILE_LANGUAGE:Fortran>:-standard-semantics>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
 $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-O0>
 )
+# https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2024-1/standard-semantics.html
 endif()
