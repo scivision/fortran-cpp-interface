@@ -6,11 +6,26 @@
 
 int main(){
 
-if(logical_not(true))
-  throw std::runtime_error("logical_not(true) failed");
+bool b = logical_not(true);
+int c = 0;
 
-if (!logical_not(false))
-  throw std::runtime_error("logical_not(false) failed");
+if(b){
+  std::cerr << "logical_not(true) failed: " << b << "\n";
+  c++;
+}
+
+b = logical_not(false);
+
+if (!b){
+  std::cerr << "logical_not(false) failed: " << b << "\n";
+  c++;
+}
+
+if(c){
+  std::cerr << "ERROR: C++ boolean-logical not\n";
+  return EXIT_FAILURE;
+}
+
 
 std::cout << "OK: boolean-logical not\n";
 return EXIT_SUCCESS;
