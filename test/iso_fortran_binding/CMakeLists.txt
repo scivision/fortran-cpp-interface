@@ -38,14 +38,17 @@ if(HAVE_C_CHAR_PTR)
   add_executable(string_array string_array.cpp string_array.f90)
   set_property(TARGET string_array PROPERTY LINKER_LANGUAGE CXX)
   target_compile_options(string_array PRIVATE "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-uninitialized>")
+
   add_test(NAME string_array COMMAND string_array)
   set_property(TEST string_array PROPERTY PASS_REGULAR_EXPRESSION
 "red[ \n]+green[ \n]+blue")
 endif()
 
 
-add_executable(cfi_setpointer setpointer.f90 setpointer.c)
-add_test(NAME CFI_setpointer COMMAND cfi_setpointer)
+if(HAVE_CFI_SETPOINTER)
+  add_executable(cfi_setpointer setpointer.f90 setpointer.c)
+  add_test(NAME CFI_setpointer COMMAND cfi_setpointer)
+endif()
 
 foreach(t IN ITEMS cfi_setpointer sampling)
   if(TARGET ${t})

@@ -53,16 +53,18 @@ check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
 # otherwise, we'd need to use try_compile() with a project for each symbol
 # IntelLLVM didn't need this trick
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  set(CMAKE_REQUIRED_LIBRARIES "gfortran")
+  set(CMAKE_REQUIRED_LIBRARIES gfortran)
 elseif(CMAKE_C_COMPILER_ID STREQUAL "NVHPC")
-  set(CMAKE_REQUIRED_LIBRARIES "nvf")
+  set(CMAKE_REQUIRED_LIBRARIES nvf)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+  set(CMAKE_REQUIRED_LIBRARIES FortranRuntime FortranDecimal)
 endif()
 
 # some compilers (e.g. NVHPC) have ISO_Fortran_binding.h but don't
 # have all the functions
 if(HAVE_ISO_FORTRAN_BINDING_H)
-check_symbol_exists(CFI_is_contiguous "ISO_Fortran_binding.h" HAVE_CFI_IS_CONTIGUOUS)
-check_symbol_exists(CFI_setpointer "ISO_Fortran_binding.h" HAVE_CFI_SETPOINTER)
+  check_symbol_exists(CFI_is_contiguous "ISO_Fortran_binding.h" HAVE_CFI_IS_CONTIGUOUS)
+  check_symbol_exists(CFI_setpointer "ISO_Fortran_binding.h" HAVE_CFI_SETPOINTER)
 endif()
 
 endfunction()
