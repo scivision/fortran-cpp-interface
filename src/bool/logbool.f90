@@ -23,13 +23,13 @@ Ld = .false.
 !! nvfortran reference guide:
 !! The logical constants .TRUE. and .FALSE. are defined to be the four-byte values -1 and 0 respectively.
 !! A logical expression is defined to be .TRUE. if its least significant bit is 1 and .FALSE. otherwise.
-! logical_not = .not. L
-if(L) then
-  logical_not = .false._C_BOOL
-else
-  logical_not = .true._C_BOOL
-endif
+!if(L) then
+!  logical_not = .false._C_BOOL
+!else
+!  logical_not = .true._C_BOOL
+!endif
 
+logical_not = .not. L
 
 print '(/, a, l1, a, l1)', "logical_not(", L, "): ", logical_not
 

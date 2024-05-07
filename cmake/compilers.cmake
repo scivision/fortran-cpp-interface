@@ -149,9 +149,23 @@ add_compile_options(-Wall -Wextra
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
-"$<$<COMPILE_LANGUAGE:Fortran>:-standard-semantics>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
 $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-O0>
 )
+
+# -fpscomp logicals is required for C_BOOL
+if(NOT WIN32)
+  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
+endif()
+
+# -stand f18 is just for warnings, it doesn't change compiler behavior
+
+# DO NOT USE -standard-semantics as it breaks linkage with any other library
+# including IntelMPI!
+#"$<$<COMPILE_LANGUAGE:Fortran>:-standard-semantics>"
+
 # https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2024-1/standard-semantics.html
+
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "NVHPC")
+  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-Munixlogical>")
 endif()
