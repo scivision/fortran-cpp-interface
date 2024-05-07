@@ -95,7 +95,7 @@ A logical expression is defined to be .TRUE. if its least significant bit is 1 a
 
 Example output, Fortran interfacing with C or C++
 
-* Intel oneAPI 2023 without `-fpscomp logical`
+* Intel oneAPI 2023 without `-fpscomp logicals`
 * NVHPC 2023.5 without `-Munixlogical`
 
 ```
@@ -109,7 +109,7 @@ Example output, Fortran interfacing with C or C++
          C_BOOL:     8         0        FF
 ```
 
-* Intel oneAPI 2023 with `-fpscomp logical`
+* Intel oneAPI 2023 with `-fpscomp logicals`
 * NVHPC 2023.5 with `-Munixlogical`
 
 ```
