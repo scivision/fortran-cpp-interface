@@ -35,13 +35,15 @@ if(HAVE_C_CHAR_PTR)
   add_executable(cfi_establish_string c_string.f90 c_string.c)
   add_test(NAME CFI_establish_string COMMAND cfi_establish_string)
 
-  add_executable(string_array string_array.cpp string_array.f90)
-  set_property(TARGET string_array PROPERTY LINKER_LANGUAGE CXX)
-  target_compile_options(string_array PRIVATE "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-uninitialized>")
+  if(HAVE_CFI_CDESC)
+    add_executable(string_array string_array.cpp string_array.f90)
+    set_property(TARGET string_array PROPERTY LINKER_LANGUAGE CXX)
+    target_compile_options(string_array PRIVATE "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-uninitialized>")
 
-  add_test(NAME string_array COMMAND string_array)
-  set_property(TEST string_array PROPERTY PASS_REGULAR_EXPRESSION
-"red[ \n]+green[ \n]+blue")
+    add_test(NAME string_array COMMAND string_array)
+    set_property(TEST string_array PROPERTY PASS_REGULAR_EXPRESSION "red[ \n]+green[ \n]+blue")
+  endif()
+
 endif()
 
 

@@ -65,6 +65,16 @@ endif()
 if(HAVE_ISO_FORTRAN_BINDING_H)
   check_symbol_exists(CFI_is_contiguous "ISO_Fortran_binding.h" HAVE_CFI_IS_CONTIGUOUS)
   check_symbol_exists(CFI_setpointer "ISO_Fortran_binding.h" HAVE_CFI_SETPOINTER)
+
+  # some compilers allow using CFI_CDESC_T as a pointer but are missing the properties of it.
+  check_source_compiles(C "#include <ISO_Fortran_binding.h>
+  int main(void){
+  CFI_CDESC_T(1) t;
+  char* s = (char*) t.base_addr;
+  return 0;
+  }"
+  HAVE_CFI_CDESC
+  )
 endif()
 
 endfunction()
