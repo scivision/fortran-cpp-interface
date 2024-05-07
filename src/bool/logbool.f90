@@ -14,6 +14,8 @@ logical :: Ld
 integer :: i
 integer(C_INT) :: ic
 
+character(*), parameter :: fmt = '(a16,2x,i3,2x,z8)'
+
 !> avoid uninitialized variable warning
 i = 0
 ic = 0
@@ -33,11 +35,12 @@ logical_not = .not. L
 
 print '(/, a, l1, a, l1)', "logical_not(", L, "): ", logical_not
 
-print '(a,1x,a)', "storage_size()", "bits"
-print '(a15,i0)', "logical: ", storage_size(Ld)
-print '(a15,i0)', "C_BOOL: ", storage_size(L)
-print '(a15,i0)', "integer: ", storage_size(i)
-print '(a15,i0)', "C_INT: ", storage_size(ic)
+
+print '(a16,2x,a,2x,a8)', "storage_size()", "bits", "hex"
+print fmt, "logical:", storage_size(Ld), Ld
+print fmt, "C_BOOL: ", storage_size(L), L
+print fmt, "integer: ", storage_size(i), i
+print fmt, "C_INT: ", storage_size(ic), ic
 
 end function logical_not
 
