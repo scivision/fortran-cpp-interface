@@ -10,14 +10,14 @@
 
 int main(){
 
-size_t dims[1] = {3};
+const std::vector<size_t> dims = {3};
 
 std::vector<float> a(3);
 
 for (size_t i = 0; i < 3; ++i)
   a[i] = i+1;
 
-asub(&a[0], dims);
+asub(&a[0], &dims.front());
 
 std::cout << "OK: C++ contiguous array\n";
 

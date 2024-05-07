@@ -1,4 +1,5 @@
 #include <vector>
+#include <memory>
 
 extern "C" void* initIterator_C();
 extern "C" void incrementIterator_C(void*);
@@ -20,7 +21,7 @@ int getIteratorValue(std::vector<int>::iterator &it) {
 
 void* initIterator_C(){
     auto it = initIterator();
-    void* ptr = &(*it.begin());
+    void* ptr = std::to_address(it.begin());
     return ptr;
 }
 

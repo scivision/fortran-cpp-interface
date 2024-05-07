@@ -1,15 +1,16 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <memory>
 
 
 char* iter_ptr(char* c){
 
     std::string s(c);
 
-    std::string::iterator it(s.begin());
+    auto it(s.begin());
 
-    return &(*it);
+    return std::to_address(it);
 }
 
 int main(){

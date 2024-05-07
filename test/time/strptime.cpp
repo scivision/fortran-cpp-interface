@@ -3,8 +3,8 @@
 #include <iomanip>
 #include <sstream>
 
-extern "C" char* strptime(const char* s,
-                          const char* f,
+extern "C" char* strptime(char* s,
+                          const char* format,
                           struct tm* tm) {
   // Isn't the C++ standard lib nice? std::get_time is defined such that its
   // format parameters are the exact same as strptime. Of course, we have to
@@ -14,9 +14,9 @@ extern "C" char* strptime(const char* s,
   // of the versions in any of the C standard libraries.
   std::istringstream input(s);
   input.imbue(std::locale(setlocale(LC_ALL, nullptr)));
-  input >> std::get_time(tm, f);
-  if (input.fail()) {
+  input >> std::get_time(tm, format);
+  if (input.fail())
     return nullptr;
-  }
-  return (char*)(s + input.tellg());
+
+  return s + input.tellg();
 }

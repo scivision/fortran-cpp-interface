@@ -46,6 +46,7 @@ foreach(a IN ITEMS
   iso_fortran_binding
   allocate contiguous
   array bool error exception
+  iterator
   glibc malloc
   opaque pointer poly_function poly_type real struct
   sleep string submodule

@@ -1,40 +1,41 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 #include "my_alloc.h"
 
 int main(){
 
-  size_t d1[1] = {1};
-  size_t d2[2] = {1,1};
-  size_t d3[3] = {1,1,1};
-  size_t d4[4] = {1,1,1,1};
+  const std::vector<size_t> d1 = {1};
+  const std::vector<size_t> d2 = {1,1};
+  const std::vector<size_t> d3 = {1,1,1};
+  const std::vector<size_t> d4 = {1,1,1,1};
 
   float *A1, *B1, *A2, *B2, *A3, *B3, *A4, *B4;
 
 
-  alloc1(&A1, &B1, d1);
+  alloc1(&A1, &B1, &d1.front());
   std::cout << "1D: A and B allocated\n";
 
-  dealloc1(&A1, &B1, d1);
+  dealloc1(&A1, &B1, &d1.front());
   std::cout << "1D: A and B deallocated\n";
 
-  alloc2(&A2, &B2, d2);
+  alloc2(&A2, &B2, &d2.front());
   std::cout << "2D: A and B allocated\n";
 
-  dealloc2(&A2, &B2, d2);
+  dealloc2(&A2, &B2, &d2.front());
   std::cout << "2D: A and B deallocated\n";
 
-  alloc3(&A3, &B3, d3);
+  alloc3(&A3, &B3, &d3.front());
   std::cout << "3D: A and B allocated\n";
 
-  dealloc3(&A3, &B3, d3);
+  dealloc3(&A3, &B3, &d3.front());
   std::cout << "3D: A and B deallocated\n";
 
-  alloc4(&A4, &B4, d4);
+  alloc4(&A4, &B4, &d4.front());
   std::cout << "4D: A and B allocated\n";
 
-  dealloc4(&A4, &B4, d4);
+  dealloc4(&A4, &B4, &d4.front());
   std::cout << "4D: A and B deallocated\n";
 
   std::cout << "OK: allocate test\n";
