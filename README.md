@@ -78,12 +78,8 @@ The examples "array", "malloc", "vector" show distinct ways to send arrays to/fr
 
 ### bool
 
-Made workaround for
 [nvfortran](https://forums.developer.nvidia.com/t/nvfortran-c-bool-bind-c-not-improper-value/291896)
-not yet supporting F2018 standard.
-In general, one needs to check that `logical(C_BOOL)` works as expected on the compiler because pre-Fortran 2018, the C_BOOL type was compiler-dependent.
-
-Thanks, I see this in these discussions too.
+supports F2018 standard `C_BOOL` if `nvfortran -Munixlogical` is used.
 
 * [ifort might return an incorrect C_BOOL .true. in iso_c_binding - Intel Community](https://community.intel.com/t5/Intel-Fortran-Compiler/ifort-might-return-an-incorrect-C-BOOL-true-in-iso-c-binding/m-p/999050)
 * [Internal representation of LOGICAL variables (The GNU Fortran Compiler](https://gcc.gnu.org/onlinedocs/gfortran/Internal-representation-of-LOGICAL-variables.html#Internal-representation-of-LOGICAL-variables)
@@ -93,6 +89,39 @@ Thanks, I see this in these discussions too.
 * https://www.fortran90.org/src/gotchas.html#c-fortran-interoperability-of-logical
 * https://info.ornl.gov/sites/publications/Files/Pub158443.pdf Section 3.1.2
 * https://shroud.readthedocs.io/_/downloads/en/latest/pdf/ section 11.4
+
+> The logical constants .TRUE. and .FALSE. are defined to be the four-byte values -1 and 0 respectively.
+A logical expression is defined to be .TRUE. if its least significant bit is 1 and .FALSE. otherwise.
+
+Example output, Fortran interfacing with C or C++
+
+* Intel oneAPI 2023 without `-fpscomp logical`
+* NVHPC 2023.5 without `-Munixlogical`
+
+```
+ logical_not(T): F
+   storage_size()  bits   hex(in)  hex(out)
+         C_BOOL:     8         1        FE
+ logical_not(true) should be false: 1
+
+ logical_not(F): T
+   storage_size()  bits   hex(in)  hex(out)
+         C_BOOL:     8         0        FF
+```
+
+* Intel oneAPI 2023 with `-fpscomp logical`
+* NVHPC 2023.5 with `-Munixlogical`
+
+```
+ logical_not(T): F
+   storage_size()  bits   hex(in)  hex(out)
+         C_BOOL:     8         1         0
+
+ logical_not(F): T
+  storage_size()  bits   hex(in)  hex(out)
+        C_BOOL:     8         0         1
+ OK: boolean-logical not
+```
 
 ### Error handling
 

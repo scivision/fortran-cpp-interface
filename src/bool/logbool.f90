@@ -10,9 +10,6 @@ logical(c_bool) function logical_not(L) bind(C)
 
 logical(c_bool), intent(in), value :: L
 
-!! The logical constants .TRUE. and .FALSE. are defined to be the four-byte values -1 and 0 respectively.
-!! A logical expression is defined to be .TRUE. if its least significant bit is 1 and .FALSE. otherwise.
-
 logical_not = .not. L
 
 print '(/, a, l1, a, l1)', "logical_not(", L, "): ", logical_not
