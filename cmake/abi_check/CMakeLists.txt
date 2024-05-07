@@ -19,6 +19,7 @@ set_property(TARGET addone_f PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_B
 target_include_directories(addone_f PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(main_cpp main.cpp $<TARGET_OBJECTS:addone_f>)
+target_compile_features(main_cpp PUBLIC cxx_std_17)
 add_test(NAME Cpp_main COMMAND main_cpp)
 
 add_executable(main_c main.c $<TARGET_OBJECTS:addone_f>)

@@ -7,27 +7,32 @@
 #include <span>
 #include <ranges>
 #include <algorithm>
+#include <vector>
+#include <string>
+#include <source_location>
 
 #include <ISO_Fortran_binding.h>
 
-static const char *cfi_errstrs[12] = {
-    "No error detected.\n",
-    "The base address member of a C descriptor is a null pointer in a context that requires a non-null pointer value.\n",
-    "The base address member of a C descriptor is not a null pointer in a context that requires a null pointer value.\n",
-    "The value supplied for the element length member of a C descriptor is not valid.\n",
-    "The value supplied for the rank member of a C descriptor is not valid.\n",
-    "The value supplied for the type member of a C descriptor is not valid.\n",
-    "The value supplied for the attribute member of a C descriptor is not valid.\n",
-    "The value supplied for the extent member of a CFI_dim_t structure is not valid.\n",
-    "A C descriptor is invalid in some way.\n",
-    "Memory allocation failed.\n",
-    "A reference is out of bounds.\n",
-    "Unrecognized status code.\n"
+
+
+static const std::vector<std::string> cfi_errstrs = {
+    "No error detected.",
+    "The base address member of a C descriptor is a null pointer in a context that requires a non-null pointer value.",
+    "The base address member of a C descriptor is not a null pointer in a context that requires a null pointer value.",
+    "The value supplied for the element length member of a C descriptor is not valid.",
+    "The value supplied for the rank member of a C descriptor is not valid.",
+    "The value supplied for the type member of a C descriptor is not valid.",
+    "The value supplied for the attribute member of a C descriptor is not valid.",
+    "The value supplied for the extent member of a CFI_dim_t structure is not valid.",
+    "A C descriptor is invalid in some way.",
+    "Memory allocation failed.",
+    "A reference is out of bounds.",
+    "Unrecognized status code."
 };
 
 // Returns the description string for an error code.
 //
-const char* cfiGetErrorString(int stat) {
+std::string cfiGetErrorString(int stat) {
 
     switch (stat) {
         case CFI_SUCCESS:                  return cfi_errstrs[0];
@@ -48,8 +53,10 @@ const char* cfiGetErrorString(int stat) {
 
 void check_cfi(int s)
 {
-  if (s != CFI_SUCCESS)
-    std::cerr << __FILE__ << ":" << __LINE__ << " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
+  if (s != CFI_SUCCESS){
+    constexpr std::source_location loc = std::source_location::current();
+    std::cerr << loc.file_name() << ":" << loc.line() << " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
+  }
 }
 
 template<typename Action>
@@ -71,7 +78,7 @@ private:
 template< class Fn >
 [[nodiscard]] auto finally( Fn const & f )
 {
-    return final_action(( f ));
+    return final_action( f );
 }
 
 //

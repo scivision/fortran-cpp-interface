@@ -5,9 +5,7 @@
 
 int main() {
 
-  int i = addone(2);
-
-  if(i != 3) {
+  if(int i = addone(2); i != 3) {
     std::cerr << "2 + 1 != " << i << "\n";
     return EXIT_FAILURE;
   }
