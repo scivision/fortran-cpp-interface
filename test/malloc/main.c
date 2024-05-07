@@ -14,7 +14,7 @@ int main(void)
     x[i] = i+1;
   }
 
-  timestwo_f(&x[0], &x2[0], &N);
+  timestwo_f(&x[0], &x2[0], N);
 
   for (size_t i=0; i < N; ++i){
     if (x2[i] != 2*x[i]){

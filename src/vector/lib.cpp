@@ -4,7 +4,9 @@
 // or whatever you name this library file.
 #include <cstddef>
 
-extern "C" void timestwo_cpp(int x[], int x2[], std::size_t N){
-  for (std::size_t i=0; i<N; i++)
+#include "my_vector.h"
+
+void timestwo_cpp(const int x[], int x2[], const size_t N){
+  for (size_t i=0; i<N; i++)
     x2[i] = x[i] * 2;
 }

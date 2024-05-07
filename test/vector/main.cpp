@@ -7,12 +7,12 @@
 int main()
 {
 
-  std::vector<int> x = {0, 1, 2};
-  auto N = x.size();
+  const std::vector<int> x = {0, 1, 2};
+  const size_t N = x.size();
 
   std::vector<int> x2(N);
 
-  timestwo_f(&x.front(), &x2.front(), &N);
+  timestwo_f(&x.front(), &x2.front(), N);
 
   for (auto i=0u; i < x2.size(); i++){
     std::cout << x2[i] << "\n";

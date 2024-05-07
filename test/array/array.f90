@@ -8,13 +8,13 @@ implicit none
 interface
 subroutine timestwo_c(v, N) bind(C)
 import
-integer(C_SIZE_T), intent(in) :: N
+integer(C_SIZE_T), intent(in), value :: N
 integer(C_INT), intent(inout) :: v(N)
 end subroutine
 
 subroutine timestwo_cpp(v, N) bind(C)
 import
-integer(C_SIZE_T), intent(in) :: N
+integer(C_SIZE_T), intent(in), value :: N
 integer(C_INT), intent(inout) :: v(N)
 end subroutine
 end interface

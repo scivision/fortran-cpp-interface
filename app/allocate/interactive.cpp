@@ -1,18 +1,19 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
+#include <vector>
 
 #include "my_alloc.h"
 
 
 int main(){
 
-  size_t d1[1] = {1000000000};
+  std::vector<size_t> d1 = {1000000000};
 
   float *A1;
 
 
-  falloc1(&A1, d1);
+  falloc1(&A1, &d1.front());
   std::cout << "1D: allocated\n";
 
   std::cout << "press enter to deallocate 1D\n";

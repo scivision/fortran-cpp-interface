@@ -9,7 +9,7 @@ contains
 pure subroutine timestwo_f(z, z2, N) bind(c)
 ! elemental is not allowed with BIND(C)
 
-integer(C_SIZE_T), intent(in) :: N
+integer(C_SIZE_T), intent(in), value :: N
 integer(c_int),intent(in) :: z(N)
 integer(c_int),intent(out) :: z2(N)
 

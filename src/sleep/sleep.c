@@ -1,26 +1,24 @@
 #include <stdio.h>
 
-void c_sleep(int);
-
 #ifdef _MSC_VER
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#else
+#include <time.h>
+#include <errno.h>
+#endif
+
+
+void c_sleep(int);
 
 // https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
 void c_sleep(int milliseconds)
 {
+
+#ifdef _MSC_VER
   Sleep(milliseconds);
-}
-
 #else
-
-#include <time.h>
-#include <errno.h>
 // https://linux.die.net/man/3/usleep
-void c_sleep(int milliseconds)
-{
-
   if (milliseconds <= 0){
     fprintf(stderr, "ERROR:sleep: milliseconds must be strictly positive\n");
     return;
@@ -52,6 +50,6 @@ void c_sleep(int milliseconds)
     fprintf(stderr, "nanosleep() error\n");
     break;
   }
-}
-
 #endif
+
+}
