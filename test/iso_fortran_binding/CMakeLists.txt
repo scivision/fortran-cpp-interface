@@ -10,14 +10,19 @@ if(HAVE_C_ALLOC_CHAR)
   add_test(NAME string_view COMMAND string_view)
 endif()
 
+check_include_file_cxx(span HAVE_SPAN)
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 12)
+if(NOT HAVE_SPAN OR
+    (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND
+     CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 12))
   set(sampling_old TRUE)
 endif()
 
 if(NOT sampling_old)
 add_executable(sampling sampling.cpp sampling.f90)
 set_property(TARGET sampling PROPERTY LINKER_LANGUAGE CXX)
+target_compile_features(sampling PRIVATE cxx_std_20)
+
 add_test(NAME sampling COMMAND sampling)
 endif()
 
