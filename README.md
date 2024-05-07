@@ -19,7 +19,7 @@ Demonstrate linking of
 * C and C++ program calling Fortran libraries
 * Fortran program calling C and C++ libraries
 
-We assume the compilers are C++11 and Fortran 2018 capable.
+We assume the compilers are C++20 and Fortran 2018 capable.
 
 This repo's examples are also known to work with:
 
@@ -155,6 +155,7 @@ For arrays of struct, compiler
 [pragma may be needed](https://stackoverflow.com/questions/53161673/data-alignment-inside-a-structure-in-intel-fortran).
 
 Valgrind needed suppression to avoid memory alignment (uninitialized memory) warnings for C struct input to nanosleep.
+
 ### MacOS
 
 For MacOS with Apple's Clang and Homebrew GCC,

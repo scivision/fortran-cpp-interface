@@ -2,7 +2,7 @@
 
 #include "my_bool.h"
 
-bool logical_not(bool a)
+bool logical_not(const bool a)
 {
   std::cout << "c++ input boolean: " << a << " size " << sizeof(a) << "\n";
 

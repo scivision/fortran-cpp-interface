@@ -91,17 +91,17 @@ namespace stdr = std::ranges;
 // [in]        n: the number of samples
 // [out] samples: an array of (x,y) values, shape [n,2]
 //
-extern "C" void draw_random_samples(int n, CFI_cdesc_t *samples);
+extern "C" void draw_random_samples(const int n, CFI_cdesc_t *samples);
 
 // Same procedure as the one below, but implemented in Fortran
-extern "C" double f_estimate_pi(int n);
+extern "C" double f_estimate_pi(const int n);
 
 /* Calculate pi using the Monte-Carlo method.
  *
  * Random numbers are generated in Fortran just for the
  * sake of testing the F2018 enhanced C interoperability.
  */
-double estimate_pi(int n)
+double estimate_pi(const int n)
 {
     CFI_CDESC_T(2) samples_;
     const auto samples = (CFI_cdesc_t *) &samples_;
@@ -111,7 +111,7 @@ double estimate_pi(int n)
                              CFI_attribute_allocatable,
                              CFI_type_double,
                              0 /* ignored */,
-                             (CFI_rank_t) 2,
+                             static_cast<CFI_rank_t>(2),
                              nullptr /* ignored */) );
 
     // Make sure we don't forget to deallocate
@@ -127,8 +127,8 @@ double estimate_pi(int n)
     {
         // <!> Pointer arithmetic <!>
 
-        const double x = *( (double *) samples->base_addr + i);
-        const double y = *( (double *) samples->base_addr + i + n);
+        const double x = *( static_cast<double*>(samples->base_addr) + i);
+        const double y = *( static_cast<double*>(samples->base_addr) + i + n);
 
         return x*x + y*y < 1;
     };
@@ -151,16 +151,14 @@ double estimate_pi(int n)
     int ncircle = count_if( iota(0,n-1), inside_of_circle );
 #endif
 
-    return 4.0 * ((double) ncircle) / n;
+    return 4.0 * (static_cast<double>(ncircle)) / n;
 
 } // dealloc called here
 
 int main(int argc, char const *argv[])
 {
 
-    int N = 1000;
-    if (argc > 1)
-      N = atoi(argv[1]);
+    const int N = (argc > 1) ? atoi(argv[1]) : 1000;
 
     std::cout << "pi = " <<   estimate_pi( N ) << '\n';
     std::cout << "pi = " << f_estimate_pi( N ) << '\n';

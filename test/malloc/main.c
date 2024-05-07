@@ -28,7 +28,7 @@ int main(void)
   free(x);
   free(x2);
 
-  printf("OK: C malloc new\n");
+  printf("OK: C malloc\n");
 
   return EXIT_SUCCESS;
 }

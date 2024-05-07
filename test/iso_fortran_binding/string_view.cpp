@@ -8,7 +8,9 @@
 extern "C" {
    void echo_c( const CFI_cdesc_t* Fstr )
    {
-      auto view = std::string_view((char *)Fstr->base_addr).substr(0, Fstr->elem_len);
+      auto view = std::string_view(
+         static_cast<char*>(Fstr->base_addr)).substr(
+            0, Fstr->elem_len);
       std::cout << view << "\n";
    }
 }
