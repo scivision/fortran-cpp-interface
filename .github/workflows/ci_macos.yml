@@ -16,6 +16,7 @@ on:
     - "**.cmake"
     - "**/CMakeLists.txt"
     - ".github/workflows/ci_macos.yml"
+    - ".github/workflows/composite-unix/**"
 
 jobs:
 
@@ -36,21 +37,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - run: brew install ninja
-
-    - run: sudo xcode-select --switch /Applications/Xcode_15.1.app
-      if: ${{ matrix.c.cc == 'gcc-13' }}
-      # https://docs.brew.sh/Xcode
-      # https://github.com/Homebrew/brew/blob/HEAD/Library/Homebrew/os/mac/xcode.rb#L20
-
-    - run: cmake --preset multi
-
-    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
-      if: ${{ failure() }}
-
-    - run: cmake --build --preset release
-
-    - run: cmake --build --preset release --parallel 1
-      if: ${{ failure() }}
-
-    - run: ctest --preset release
+    - uses: ./.github/workflows/composite-unix

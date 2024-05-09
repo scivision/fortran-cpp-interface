@@ -1,0 +1,35 @@
+runs:
+
+  using: "composite"
+
+  steps:
+
+  - name: Install Ninja (macOS)
+    if: runner.os == 'macOS'
+    shell: bash
+    run: brew install ninja
+
+
+  - name: install ninja (Linux)
+    shell: bash
+    if: runner.os == 'Linux'
+    run: |
+      sudo apt update
+      sudo apt install --no-install-recommends ninja-build
+
+  - run: cmake --preset multi
+    shell: bash
+
+  - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
+    shell: bash
+    if: ${{ failure() }}
+
+  - run: cmake --build --preset release
+    shell: bash
+
+  - run: cmake --build --preset release --parallel 1
+    shell: bash
+    if: ${{ failure() }}
+
+  - run: ctest --preset release
+    shell: bash
