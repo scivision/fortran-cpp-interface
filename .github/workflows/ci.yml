@@ -32,14 +32,9 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-
-    - name: install ninja
-      run: sudo apt install --no-install-recommends ninja-build
-
     - uses: actions/checkout@v4
 
-    - run: cmake --workflow --preset debug
-    - run: cmake --workflow --preset release
+    - uses: ./.github/workflows/composite-unix
 
 
   valgrind-memory:
@@ -75,14 +70,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: install ninja
-      run: sudo apt install --no-install-recommends ninja-build
+    - uses: ./.github/workflows/composite-unix
 
-    - run: cmake --workflow --preset debug
-    - run: cmake --workflow --preset release
 
-    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
-      if: ${{ failure() }}
+  mac:
+    # need Apple Silicon for exception handling try_compile detection to work
+    runs-on: macos-14
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        c: [{cc: clang, cxx: clang++}, {cc: gcc-13, cxx: g++-13}]
+
+    env:
+      FC: gfortran-13
+      CC: ${{ matrix.c.cc }}
+      CXX: ${{ matrix.c.cxx }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ./.github/workflows/composite-unix
 
 
   windows:
