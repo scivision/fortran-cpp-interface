@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.19...3.29)
-# 3.15+ for COMPILE_LANGAGE multiple languages, COMPILE_LANG_AND_ID
+cmake_minimum_required(VERSION 3.19...3.30)
 # 3.19 for CheckSourceCompiles
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
@@ -15,6 +14,8 @@ enable_testing()
 
 include(CheckSourceCompiles)
 
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+# This project isn't using C++ modules; avoid bugs in module scanning CMake 3.28, 3.29 with GCC >= 14.
 
 set(CMAKE_C_STANDARD 99)
 
