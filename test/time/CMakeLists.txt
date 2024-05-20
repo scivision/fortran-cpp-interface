@@ -1,6 +1,7 @@
 set_property(DIRECTORY PROPERTY LABELS time)
 
-add_executable(cxx_fortran_tictoc main.cpp clock.f90)
+add_library(fortran_clock OBJECT clock.f90)
+add_executable(cxx_fortran_tictoc main.cpp $<TARGET_OBJECTS:fortran_clock>)
 add_test(NAME C++_Fortran_tictoc COMMAND cxx_fortran_tictoc)
 
 file(READ strftime.f90 src)
@@ -19,7 +20,10 @@ endforeach()
 file(READ strptime.f90 src)
 check_source_compiles(Fortran "${src}" HAVE_C_STRPTIME)
 
-target_sources(strptime PRIVATE "$<$<NOT:$<BOOL:${HAVE_C_STRPTIME}>>:strptime.cpp>")
+if(NOT HAVE_C_STRPTIME)
+  add_library(cpp_strptime OBJECT strptime.cpp)
+  target_sources(strptime PRIVATE $<TARGET_OBJECTS:cpp_strptime>)
+endif()
 
 if(TARGET strftime)
   target_link_libraries(strftime PRIVATE "$<$<BOOL:${MINGW}>:ucrtbase>")

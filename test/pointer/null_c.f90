@@ -1,4 +1,4 @@
-program Null_C
+program main
 
 use, intrinsic :: iso_c_binding, only : C_PTR, c_associated, C_NULL_CHAR, C_CHAR
 

@@ -21,6 +21,7 @@ target_link_libraries(fortran_cxx_struct PRIVATE struct_cpp)
 set_property(TARGET fortran_cxx_struct PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C++_struct COMMAND fortran_cxx_struct)
 
-add_executable(binding_derived derived.f90 main_derived.c)
+add_library(fortran_derived OBJECT derived.f90)
+add_executable(binding_derived main_derived.c $<TARGET_OBJECTS:fortran_derived>)
 set_property(TARGET binding_derived PROPERTY LINKER_LANGUAGE C)
 add_test(NAME binding_derived COMMAND binding_derived)

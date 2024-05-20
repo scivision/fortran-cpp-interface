@@ -13,6 +13,7 @@ add_test(NAME string_cpp COMMAND string_cpp)
 # single C_CHAR -- fails on nvfortran
 # https://forums.developer.nvidia.com/t/nvfortran-iso-c-binding-with-single-char/284098
 
-add_executable(single_char main_char.f90 lib_char.c)
+add_library(c_char OBJECT lib_char.c)
+add_executable(single_char main_char.f90 $<TARGET_OBJECTS:c_char>)
 set_property(TARGET single_char PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME single_char COMMAND single_char)
