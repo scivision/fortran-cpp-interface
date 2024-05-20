@@ -10,9 +10,6 @@ cmake_minimum_required(VERSION 3.19)
 
 list(APPEND opts -DCMAKE_BUILD_TYPE=Debug)
 
-set(CTEST_TEST_TIMEOUT 60)
-# takes effect only if test property TIMEOUT is not set
-
 if(NOT DEFINED CTEST_MEMORYCHECK_TYPE)
   set(CTEST_MEMORYCHECK_TYPE "Valgrind")
 endif()
@@ -20,7 +17,7 @@ endif()
 if(CTEST_MEMORYCHECK_TYPE STREQUAL "Valgrind")
   # https://www.cprogramming.com/debugging/valgrind.html
   find_program(CTEST_MEMORYCHECK_COMMAND NAMES valgrind HINTS ${MEMCHECK_ROOT} REQUIRED)
-  set(CTEST_MEMORYCHECK_COMMAND_OPTIONS)
+  set(CTEST_MEMORYCHECK_COMMAND_OPTIONS --leak-check=full)
   set(supp ${CMAKE_CURRENT_LIST_DIR}/valgrind.supp)
   if(EXISTS ${supp})
     list(APPEND CTEST_MEMORYCHECK_COMMAND_OPTIONS --suppressions=${supp})
@@ -77,10 +74,7 @@ if(NOT (ret EQUAL 0 AND err EQUAL 0))
   message(FATAL_ERROR "CMake configure failed:  ${ret}   ${err}")
 endif()
 
-cmake_host_system_information(RESULT Ncpu QUERY NUMBER_OF_PHYSICAL_CORES)
-
 ctest_build(
-PARALLEL_LEVEL ${Ncpu}
 RETURN_VALUE ret
 CAPTURE_CMAKE_ERROR err
 )
@@ -96,7 +90,6 @@ EXCLUDE_LABEL ${exclude_label}
 RETURN_VALUE ret
 CAPTURE_CMAKE_ERROR err
 DEFECT_COUNT count
-PARALLEL_LEVEL ${Ncpu}
 )
 
 if(NOT (ret EQUAL 0 AND err EQUAL 0))

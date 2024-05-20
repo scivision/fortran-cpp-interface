@@ -12,10 +12,14 @@ character(kind=c_char, len=:), allocatable, intent(in) :: str
 end subroutine
 end interface
 
+valgrind : block
+
 character(kind=c_char, len=:), allocatable :: s
 
 s = c_char_"Hello World!"
 
 call echo_c( s )
+
+end block valgrind
 
 end program
