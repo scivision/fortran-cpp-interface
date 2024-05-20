@@ -62,6 +62,9 @@ jobs:
     needs: linux-gcc14
     timeout-minutes: 10
 
+    env:
+      FC: gfortran-14
+
     steps:
     - name: install valgrind
       run: |
@@ -84,7 +87,7 @@ jobs:
     env:
       CC: clang-${{ matrix.clang-version }}
       CXX: clang++-${{ matrix.clang-version }}
-      FC: gfortran
+      FC: gfortran-14
 
     steps:
     - uses: actions/checkout@v4
