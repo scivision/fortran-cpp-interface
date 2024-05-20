@@ -13,8 +13,10 @@ extern "C" {
 #endif
 void err_c(int);
 
+#ifdef __cplusplus
 #if __has_cpp_attribute(noreturn)
 [[noreturn]]
+#endif
 #endif
 void err_cpp(int);
 
