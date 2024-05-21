@@ -2,10 +2,13 @@ set_property(DIRECTORY PROPERTY LABELS sleep)
 
 add_library(f_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/sleep_std.f90)
 
-add_library(c_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.c)
-target_link_libraries(c_f_sleep PRIVATE f_sleep)
-add_library(cpp_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.cpp)
-target_link_libraries(cpp_f_sleep PRIVATE f_sleep)
+# not OBJECT so include propagates
+add_library(c_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.c $<TARGET_OBJECTS:f_sleep>)
+target_include_directories(c_f_sleep PUBLIC ${PROJECT_SOURCE_DIR}/src/sleep)
+
+# not OBJECT so include propagates
+add_library(cpp_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.cpp $<TARGET_OBJECTS:f_sleep>)
+target_include_directories(cpp_f_sleep PUBLIC ${PROJECT_SOURCE_DIR}/src/sleep)
 
 add_executable(fortran_c_sleep test_sleep.f90)
 target_link_libraries(fortran_c_sleep PRIVATE c_f_sleep)

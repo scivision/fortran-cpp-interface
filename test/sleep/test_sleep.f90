@@ -1,6 +1,6 @@
 program sleep_demo
 
-use, intrinsic :: iso_fortran_env, only : int64
+use, intrinsic :: iso_fortran_env, only : int64, stderr => error_unit
 
 use sleep_std, only : sleep_ms
 
@@ -28,8 +28,16 @@ call system_clock(count=toc)
 
 t_ms = real(toc-tic) * 1000. / real(trate)
 
-if (t_ms < 0.5 * millisec) error stop 'actual sleep time was too short'
-if (t_ms > 2 * millisec) error stop 'actual sleep time was too long'
+if (t_ms < 0.5 * millisec) then
+  !> slept less than half expected time
+  write(stderr, '(a, f9.6)') 'ERROR: measured sleep time too short (millisec): ', t_ms
+  error stop
+endif
+if (t_ms > 2 * millisec) then
+  !> slept more than twice expected time
+  write(stderr, '(a, f9.6)') 'ERROR: measure sleep time too long (millisec): ', t_ms
+  error stop
+endif
 
 print '(A, F6.1)', 'OK: test_sleep: slept for (ms): ', t_ms
 

@@ -8,11 +8,11 @@
 #include <errno.h>
 #endif
 
+#include "sleep.h"
 
-void c_sleep(int);
 
 // https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
-void c_sleep(int milliseconds)
+void c_sleep(const int milliseconds)
 {
 
 #ifdef _MSC_VER

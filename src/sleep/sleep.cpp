@@ -1,9 +1,8 @@
 #include <chrono>
 #include <thread>
 
-extern "C" void c_sleep(int);
+#include "sleep.h"
 
-void c_sleep(int milliseconds)
-{
+void c_sleep(const int milliseconds) {
   std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
