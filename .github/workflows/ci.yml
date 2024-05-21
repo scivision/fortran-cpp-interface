@@ -58,12 +58,12 @@ jobs:
 
 
   valgrind-memory:
-    runs-on: ubuntu-24.04
-    needs: linux-gcc14
+    runs-on: ubuntu-latest
+    needs: linux-gcc9
     timeout-minutes: 10
 
     env:
-      FC: gfortran-14
+      FC: gfortran-13
 
     steps:
     - name: install valgrind
@@ -76,23 +76,24 @@ jobs:
     - run: ctest -S memcheck.cmake -V -E "Fortran_nano_sleep|string_array"
 
 
-  linux-clang:
+  linux-flang:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     strategy:
       matrix:
-        clang-version: [17]
-
-# FIXME: clang-18 failed CFI_establish_string ERROR STOP expected: Hello  got
+        clang-version: [18]
 
     env:
       CC: clang-${{ matrix.clang-version }}
       CXX: clang++-${{ matrix.clang-version }}
-      FC: gfortran-14
+      FC: flang-new
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: install Flang
+      run: sudo apt install --no-install-recommends flang
 
     - uses: ./.github/workflows/composite-unix
 
