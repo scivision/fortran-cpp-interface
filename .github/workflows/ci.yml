@@ -100,7 +100,7 @@ jobs:
 
   mac:
     # need Apple Silicon for exception handling try_compile detection to work
-    runs-on: macos-14
+    runs-on: macos-latest
     timeout-minutes: 10
 
     strategy:
