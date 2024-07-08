@@ -1,8 +1,8 @@
-function(f08submod)
-
-if(DEFINED f08submod_bind OR CMAKE_VERSION VERSION_LESS 3.25)
+if(DEFINED f08submod_bind)
   return()
 endif()
+
+block()
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
@@ -18,6 +18,4 @@ else()
   message(CHECK_FAIL "no")
 endif()
 
-endfunction()
-
-f08submod()
+endblock()

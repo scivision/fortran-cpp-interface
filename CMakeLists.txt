@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 3.19...3.30)
+cmake_minimum_required(VERSION 3.25...3.30)
 # 3.19 for CheckSourceCompiles
+# 3.25 for block()
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(FATAL_ERROR "Please use out-of-source build:
@@ -23,11 +24,6 @@ set(CMAKE_CXX_STANDARD 20)
 # we use c++20 features in some examples
 
 message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
-
-foreach(c IN ITEMS f03abstract f03bind
-  f08contiguous f08submod_bind)
-  include(cmake/${c}.cmake)
-endforeach()
 
 include(cmake/compilers.cmake)
 

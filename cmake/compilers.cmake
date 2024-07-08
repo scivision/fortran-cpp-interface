@@ -4,7 +4,8 @@ include(CheckIncludeFileCXX)
 
 # --- abi check: C++ and Fortran compiler ABI compatibility
 
-function(abi_check)
+block()
+
 if(NOT DEFINED abi_compile)
 
   message(CHECK_START "checking that C, C++, and Fortran compilers can link")
@@ -21,32 +22,30 @@ else()
 endif()
 
 # try_run() doesn't adequately detect failed exception handling--it may pass while ctest of the same exe fails
-if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.25)
-  message(CHECK_START "checking that C++ exception handling works")
-  try_compile(exception_compile
-    PROJECT exception
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/exception_check
-    OUTPUT_VARIABLE abi_output
-  )
-  if(abi_output MATCHES "ld: warning: could not create compact unwind for")
-    message(CHECK_FAIL "no")
-    set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
-    message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
-  else()
-    message(CHECK_PASS "yes")
-    set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
-  endif()
+
+message(CHECK_START "checking that C++ exception handling works")
+try_compile(exception_compile
+  PROJECT exception
+  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/exception_check
+  OUTPUT_VARIABLE abi_output
+)
+if(abi_output MATCHES "ld: warning: could not create compact unwind for")
+  message(CHECK_FAIL "no")
+  set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
+  message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
+else()
+  message(CHECK_PASS "yes")
+  set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
 endif()
 
 endif()
 
-
-endfunction(abi_check)
-abi_check()
+endblock()
 
 
 # --- ISO_Fortran_binding.h header
-function(check_iso_fortran_binding)
+block()
+
 check_include_file("ISO_Fortran_binding.h" HAVE_ISO_FORTRAN_BINDING_H)
 
 # here we assume C and Fortran compilers are from the same vendor
@@ -77,38 +76,72 @@ if(HAVE_ISO_FORTRAN_BINDING_H)
   )
 endif()
 
-endfunction()
-check_iso_fortran_binding()
+endblock()
+
+
+check_source_compiles(Fortran
+"program test
+implicit none
+real :: a(1)
+print '(L1)', is_contiguous(a)
+end program"
+f08contiguous
+)
+
+check_source_compiles(Fortran
+"program abst
+
+implicit none
+
+type, abstract :: L1
+integer, pointer :: bullseye(:,:)
+end type L1
+
+type, extends(L1) :: L2
+integer, pointer :: arrow(:)
+end type L2
+
+class(L2), allocatable :: obj
+
+end program
+"
+f03abstract
+)
+
+include(${CMAKE_CURRENT_LIST_DIR}/f08submod_bind.cmake)
+
+
+block()
+
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+
+check_source_compiles(Fortran
+"subroutine fun(i) bind(C)
+use, intrinsic :: iso_c_binding
+integer(C_INT), intent(in) :: i
+end subroutine"
+f03bind
+)
+
 
 # --- GCC < 12 can't do these
 check_source_compiles(Fortran
-"program cstr
-use, intrinsic :: iso_c_binding, only : c_char
-implicit none
-interface
-subroutine fun(s) bind(C)
-import :: c_char
+"subroutine fun(s) bind(C)
+use, intrinsic :: iso_c_binding
 character(kind=c_char, len=:), pointer, intent(out) :: s
-end subroutine
-end interface
-end program
-"
+end subroutine"
 HAVE_C_CHAR_PTR
 )
 
 check_source_compiles(Fortran
-"program string_view
-use, intrinsic :: iso_c_binding, only : c_char
-implicit none
-interface
-subroutine echo_c( str ) bind(C)
-import :: c_char
+"subroutine echo_c( str ) bind(C)
+use, intrinsic :: iso_c_binding
 character(kind=c_char, len=:), allocatable, intent(in) :: str
-end subroutine
-end interface
-end program"
+end subroutine"
 HAVE_C_ALLOC_CHAR
 )
+
+endblock()
 
 # --- fix errors about needing -fPIE
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
