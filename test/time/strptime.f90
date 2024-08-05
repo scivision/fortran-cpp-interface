@@ -25,7 +25,7 @@ type(tm_struct) :: tm
 rc = strptime(trim(str)// c_null_char, trim(fmt)// c_null_char, tm)
 if(rc == 0) then
   error stop "strptime failed"
-endif
+end if
 
 print '(a3,1x,i4,1x,i2,1x,i2,1x,i2,1x,i2,1x,i2)', "OK:", &
   tm%tm_year+1900, tm%tm_mon+1, tm%tm_mday, tm%tm_hour, tm%tm_min, tm%tm_sec

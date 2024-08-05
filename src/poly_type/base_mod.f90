@@ -42,7 +42,7 @@ subroutine destructor(self)
     deallocate(self%D)
   else
     print *, "D was not allocated"
-  endif
+  end if
 
 end subroutine destructor
 

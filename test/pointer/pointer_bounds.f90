@@ -43,10 +43,10 @@ print '(a,i0,a,i0)', "Lneg1_C: lbound(A) = ", lbound(A,1), " ubound(A) = ", ubou
 if (lbound(A,1) /= 1) then
   write(error_unit,'(a,i0)') "Lneg1_C: unexpected lbound(A,1) ", lbound(A,1)
   error stop
-endif
+end if
 if (ubound(A,1) /= 4) then
   write(error_unit, '(a,i0)') "Lneg1_C: unexpected ubound(A,1) ", ubound(A,1)
   error stop
-endif
+end if
 end subroutine lneg1_C
 end program

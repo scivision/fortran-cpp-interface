@@ -18,7 +18,7 @@ if(command_argument_count() > 0) then
   call get_command_argument(1, argv, status=ierr)
   if (ierr /= 0) error stop "please specify milliseconds to sleep"
   read(argv, '(i6)') millisec
-endif
+end if
 
 if (millisec <= 0) error stop "please specify positive milliseconds to sleep"
 
@@ -32,12 +32,12 @@ if (t_ms < 0.5 * millisec) then
   !> slept less than half expected time
   write(stderr, '(a, f9.6)') 'ERROR: measured sleep time too short (millisec): ', t_ms
   error stop
-endif
+end if
 if (t_ms > 2 * millisec) then
   !> slept more than twice expected time
   write(stderr, '(a, f9.6)') 'ERROR: measure sleep time too long (millisec): ', t_ms
   error stop
-endif
+end if
 
 print '(A, F6.1)', 'OK: test_sleep: slept for (ms): ', t_ms
 

@@ -20,7 +20,7 @@ buf = "" !< ensure buf has no garbage characters
 do i = 1, len(buf)
     if (s(i) == C_NULL_CHAR) exit
     buf(i:i) = s(i)
-enddo
+end do
 allocate(character(len_trim(buf)) :: fs)
 fs = trim(buf)
 end block

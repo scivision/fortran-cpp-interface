@@ -28,7 +28,7 @@ allocate(x(N), x2(N))
 !! dummy data
 do i=1,N
   x(i) = int(i, C_INT)
-enddo
+end do
 
 call timestwo_c(x, x2, size(x, kind=C_SIZE_T))
 if (any(2*x /= x2)) error stop 'x2 /= 2*x'

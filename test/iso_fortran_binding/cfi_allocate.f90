@@ -27,7 +27,7 @@ print *,"x has been allocated like x(", (LBOUND(x,i), UBOUND(x,i), i=1,3), ")"
 call alloc3d(x)
 if (allocated(x)) then
   print *, "x has been allocated like x(", (LBOUND(x,i), UBOUND(x,i), i=1,3), ")"
-endif
+end if
 
 call dealloc3d(x)
 if (allocated(x)) error stop "CFI_deallocate failed"

@@ -30,7 +30,7 @@ call timestwo_cpp(A, size(A, kind=C_SIZE_T))
 if(any(A /= [4,8,12])) then
   write(stderr,*) "A = ", A
   error stop "fortran call timestwo_cpp failed"
-endif
+end if
 
 print *, "OK: Fortran array"
 

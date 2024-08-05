@@ -36,7 +36,7 @@ block
   do i = 1, len(buf)
     if (s%my_char(i) == c_null_char) exit
     buf(i:i) = s%my_char(i)
-  enddo
+  end do
   allocate(character(len_trim(buf)) :: my_char)
   my_char = trim(buf)
 end block

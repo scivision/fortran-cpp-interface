@@ -20,12 +20,12 @@ end interface
 if (addone(2) /= 3)  then
   write(stderr,*) "ERROR: 2+1 /= ", addone(2)
   error stop
-endif
+end if
 
 if (addtwo(2) /= 4) then
   write(stderr,*) "ERROR: 2+2 /= ", addtwo(2)
   error stop
-endif
+end if
 
 print *, "OK: Fortran main with C,C++ libraries"
 
