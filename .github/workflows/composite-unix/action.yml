@@ -17,13 +17,6 @@ runs:
       sudo apt update
       sudo apt install --no-install-recommends ninja-build
 
-  - name: MacoS GCC workaround
-    shell: bash
-    run: sudo xcode-select --switch /Applications/Xcode_15.1.app
-    if: runner.os == 'macOS' && env.CC == 'gcc-13'
-    # https://docs.brew.sh/Xcode
-    # https://github.com/Homebrew/brew/blob/HEAD/Library/Homebrew/os/mac/xcode.rb#L20
-
   - run: cmake --workflow --preset debug
     shell: bash
 

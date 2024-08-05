@@ -62,9 +62,6 @@ jobs:
     needs: linux-gcc14
     timeout-minutes: 10
 
-    env:
-      FC: gfortran-13
-
     steps:
     - name: install valgrind
       run: |
@@ -110,7 +107,7 @@ jobs:
     # {cc: gcc-13, cxx: g++-13}  macos GHA broken in general for GCC
 
     env:
-      FC: gfortran-13
+      FC: gfortran-14
       CC: ${{ matrix.c.cc }}
       CXX: ${{ matrix.c.cxx }}
 
