@@ -102,16 +102,19 @@ jobs:
 
     strategy:
       matrix:
-        c: [{cc: clang, cxx: clang++}]
-
-    # {cc: gcc-13, cxx: g++-13}  macos GHA broken in general for GCC
+        compiler: [{cpp: clang++, c: clang, fc: flang-new },
+                   {cpp: g++-14, c: gcc-14, fc: gfortran-14 }]
 
     env:
-      FC: gfortran-14
-      CC: ${{ matrix.c.cc }}
-      CXX: ${{ matrix.c.cxx }}
+      FC: ${{ matrix.compiler.fc }}
+      CC: ${{ matrix.compiler.c }}
+      CXX: ${{ matrix.compiler.cpp }}
 
     steps:
+    - name: install Flang
+      if: ${{ matrix.compiler.fc == 'flang-new' }}
+      run: brew install flang
+
     - uses: actions/checkout@v4
 
     - uses: ./.github/workflows/composite-unix
