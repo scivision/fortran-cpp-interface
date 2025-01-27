@@ -14,5 +14,5 @@ ${PROJECT_SOURCE_DIR}/src/vector/lib.cpp
 )
 add_executable(fortran_cxx_vector vector.f90 $<TARGET_OBJECTS:cpp_vector>)
 # LINKER_LANGUAGE needed for Linux oneAPI
-set_property(TARGET fortran_cxx_vector PROPERTY LINKER_LANGUAGE Fortran)
+set_property(TARGET fortran_cxx_vector PROPERTY LINKER_LANGUAGE ${linker_lang})
 add_test(NAME Fortran_C++_vector COMMAND fortran_cxx_vector)

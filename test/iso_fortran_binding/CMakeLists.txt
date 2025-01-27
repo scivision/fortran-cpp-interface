@@ -6,7 +6,7 @@ endif()
 
 if(HAVE_C_ALLOC_CHAR)
   add_executable(string_view string_view.f90 string_view.cpp)
-  set_property(TARGET string_view PROPERTY LINKER_LANGUAGE Fortran)
+  set_property(TARGET string_view PROPERTY LINKER_LANGUAGE ${linker_lang})
   add_test(NAME string_view COMMAND string_view)
 endif()
 

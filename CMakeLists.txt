@@ -23,6 +23,8 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 20)
 # we use c++20 features in some examples
 
+option(dev "developer mode")
+
 message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
 
 include(cmake/compilers.cmake)

@@ -19,7 +19,7 @@ add_test(NAME Cpp_Fortran_bool COMMAND cxx_fortran_bool)
 
 add_executable(fortran_cxx_bool main.f90)
 target_link_libraries(fortran_cxx_bool PRIVATE bool_cxx)
-set_property(TARGET fortran_cxx_bool PROPERTY LINKER_LANGUAGE Fortran)
+set_property(TARGET fortran_cxx_bool PROPERTY LINKER_LANGUAGE ${linker_lang})
 add_test(NAME Fortran_Cpp_bool COMMAND fortran_cxx_bool)
 
 add_executable(fortran_c_bool main.f90)

@@ -7,7 +7,7 @@ target_include_directories(int_iterator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 if(NOT (APPLE AND "$ENV{GITHUB_ACTIONS}"))
 add_executable(int_iterator_fortran main.f90)
 target_link_libraries(int_iterator_fortran PRIVATE int_iterator)
-set_property(TARGET int_iterator_fortran PROPERTY LINKER_LANGUAGE Fortran)
+set_property(TARGET int_iterator_fortran PROPERTY LINKER_LANGUAGE ${linker_lang})
 add_test(NAME IntegerIteratorFortran COMMAND int_iterator_fortran)
 endif()
 

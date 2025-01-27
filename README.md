@@ -49,7 +49,7 @@ ctest --test-dir build
 
 Note the use of CMake target property
 [LINKER_LANGUAGE](https://cmake.org/cmake/help/latest/prop_tgt/LINKER_LANGUAGE.html)
-necessary for CMake with Intel oneAPI on Linux / macOS.
+necessary for CMake with Intel oneAPI or NVIDIA HPC SDK on Linux.
 
 * C main program with Fortran library: `LINKER_LANGUAGE C`
 * C++ main program with Fortran library: `LINKER_LANGUAGE CXX`

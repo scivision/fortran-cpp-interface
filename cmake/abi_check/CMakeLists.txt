@@ -10,7 +10,7 @@ add_library(addtwo OBJECT addtwo.cpp)
 target_include_directories(addtwo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(main_f main.f90 $<TARGET_OBJECTS:addone> $<TARGET_OBJECTS:addtwo>)
-set_property(TARGET main_f PROPERTY LINKER_LANGUAGE Fortran)
+set_property(TARGET main_f PROPERTY LINKER_LANGUAGE ${linker_lang})
 
 add_test(NAME Fortran_main COMMAND main_f)
 
