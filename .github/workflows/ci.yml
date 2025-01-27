@@ -39,7 +39,7 @@ jobs:
 
 
   linux-gcc9:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 15
 
     strategy:
@@ -58,7 +58,7 @@ jobs:
 
 
   valgrind-memory:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: linux-gcc14
     timeout-minutes: 10
 
@@ -74,7 +74,7 @@ jobs:
 
 
   linux-flang:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     strategy:
