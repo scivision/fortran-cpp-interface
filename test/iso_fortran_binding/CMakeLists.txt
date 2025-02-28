@@ -17,6 +17,9 @@ add_executable(sampling sampling.cpp sampling.f90)
 set_property(TARGET sampling PROPERTY LINKER_LANGUAGE CXX)
 
 add_test(NAME sampling COMMAND sampling)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 12)
+  set_property(TEST sampling PROPERTY DISABLED true)
+endif()
 endif()
 
 if(HAVE_CFI_IS_CONTIGUOUS)

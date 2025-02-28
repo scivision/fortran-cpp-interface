@@ -9,7 +9,10 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+
+#if __has_include(<source_location>)
 #include <source_location>
+#endif
 
 #include <ISO_Fortran_binding.h>
 
@@ -54,8 +57,13 @@ std::string cfiGetErrorString(int stat) {
 void check_cfi(int s)
 {
   if (s != CFI_SUCCESS){
+#if defined(__cpp_lib_source_location)
     constexpr std::source_location loc = std::source_location::current();
-    std::cerr << loc.file_name() << ":" << loc.line() << " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
+    std::cerr << loc.file_name() << ":" << loc.line() <<
+#else
+    std::cerr <<
+#endif
+    " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
   }
 }
 
@@ -163,5 +171,5 @@ int main(int argc, char const *argv[])
     std::cout << "pi = " <<   estimate_pi( N ) << '\n';
     std::cout << "pi = " << f_estimate_pi( N ) << '\n';
 
-    return 0;
+    return EXIT_SUCCESS;
 }
