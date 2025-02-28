@@ -17,8 +17,8 @@ foreach(t IN LISTS tests)
   add_test(NAME ${t} COMMAND ${t})
 endforeach()
 
-file(READ strptime.f90 src)
-check_source_compiles(Fortran "${src}" HAVE_C_STRPTIME)
+set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE)
+check_symbol_exists(strptime "time.h" HAVE_C_STRPTIME)
 
 if(NOT HAVE_C_STRPTIME)
   add_library(cpp_strptime OBJECT strptime.cpp)
