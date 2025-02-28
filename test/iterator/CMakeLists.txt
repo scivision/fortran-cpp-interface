@@ -1,6 +1,4 @@
-
 add_library(int_iterator OBJECT lib.cpp)
-target_compile_features(int_iterator PUBLIC cxx_std_20)
 target_include_directories(int_iterator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # glitch in arm64 GitHub Actions. Happened on other projects too (h5fortran-mpi)
