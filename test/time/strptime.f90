@@ -19,14 +19,20 @@ end function
 end interface
 
 type(C_PTR) :: rc
-character(kind=C_CHAR, len=20) :: str = '2018-01-01 12:00:00'
+character(kind=C_CHAR, len=20) :: str = '2018-01-02 12:05:15'
 character(kind=C_CHAR, len=18), parameter :: fmt = '%Y-%m-%d %H:%M:%S' // c_null_char
 type(tm_struct) :: tm
 
 rc = strptime(trim(str)// c_null_char, fmt, tm)
 if(c_associated(rc, c_null_ptr)) error stop "strptime failed"
 
-print '(a3,1x,i4,1x,i2,1x,i2,1x,i2,1x,i2,1x,i2)', "OK:", &
-  tm%tm_year+1900, tm%tm_mon+1, tm%tm_mday, tm%tm_hour, tm%tm_min, tm%tm_sec
+if (tm%tm_year /= 118) error stop "tm_year /= 2018"
+if (tm%tm_mon /= 0) error stop "tm_mon /= 0+1"
+if (tm%tm_mday /= 2) error stop "tm_mday /= 2"
+if (tm%tm_hour /= 12) error stop "tm_hour /= 12"
+if (tm%tm_min /= 5) error stop "tm_min /= 0"
+if (tm%tm_sec /= 15) error stop "tm_sec /= 15"
+
+print '(a)', "OK: strptime"
 
 end program
