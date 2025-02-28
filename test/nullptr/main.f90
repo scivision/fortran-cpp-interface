@@ -19,6 +19,9 @@ logical(C_BOOL), parameter :: t = .true., f = .false.
 
 type(c_ptr) :: ptr
 
+!> Don't use c_associated to check uninitialized pointers, will give errors or unexpected behavior.
+!! if (c_associated(ptr))
+
 if (.not. c_associated(nullchar(f))) error stop "nullptr should not be detected"
 
 ptr = nullchar(t)
