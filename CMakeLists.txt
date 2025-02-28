@@ -47,6 +47,7 @@ foreach(a IN ITEMS
   array bool error exception
   iterator
   glibc malloc
+  nullptr
   opaque pointer poly_function poly_type real struct
   sleep string submodule
   time vector)
