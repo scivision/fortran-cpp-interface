@@ -4,14 +4,8 @@ add_library(fortran_clock OBJECT clock.f90)
 add_executable(cxx_fortran_tictoc main.cpp $<TARGET_OBJECTS:fortran_clock>)
 add_test(NAME C++_Fortran_tictoc COMMAND cxx_fortran_tictoc)
 
-check_symbol_exists(strftime "time.h" HAVE_C_STRFTIME)
 
-set(tests strptime)
-if(HAVE_C_STRFTIME)
-  list(APPEND tests strftime)
-endif()
-
-foreach(t IN LISTS tests)
+foreach(t IN ITEMS strftime strptime)
   add_executable(${t} ${t}.f90)
   add_test(NAME ${t} COMMAND ${t})
 endforeach()

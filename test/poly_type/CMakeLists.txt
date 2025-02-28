@@ -1,10 +1,5 @@
 set_property(DIRECTORY PROPERTY LABELS poly_type)
 
-if(NOT f03abstract)
-  message(STATUS "Skipping poly_type since not supported by ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}")
-  return()
-endif()
-
 add_library(poly_type_lib
 ${PROJECT_SOURCE_DIR}/src/poly_type/poly_type.f90
 ${PROJECT_SOURCE_DIR}/src/poly_type/base_mod.f90
