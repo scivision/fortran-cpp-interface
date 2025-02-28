@@ -4,8 +4,7 @@ add_library(fortran_clock OBJECT clock.f90)
 add_executable(cxx_fortran_tictoc main.cpp $<TARGET_OBJECTS:fortran_clock>)
 add_test(NAME C++_Fortran_tictoc COMMAND cxx_fortran_tictoc)
 
-file(READ strftime.f90 src)
-check_source_compiles(Fortran "${src}" HAVE_C_STRFTIME)
+check_symbol_exists(strftime "time.h" HAVE_C_STRFTIME)
 
 set(tests strptime)
 if(HAVE_C_STRFTIME)
