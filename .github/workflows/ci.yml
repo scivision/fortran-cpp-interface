@@ -79,12 +79,12 @@ jobs:
 
     strategy:
       matrix:
-        clang-version: [20]
+        llvm-version: [20]
 
     env:
-      CC: clang-${{ matrix.clang-version }}
-      CXX: clang++-${{ matrix.clang-version }}
-      FC: flang-${{ matrix.clang-version }}
+      CC: clang-${{ matrix.llvm-version }}
+      CXX: clang++-${{ matrix.llvm-version }}
+      FC: flang-${{ matrix.llvm-version }}
 
     steps:
     - uses: actions/checkout@v4
@@ -93,11 +93,11 @@ jobs:
       run: |
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
-          sudo ./llvm.sh 20
+          sudo ./llvm.sh ${{ matrix.llvm-version }}
           sudo apt-get update
 
     - name: install Flang
-      run: sudo apt install --no-install-recommends clang-${{ matrix.clang-version }} flang-${{ matrix.clang-version }}
+      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
 
     - uses: ./.github/workflows/composite-unix
 
