@@ -146,5 +146,9 @@ jobs:
       env:
         CMAKE_GENERATOR: "MinGW Makefiles"
 
-    - run: cat build/CMakeFiles/CMakeConfigureLog.yaml
-      if: ${{ failure() }}
+    - name: upload CMakeConfigureLog.yaml
+      if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ runner.os }}-CMakeConfigureLog.yaml
+        path: build/CMakeFiles/CMakeConfigureLog.yaml
