@@ -4,23 +4,10 @@ runs:
 
   steps:
 
-  - name: Install Ninja (macOS)
-    if: runner.os == 'macOS'
-    shell: bash
-    run: brew install ninja
-
-
-  - name: install ninja (Linux)
-    shell: bash
-    if: runner.os == 'Linux'
-    run: |
-      sudo apt update
-      sudo apt install --no-install-recommends ninja-build
-
-  - run: cmake --workflow --preset debug
+  - run: cmake --workflow debug
     shell: bash
 
-  - run: cmake --workflow --preset release
+  - run: cmake --workflow release
     shell: bash
 
   - name: upload CMakeConfigureLog.yaml

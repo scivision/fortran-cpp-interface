@@ -4,26 +4,35 @@ env:
   CC: icx
   CXX: icpx
   FC: ifx
-  LINUX_CPP_COMPONENTS: intel-oneapi-compiler-dpcpp-cpp
-  LINUX_FORTRAN_COMPONENTS: intel-oneapi-compiler-fortran
 # https://github.com/oneapi-src/oneapi-ci/blob/master/.github/workflows/build_all.yml
   CTEST_NO_TESTS_ACTION: error
-  CMAKE_BUILD_PARALLEL_LEVEL: 4
-  CTEST_PARALLEL_LEVEL: 0
   CMAKE_BUILD_TYPE: Release
+  CMAKE_GENERATOR: Ninja
+# don't need Ninja but it prints the command lines by default which is good for debugging
+
+  # debug triggers asan build errors, peculiar to GitHub Actions
 
 on:
   push:
     paths:
       - "**.c"
-      - "**.cpp"
       - "**.h"
+      - "**.cpp"
       - "**.f90"
       - "**.F90"
       - "**.cmake"
       - "**/CMakeLists.txt"
       - ".github/workflows/oneapi-linux.yml"
+      - ".github/workflows/oneapi*.sh"
       - "!memcheck.cmake"
+      - "!coverage.cmake"
+      - "!example/*"
+  workflow_dispatch:
+
+# avoid wasted runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 
 jobs:
@@ -32,6 +41,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    strategy:
+      matrix:
+        oneapi: [2025.1]
     steps:
     - uses: actions/checkout@v4
 
@@ -41,21 +53,28 @@ jobs:
       with:
         path: |
           /opt/intel/oneapi
-        key: install-apt
+        key: oneapi-${{ matrix.oneapi }}-apt
 
     - name: non-cache install oneAPI
       if: steps.cache-install.outputs.cache-hit != 'true'
       timeout-minutes: 5
       run: |
         .github/workflows/oneapi_setup_apt_repo_linux.sh
-        sudo apt install ${{ env.LINUX_CPP_COMPONENTS }} ${{ env.LINUX_FORTRAN_COMPONENTS }}
+        sudo apt install --no-install-recommends intel-oneapi-compiler-dpcpp-cpp-${{ matrix.oneapi }} intel-oneapi-compiler-fortran-${{ matrix.oneapi }}
 
     - name: Setup Intel oneAPI environment
       run: |
         source /opt/intel/oneapi/setvars.sh
         printenv >> $GITHUB_ENV
 
-    - run: cmake --workflow --preset default
+    - run: cmake --workflow default
+
+    - name: Upload log failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: oneapi-${{ matrix.oneapi }}-${{ runner.os }}-CMakeConfigureLog.yaml
+        path: build/CMakeFiles/CMakeConfigureLog.yaml
 
     - name: exclude unused files from cache
       if: steps.cache-install.outputs.cache-hit != 'true'
