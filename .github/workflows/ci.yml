@@ -39,7 +39,8 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-    - uses: actions/checkout@v4
+    - &checkout
+      uses: actions/checkout@v5
 
     - uses: ./.github/workflows/composite-unix
 
@@ -58,7 +59,13 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
+
+    - name: GCC APT
+      if: matrix.gcc-version < 11
+      run: |
+        sudo apt update -y
+        sudo apt install -y --no-install-recommends gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
 
     - uses: ./.github/workflows/composite-unix
 
@@ -74,7 +81,7 @@ jobs:
         sudo apt update
         sudo apt install --no-install-recommends valgrind
 
-    - uses: actions/checkout@v4
+    - *checkout
 
     - run: ctest -S memcheck.cmake -VV -E "sleep|string_array|string_view|binding_derived"
 
@@ -93,7 +100,7 @@ jobs:
       FC: flang-${{ matrix.llvm-version }}
 
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
 
     - name: Apt LLVM
       run: |
@@ -116,7 +123,7 @@ jobs:
     strategy:
       matrix:
         compiler: [{cpp: clang++, c: clang, fc: flang-new },
-                   {cpp: g++-14, c: gcc-14, fc: gfortran-14 }]
+                   {cpp: g++-15, c: gcc-15, fc: gfortran-15 }]
 
     env:
       FC: ${{ matrix.compiler.fc }}
@@ -128,7 +135,7 @@ jobs:
       if: ${{ matrix.compiler.fc == 'flang-new' }}
       run: brew install flang
 
-    - uses: actions/checkout@v4
+    - *checkout
 
     - uses: ./.github/workflows/composite-unix
 
@@ -147,11 +154,11 @@ jobs:
     - name: Put MSYS2_MinGW64 on PATH
       run: echo "${{ steps.msys2.outputs.msys2-location }}/ucrt64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-    - uses: actions/checkout@v4
+    - *checkout
 
-    - run: cmake --workflow --preset default
+    - run: cmake --workflow default
       env:
-        CMAKE_GENERATOR: "MinGW Makefiles"
+        CMAKE_GENERATOR: Ninja
 
     - name: upload CMakeConfigureLog.yaml
       if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
