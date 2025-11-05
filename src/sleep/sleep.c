@@ -15,16 +15,16 @@
 void c_sleep(const int milliseconds)
 {
 
-#ifdef _MSC_VER
-  Sleep(milliseconds);
-#else
-// https://linux.die.net/man/3/usleep
   if (milliseconds <= 0){
     fprintf(stderr, "ERROR:sleep: milliseconds must be strictly positive\n");
     return;
   }
 
-  //int ierr = usleep(*milliseconds * 1000);
+#ifdef _MSC_VER
+  Sleep(milliseconds);
+#else
+// https://linux.die.net/man/3/usleep
+//int ierr = usleep(*milliseconds * 1000);
 
   struct timespec t;
 
@@ -40,8 +40,10 @@ void c_sleep(const int milliseconds)
     fprintf(stderr, "nanosleep() interrupted\n");
     break;
     case EINVAL:
+    fprintf(stderr, "nanosleep() invalid timespec value (EINVAL)\n");
+    break;
     case EFAULT:
-    fprintf(stderr, "nanosleep() bad milliseconds value\n");
+    fprintf(stderr, "nanosleep() timespec points outside accessible address space (EFAULT)\n");
     break;
     case ENOSYS:
     fprintf(stderr, "nanosleep() not supported on this system\n");

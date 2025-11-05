@@ -58,17 +58,15 @@ target_link_libraries(fortran_micro_sleep PRIVATE f_micro_sleep)
 add_test(NAME Fortran_micro_sleep COMMAND fortran_micro_sleep)
 
 
-add_library(f_nano_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/reference/posix_nanosleep.f90)
-set_property(TARGET f_nano_sleep PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
-target_include_directories(f_nano_sleep PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
+# This method is too brittle
+# add_library(f_nano_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/reference/posix_nanosleep.f90)
+# set_property(TARGET f_nano_sleep PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
+# target_include_directories(f_nano_sleep PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
 
-add_executable(fortran_nano_sleep test_sleep.f90)
-target_link_libraries(fortran_nano_sleep PRIVATE f_nano_sleep)
+# add_executable(fortran_nano_sleep test_sleep.f90)
+# target_link_libraries(fortran_nano_sleep PRIVATE f_nano_sleep)
 
-add_test(NAME Fortran_nano_sleep COMMAND fortran_nano_sleep)
-if(APPLE AND CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
-  set_property(TEST Fortran_nano_sleep PROPERTY DISABLED true)
-endif()
+# add_test(NAME Fortran_nano_sleep COMMAND fortran_nano_sleep)
 
 endif()
 

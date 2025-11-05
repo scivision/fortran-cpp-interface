@@ -17,8 +17,9 @@ end interface
 contains
 
 subroutine sleep_ms(millseconds)
-integer(C_INT), intent(in) :: millseconds
-call c_sleep(millseconds)
+integer, intent(in) :: millseconds
+
+call c_sleep(int(millseconds, C_INT))
 end subroutine sleep_ms
 
 end module sleep_std
