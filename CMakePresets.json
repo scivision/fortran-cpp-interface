@@ -14,6 +14,16 @@
   "name": "multi", "inherits": "default",
   "displayName": "Ninja Multi-Config",
   "generator": "Ninja Multi-Config"
+},
+{
+  "name": "clang_gfortran", "inherits": "default",
+  "displayName": "Clang + GFortran",
+  "description": "Use Clang for C/C++ and GFortran for Fortran",
+  "cacheVariables": {
+    "CMAKE_C_COMPILER": "clang",
+    "CMAKE_CXX_COMPILER": "clang++",
+    "CMAKE_Fortran_COMPILER": "gfortran"
+  }
 }
 ],
 "buildPresets": [

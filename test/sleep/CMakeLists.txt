@@ -1,5 +1,16 @@
 set_property(DIRECTORY PROPERTY LABELS sleep)
 
+add_executable(fortran_sleep ticks.f90)
+add_test(NAME Fortran_sleep COMMAND fortran_sleep)
+
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+  set(bad_ticks true)
+else()
+  set(bad_ticks false)
+endif()
+
+set_property(TEST Fortran_sleep PROPERTY DISABLED ${bad_ticks})
+
 add_library(f_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/sleep_std.f90)
 
 # not OBJECT so include propagates
@@ -25,8 +36,10 @@ if(WIN32)
 add_library(f_win_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/reference/windows.f90)
 set_property(TARGET f_win_sleep PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/windows)
 target_include_directories(f_win_sleep PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/windows)
+
 add_executable(fortran_win_sleep test_sleep.f90)
 target_link_libraries(fortran_win_sleep PRIVATE f_win_sleep)
+
 add_test(NAME Fortran_win_sleep COMMAND fortran_win_sleep)
 
 endif()
@@ -36,15 +49,20 @@ if(NOT MSVC)
 add_library(f_micro_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/reference/posix_usleep.f90)
 set_property(TARGET f_micro_sleep PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/posix_usleep)
 target_include_directories(f_micro_sleep PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/posix_usleep)
+
 add_executable(fortran_micro_sleep test_sleep.f90)
 target_link_libraries(fortran_micro_sleep PRIVATE f_micro_sleep)
+
 add_test(NAME Fortran_micro_sleep COMMAND fortran_micro_sleep)
+
 
 add_library(f_nano_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/reference/posix_nanosleep.f90)
 set_property(TARGET f_nano_sleep PROPERTY Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
 target_include_directories(f_nano_sleep PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/posix_nanosleep)
+
 add_executable(fortran_nano_sleep test_sleep.f90)
 target_link_libraries(fortran_nano_sleep PRIVATE f_nano_sleep)
+
 add_test(NAME Fortran_nano_sleep COMMAND fortran_nano_sleep)
 set_property(TEST Fortran_nano_sleep PROPERTY DISABLED true)
 # this test is shaky. Fails on MinGW and macOS Apple Silicon. Best to use an auxiliary C function to interface with C struct.
