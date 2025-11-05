@@ -66,8 +66,9 @@ add_executable(fortran_nano_sleep test_sleep.f90)
 target_link_libraries(fortran_nano_sleep PRIVATE f_nano_sleep)
 
 add_test(NAME Fortran_nano_sleep COMMAND fortran_nano_sleep)
-set_property(TEST Fortran_nano_sleep PROPERTY DISABLED true)
-# this test is shaky. Fails on MinGW and macOS Apple Silicon. Best to use an auxiliary C function to interface with C struct.
+if(APPLE AND CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+  set_property(TEST Fortran_nano_sleep PROPERTY DISABLED true)
+endif()
 
 endif()
 
