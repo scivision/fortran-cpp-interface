@@ -13,18 +13,15 @@ endif()
 
 # --- abi check: C++ and Fortran compiler ABI compatibility
 
-block()
+if(NOT DEFINED abi_compile)
 
-if(dev AND NOT DEFINED abi_compile AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.25)
+message(CHECK_START "checking that C, C++, and Fortran compilers can link")
 
-  message(CHECK_START "checking that C, C++, and Fortran compilers can link")
-
-  try_compile(abi_compile
-  PROJECT abi_check
-  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/abi_check
-  CMAKE_FLAGS -Dlinker_lang=${linker_lang}
-  )
-
+try_compile(abi_compile
+PROJECT abi_check
+SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/abi_check
+CMAKE_FLAGS -Dlinker_lang=${linker_lang} -DCMAKE_LINK_WARNING_AS_ERROR:BOOL=on
+)
 
 if(abi_compile)
   message(CHECK_PASS "OK")
@@ -39,23 +36,23 @@ endif()
 # try_run() doesn't adequately detect failed exception handling--it may pass while ctest of the same exe fails
 
 message(CHECK_START "checking that C++ exception handling works")
-try_compile(exception_compile
+
+try_compile(HAVE_CXX_TRYCATCH
   PROJECT exception
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/exception_check
-  OUTPUT_VARIABLE abi_output
+  OUTPUT_VARIABLE _out
+  CMAKE_FLAGS "-DCMAKE_LINK_WARNING_AS_ERROR:BOOL=on"
 )
-if(abi_output MATCHES "ld: warning: could not create compact unwind for")
+# _out is for CMake < 4.0
+
+if(NOT HAVE_CXX_TRYCATCH OR _out MATCHES "ld: warning: could not create compact unwind for")
   message(CHECK_FAIL "no")
-  set(HAVE_CXX_TRYCATCH false CACHE BOOL "C++ exception handling broken")
   message(WARNING "C++ exception handling will not work reliably due to incompatible compilers")
 else()
   message(CHECK_PASS "yes")
-  set(HAVE_CXX_TRYCATCH true CACHE BOOL "C++ exception handling works")
 endif()
 
 endif()
-
-endblock()
 
 
 # --- ISO_Fortran_binding.h header
