@@ -92,7 +92,7 @@ jobs:
 
     strategy:
       matrix:
-        llvm-version: [20]
+        llvm-version: [21]
 
     env:
       CC: clang-${{ matrix.llvm-version }}
@@ -123,12 +123,15 @@ jobs:
     strategy:
       matrix:
         compiler: [{cpp: clang++, c: clang, fc: flang-new },
+                   {cpp: clang++, c: clang, fc: gfortran-15 },
                    {cpp: g++-15, c: gcc-15, fc: gfortran-15 }]
 
     env:
       FC: ${{ matrix.compiler.fc }}
       CC: ${{ matrix.compiler.c }}
       CXX: ${{ matrix.compiler.cpp }}
+
+    name: macOS ${{ matrix.compiler.cpp }} ${{ matrix.compiler.fc }}
 
     steps:
     - name: install Flang
