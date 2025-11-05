@@ -1,15 +1,17 @@
 set_property(DIRECTORY PROPERTY LABELS sleep)
 
-add_executable(fortran_sleep ticks.f90)
-add_test(NAME Fortran_sleep COMMAND fortran_sleep)
+# ticks uses non-standard sleep() subroutine; disabled for now
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
-  set(bad_ticks true)
-else()
-  set(bad_ticks false)
-endif()
+# add_executable(fortran_sleep ticks.f90)
+# add_test(NAME Fortran_sleep COMMAND fortran_sleep)
 
-set_property(TEST Fortran_sleep PROPERTY DISABLED ${bad_ticks})
+# if(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+#   set(bad_ticks true)
+# else()
+#   set(bad_ticks false)
+# endif()
+
+# set_property(TEST Fortran_sleep PROPERTY DISABLED ${bad_ticks})
 
 add_library(f_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/sleep_std.f90)
 
