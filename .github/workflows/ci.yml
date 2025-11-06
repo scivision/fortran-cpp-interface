@@ -90,7 +90,7 @@ jobs:
     - name: install compilers
       run: |
         apt update -y
-        apt install -y --no-install-recommends ca-certificates gpg curl ninja-build ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
+        apt install -y --no-install-recommends ca-certificates gpg curl make ninja-build ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
 
     - name: install CMake
       run: |
