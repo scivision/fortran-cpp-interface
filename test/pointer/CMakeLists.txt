@@ -26,6 +26,5 @@ add_test(NAME Fortran_C++_null COMMAND fortran_cxx_null)
 # for Visual Studio generator object library
 add_library(c_null OBJECT ${PROJECT_SOURCE_DIR}/src/pointer/null.c)
 add_executable(fortran_c_null null_c.f90 $<TARGET_OBJECTS:c_null>)
+set_property(TARGET fortran_c_null PROPERTY LINKER_LANGUAGE Fortran)
 add_test(NAME Fortran_C_null COMMAND fortran_c_null)
-
-set_property(TARGET fortran_c_null fortran_cxx_null PROPERTY LINKER_LANGUAGE Fortran)
