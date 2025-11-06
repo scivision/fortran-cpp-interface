@@ -45,7 +45,7 @@ jobs:
     - uses: ./.github/workflows/composite-unix
 
 
-  linux-gcc-old:
+  linux-gcc-9-10-11:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
 
@@ -53,7 +53,7 @@ jobs:
       matrix:
         gcc-version: [9, 10, 11]
 
-    env:
+    env: &gcc-env
       CC: gcc-${{ matrix.gcc-version }}
       CXX: g++-${{ matrix.gcc-version }}
       FC: gfortran-${{ matrix.gcc-version }}
@@ -66,6 +66,42 @@ jobs:
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
+
+    - uses: ./.github/workflows/composite-unix
+
+
+  gcc-7-8:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
+      env:
+        DEBIAN_FRONTEND: noninteractive
+
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        gcc-version: [7, 8]
+
+    env: *gcc-env
+
+    steps:
+    - name: install compilers
+      run: |
+        apt update -y
+        apt install -y --no-install-recommends ca-certificates gpg curl ninja-build ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
+
+    - name: install CMake
+      run: |
+        curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+        apt-get update
+        test -f /usr/share/doc/kitware-archive-keyring/copyright || rm /usr/share/keyrings/kitware-archive-keyring.gpg
+        apt-get install --no-install-recommends -y kitware-archive-keyring
+        apt-get install --no-install-recommends -y cmake
+
+    - *checkout
 
     - uses: ./.github/workflows/composite-unix
 
