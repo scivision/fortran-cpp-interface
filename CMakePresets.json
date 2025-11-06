@@ -16,6 +16,11 @@
   "generator": "Ninja Multi-Config"
 },
 {
+  "name": "gmake", "inherits": "default",
+  "displayName": "GNU Make on Unix-like",
+  "generator": "Unix Makefiles"
+},
+{
   "name": "clang_gfortran", "inherits": "default",
   "displayName": "Clang + GFortran",
   "description": "Use Clang for C/C++ and GFortran for Fortran",
@@ -30,6 +35,10 @@
   {
     "name": "default",
     "configurePreset": "default"
+  },
+  {
+    "name": "gmake",
+    "configurePreset": "gmake"
   },
   {
     "name": "release",
@@ -62,6 +71,10 @@
     "stopOnFailure": false,
     "timeout": 15
   }
+},
+{
+  "name": "gmake", "inherits": "default",
+  "configurePreset": "gmake"
 },
 {
   "name": "release", "inherits": "default",
@@ -129,6 +142,23 @@
       {
         "type": "test",
         "name": "release"
+      }
+    ]
+  },
+  {
+    "name": "gmake",
+    "steps": [
+      {
+        "type": "configure",
+        "name": "gmake"
+      },
+      {
+        "type": "build",
+        "name": "gmake"
+      },
+      {
+        "type": "test",
+        "name": "gmake"
       }
     ]
   }

@@ -10,9 +10,13 @@ runs:
   - run: cmake --workflow release
     shell: bash
 
+  - name: GNU Make build and test
+    run: cmake --workflow gmake --fresh
+    shell: bash
+
   - name: upload CMakeConfigureLog.yaml
     if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
     uses: actions/upload-artifact@v4
     with:
-      name: ${{ runner.os }}-${{ env.CC }}-CMakeConfigureLog.yaml
+      name: ${{ runner.os }}-${{ env.CC }}-${{ env.FC }}-CMakeConfigureLog.yaml
       path: build/CMakeFiles/CMakeConfigureLog.yaml
