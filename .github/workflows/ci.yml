@@ -82,7 +82,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gcc-version: [7, 8]
+        gcc-version: [8]
+    # GCC 7 works, but just didn't feel the need to test so old a version
 
     env: *gcc-env
 
@@ -128,7 +129,7 @@ jobs:
 
     strategy:
       matrix:
-        llvm-version: [20]
+        llvm-version: [21]
 
     env:
       CC: clang-${{ matrix.llvm-version }}
@@ -183,6 +184,11 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 10
 
+    env:
+      CC: gcc
+      CXX: g++
+      FC: gfortran
+
     steps:
     - uses: msys2/setup-msys2@v2
       id: msys2
@@ -201,7 +207,7 @@ jobs:
 
     - name: upload CMakeConfigureLog.yaml
       if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: ${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml
