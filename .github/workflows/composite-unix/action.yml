@@ -16,7 +16,7 @@ runs:
 
   - name: upload CMakeConfigureLog.yaml
     if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
-    uses: actions/upload-artifact@v4
+    uses: actions/upload-artifact@v6
     with:
       name: ${{ runner.os }}-${{ env.CC }}-${{ env.FC }}-CMakeConfigureLog.yaml
       path: build/CMakeFiles/CMakeConfigureLog.yaml
