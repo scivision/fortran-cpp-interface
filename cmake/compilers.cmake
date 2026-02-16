@@ -109,15 +109,6 @@ block()
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 
-check_source_compiles(Fortran
-"subroutine fun(i) bind(C)
-use, intrinsic :: iso_c_binding
-integer(C_INT), intent(in) :: i
-end subroutine"
-f03bind
-)
-
-
 # --- GCC < 12 can't do these
 check_source_compiles(Fortran
 "subroutine fun(s) bind(C)
@@ -138,11 +129,11 @@ HAVE_C_ALLOC_CHAR
 endblock()
 
 # --- fix errors about needing -fPIE
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  include(CheckPIESupported)
-  check_pie_supported()
-  set(CMAKE_POSITION_INDEPENDENT_CODE true)
-endif()
+# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+#   include(CheckPIESupported)
+#   check_pie_supported()
+#   set(CMAKE_POSITION_INDEPENDENT_CODE true)
+# endif()
 
 # --- compiler options
 
@@ -156,17 +147,15 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
   add_compile_options("$<$<COMPILE_LANGUAGE:C,CXX>:/W3>")
 endif()
 
-if(CMAKE_C_COMPILER_ID MATCHES "^Intel")
-  add_compile_options("$<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:-Rno-debug-disables-optimization>")
-endif()
-
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
 
 add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")
 
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
-add_compile_options(-Wall -Wextra
+add_compile_options(
+"$<$<COMPILE_LANGUAGE:Fortran>:-Wall>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-Wextra>"
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>"
 )
@@ -177,13 +166,10 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
 add_compile_options(
 "$<$<COMPILE_LANGUAGE:Fortran>:-warn>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-traceback;-check;-debug>"
-$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-O0>
 )
 
 # -fpscomp logicals is required for C_BOOL
-if(NOT WIN32)
-  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
-endif()
+add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
 
 # -stand f18 is just for warnings, it doesn't change compiler behavior
 

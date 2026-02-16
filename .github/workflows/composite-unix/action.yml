@@ -4,15 +4,17 @@ runs:
 
   steps:
 
-  - run: cmake --workflow debug
+  - name: Ninja build and test
+    run: cmake --workflow default --fresh
     shell: bash
-
-  - run: cmake --workflow release
-    shell: bash
+    env:
+      CMAKE_GENERATOR: Ninja
 
   - name: GNU Make build and test
-    run: cmake --workflow gmake --fresh
+    run: cmake --workflow default --fresh
     shell: bash
+    env:
+      CMAKE_GENERATOR: "Unix Makefiles"
 
   - name: upload CMakeConfigureLog.yaml
     if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
