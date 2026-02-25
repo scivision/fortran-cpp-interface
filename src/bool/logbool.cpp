@@ -4,7 +4,7 @@
 
 bool logical_not(const bool a)
 {
-  std::cout << "c++ input boolean: " << a << " size " << sizeof(a) << "\n";
+  std::cout << "C++ input boolean: " << a << " size " << sizeof(a) << "\n";
 
   return !a;
 }
