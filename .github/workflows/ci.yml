@@ -128,7 +128,7 @@ jobs:
 
     strategy:
       matrix:
-        llvm-version: [21]
+        llvm-version: [22]
 
     env:
       CC: clang-${{ matrix.llvm-version }}
@@ -146,13 +146,13 @@ jobs:
           sudo apt-get update
 
     - name: install Flang
-      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
+      run: sudo apt install --no-install-recommends clang flang
+# specifying version here sometimes breaks--LLVM suggestion is just specify version in the llvm.sh step
 
     - uses: ./.github/workflows/composite-unix
 
 
   mac:
-    # need Apple Silicon for exception handling try_compile detection to work
     runs-on: macos-latest
     timeout-minutes: 10
 
