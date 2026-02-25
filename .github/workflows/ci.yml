@@ -130,11 +130,6 @@ jobs:
       matrix:
         llvm-version: [21]
 
-    env:
-      CC: clang-${{ matrix.llvm-version }}
-      CXX: clang++-${{ matrix.llvm-version }}
-      FC: flang-${{ matrix.llvm-version }}
-
     steps:
     - *checkout
 
@@ -146,10 +141,14 @@ jobs:
           sudo apt-get update
 
     - name: install Flang
-      run: sudo apt install --no-install-recommends clang flang
-# specifying version here sometimes breaks--LLVM suggestion is just specify version in the llvm.sh step
+      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
+# MUST specify version here or default old Clang used despite LLVM apt docs
 
     - uses: ./.github/workflows/composite-unix
+      env:
+        CC: clang-${{ matrix.llvm-version }}
+        CXX: clang++-${{ matrix.llvm-version }}
+        FC: flang-${{ matrix.llvm-version }}
 
 
   mac:
