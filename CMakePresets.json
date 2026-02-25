@@ -9,6 +9,12 @@
     "CMAKE_COMPILE_WARNING_AS_ERROR": true,
     "CMAKE_LINK_WARNING_AS_ERROR": true
   }
+},
+{ "name": "ninja", "inherits": "default",
+  "generator": "Ninja"
+},
+{ "name": "gmake", "inherits": "default",
+  "generator": "Unix Makefiles"
 }
 ],
 "buildPresets": [
@@ -31,7 +37,9 @@
     "name": "debug",
     "configurePreset": "default",
     "configuration": "Debug"
-  }
+  },
+  { "name": "ninja", "configurePreset": "ninja" },
+  { "name": "gmake", "configurePreset": "gmake" }
 ],
 "testPresets": [
 {
@@ -63,58 +71,50 @@
   "name": "debug", "inherits": "default",
   "configurePreset": "default",
   "configuration": "Debug"
-}
+},
+{ "name": "ninja", "configurePreset": "ninja" },
+{ "name": "gmake", "configurePreset": "gmake" }
 ],
 "workflowPresets": [
   {
     "name": "default",
     "steps": [
-      {
-        "type": "configure",
-        "name": "default"
-      },
-      {
-        "type": "build",
-        "name": "default"
-      },
-      {
-        "type": "test",
-        "name": "default"
-      }
+      { "type": "configure", "name": "default" },
+      { "type": "build", "name": "default" },
+      { "type": "test", "name": "default" }
+
     ]
   },
   {
     "name": "debug",
     "steps": [
-      {
-        "type": "configure",
-        "name": "default"
-      },
-      {
-        "type": "build",
-        "name": "debug"
-      },
-      {
-        "type": "test",
-        "name": "debug"
-      }
+      { "type": "configure", "name": "default" },
+      { "type": "build", "name": "debug" },
+      { "type": "test", "name": "debug" }
     ]
   },
   {
     "name": "release",
     "steps": [
-      {
-        "type": "configure",
-        "name": "default"
-      },
-      {
-        "type": "build",
-        "name": "release"
-      },
-      {
-        "type": "test",
-        "name": "release"
-      }
+      { "type": "configure", "name": "default" },
+      { "type": "build", "name": "release" },
+      { "type": "test", "name": "release" }
+    ]
+  },
+  {
+    "name": "ninja",
+    "steps": [
+      { "type": "configure", "name": "ninja" },
+      { "type": "build", "name": "ninja" },
+      { "type": "test", "name": "ninja" }
+    ]
+  },
+  {
+    "name": "gmake",
+    "steps": [
+      { "type": "configure", "name": "gmake" },
+      { "type": "build", "name": "gmake" },
+      { "type": "test", "name": "gmake" }
     ]
   }
 ]

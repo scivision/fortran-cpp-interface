@@ -3,7 +3,6 @@ name: ci
 env:
   CTEST_NO_TESTS_ACTION: error
   CTEST_PARALLEL_LEVEL: 0
-  CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 on:
   push:
@@ -201,9 +200,7 @@ jobs:
 
     - *checkout
 
-    - run: cmake --workflow default
-      env:
-        CMAKE_GENERATOR: Ninja
+    - run: cmake --workflow ninja
 
     - name: upload CMakeConfigureLog.yaml
       if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''
