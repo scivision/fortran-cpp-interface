@@ -128,7 +128,7 @@ jobs:
 
     strategy:
       matrix:
-        llvm-version: [22]
+        llvm-version: [21]
 
     env:
       CC: clang-${{ matrix.llvm-version }}
