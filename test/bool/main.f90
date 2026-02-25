@@ -1,4 +1,4 @@
-program boollog
+program logical_C_bool
 
 use, intrinsic ::iso_c_binding, only : C_BOOL
 
@@ -13,10 +13,15 @@ end interface
 
 logical(C_BOOL) :: t, f
 
+logical :: true_f, false_f
+
 t = .true.
 f = .false.
 
-if (logical_not(t)) error stop "logical_not(.true.) should be .false."
-if (.not. logical_not(f)) error stop "logical_not(.false.) should be .true."
+false_f = logical_not(t)
+true_f = logical_not(f)
+
+if (false_f) error stop "logical_not(.true.) should be .false."
+if (.not. true_f) error stop "logical_not(.false.) should be .true."
 
 end program
