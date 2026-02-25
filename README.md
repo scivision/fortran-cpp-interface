@@ -133,8 +133,6 @@ On 2019-01-12 [a GCC commit](https://github.com/gcc-mirror/gcc/commit/bbf18dc5d2
 from Paul Thomas brought ISO_Fortran_binding.h to
 [GCC 9](https://gcc.gnu.org/gcc-9/changes.html).
 
-This means if using Clang compiler e.g. on macOS, you may need to switch to GCC (till Clang/Flang someday includes ISO_Fortran_binding.h).
-
 Compilers having "ISO_Fortran_binding.h" include:
 
 * GCC &ge; 9
