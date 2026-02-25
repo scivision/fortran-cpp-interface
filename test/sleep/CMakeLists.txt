@@ -13,11 +13,16 @@ set_property(DIRECTORY PROPERTY LABELS sleep)
 
 # set_property(TEST Fortran_sleep PROPERTY DISABLED ${bad_ticks})
 
+include(CheckSymbolExists)
+check_symbol_exists(nanosleep time.h HAVE_NANOSLEEP)
+
+
 add_library(f_sleep OBJECT ${PROJECT_SOURCE_DIR}/src/sleep/sleep_std.f90)
 
 # not OBJECT so include propagates
 add_library(c_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.c $<TARGET_OBJECTS:f_sleep>)
 target_include_directories(c_f_sleep PUBLIC ${PROJECT_SOURCE_DIR}/src/sleep)
+target_compile_definitions(c_f_sleep PRIVATE $<$<BOOL:${HAVE_NANOSLEEP}>:HAVE_NANOSLEEP>)
 
 # not OBJECT so include propagates
 add_library(cpp_f_sleep ${PROJECT_SOURCE_DIR}/src/sleep/sleep.cpp $<TARGET_OBJECTS:f_sleep>)
@@ -71,5 +76,9 @@ add_test(NAME Fortran_micro_sleep COMMAND fortran_micro_sleep)
 endif()
 
 get_property(tests DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
-set_property(TEST ${tests} PROPERTY TIMEOUT 5)
+set_tests_properties(${tests} PROPERTIES
+TIMEOUT 5
+RUN_SERIAL true
+)
+# need RUN_SERIAL for first-time run of lots of tests, system might have artifact of running too slow one-time
 # allow extra time for valgrind. Have some timeout b/c macOS can hang for example.

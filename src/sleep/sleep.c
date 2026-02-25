@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-#ifdef _MSC_VER
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#else
+#if defined(HAVE_NANOSLEEP)
 #include <time.h>
 #include <errno.h>
+#elif defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #endif
 
 #include "sleep.h"
@@ -20,9 +20,7 @@ void c_sleep(const int milliseconds)
     return;
   }
 
-#ifdef _MSC_VER
-  Sleep(milliseconds);
-#else
+#if defined(HAVE_NANOSLEEP)
 // https://linux.die.net/man/3/usleep
 //int ierr = usleep(*milliseconds * 1000);
 
@@ -37,21 +35,25 @@ void c_sleep(const int milliseconds)
 
   switch(errno){
     case EINTR:
-    fprintf(stderr, "nanosleep() interrupted\n");
+    fprintf(stderr, "nanosleep interrupted\n");
     break;
     case EINVAL:
-    fprintf(stderr, "nanosleep() invalid timespec value (EINVAL)\n");
+    fprintf(stderr, "nanosleep invalid timespec value (EINVAL)\n");
     break;
     case EFAULT:
-    fprintf(stderr, "nanosleep() timespec points outside accessible address space (EFAULT)\n");
+    fprintf(stderr, "nanosleep timespec points outside accessible address space (EFAULT)\n");
     break;
     case ENOSYS:
-    fprintf(stderr, "nanosleep() not supported on this system\n");
+    fprintf(stderr, "nanosleep not supported on this system\n");
     break;
     default:
-    fprintf(stderr, "nanosleep() error\n");
+    fprintf(stderr, "nanosleep error\n");
     break;
   }
+#elif defined(_WIN32)
+  Sleep(milliseconds);
+#else
+#error "No nanosleep implementation available for this platform"
 #endif
 
 }
