@@ -4,8 +4,9 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
+  "binaryDir": "build",
   "cacheVariables": {
+    "CMAKE_BUILD_TYPE": "Release",
     "CMAKE_COMPILE_WARNING_AS_ERROR": true,
     "CMAKE_LINK_WARNING_AS_ERROR": true
   }
@@ -15,36 +16,40 @@
 },
 { "name": "gmake", "inherits": "default",
   "generator": "Unix Makefiles"
+},
+{ "name": "build", "inherits": "default"},
+{
+  "name": "debug", "inherits": "default",
+  "cacheVariables": {
+    "CMAKE_BUILD_TYPE": "Debug"
+  }
+},
+{
+  "name": "reldebug", "inherits": "default",
+  "cacheVariables": {
+    "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+  },
+  "displayName": "Release with Debug Info"
+},
+{
+  "name": "msvc", "inherits": "default",
+  "generator": "Visual Studio 18 2026"
 }
 ],
 "buildPresets": [
-  {
-    "name": "default",
-    "configurePreset": "default"
-  },
-  {
-    "name": "release",
-    "configurePreset": "default",
-    "configuration": "Release"
-  },
-  {
-    "name": "reldebug",
-    "configurePreset": "default",
-    "configuration": "RelWithDebInfo",
-    "displayName": "Release with Debug Info"
-  },
-  {
-    "name": "debug",
-    "configurePreset": "default",
-    "configuration": "Debug"
-  },
+  { "name": "default", "configurePreset": "default", "configuration": "Release", "jobs": 0 },
+  { "name": "build", "inherits": "default", "configurePreset": "build" },
+  { "name": "msvc", "inherits": "default", "configurePreset": "msvc" },
+  { "name": "debug", "inherits": "default", "configurePreset": "debug", "configuration": "Debug" },
+  { "name": "reldebug", "inherits": "default", "configurePreset": "reldebug", "configuration": "RelWithDebInfo" },
   { "name": "ninja", "configurePreset": "ninja" },
-  { "name": "gmake", "configurePreset": "gmake" }
+  { "name": "gmake", "inherits": "default", "configurePreset": "gmake" }
 ],
 "testPresets": [
 {
   "name": "default",
   "configurePreset": "default",
+  "configuration": "Release",
   "output": {
     "outputOnFailure": true,
     "verbosity": "verbose"
@@ -53,23 +58,19 @@
     "noTestsAction": "error",
     "scheduleRandom": true,
     "stopOnFailure": false,
-    "timeout": 15
+    "jobs": 4
   }
 },
 {
-  "name": "release", "inherits": "default",
-  "configurePreset": "default",
-  "configuration": "Release"
-},
-{
   "name": "reldebug", "inherits": "default",
-  "configurePreset": "default",
+  "configurePreset": "reldebug",
   "configuration": "RelWithDebInfo",
   "displayName": "Release with Debug Info"
 },
+{ "name": "msvc", "inherits": "default", "configurePreset": "msvc" },
 {
   "name": "debug", "inherits": "default",
-  "configurePreset": "default",
+  "configurePreset": "debug",
   "configuration": "Debug"
 },
 { "name": "ninja", "configurePreset": "ninja" },
@@ -78,31 +79,42 @@
 "workflowPresets": [
   {
     "name": "default",
+    "displayName": "build and test",
     "steps": [
       { "type": "configure", "name": "default" },
       { "type": "build", "name": "default" },
       { "type": "test", "name": "default" }
-
+    ]
+  },
+  {
+    "name": "build",
+    "displayName": "build only",
+    "steps": [
+      { "type": "configure", "name": "build" },
+      { "type": "build", "name": "build" }
     ]
   },
   {
     "name": "debug",
+    "displayName": "Debug build and test",
     "steps": [
-      { "type": "configure", "name": "default" },
+      { "type": "configure", "name": "debug" },
       { "type": "build", "name": "debug" },
       { "type": "test", "name": "debug" }
     ]
   },
   {
-    "name": "release",
+    "name": "msvc",
+    "displayName": "MSVC build and test",
     "steps": [
-      { "type": "configure", "name": "default" },
-      { "type": "build", "name": "release" },
-      { "type": "test", "name": "release" }
+      { "type": "configure", "name": "msvc" },
+      { "type": "build", "name": "msvc" },
+      { "type": "test", "name": "msvc" }
     ]
   },
   {
     "name": "ninja",
+    "displayName": "Ninja build and test",
     "steps": [
       { "type": "configure", "name": "ninja" },
       { "type": "build", "name": "ninja" },
@@ -111,6 +123,7 @@
   },
   {
     "name": "gmake",
+    "displayName": "GNU Make build and test",
     "steps": [
       { "type": "configure", "name": "gmake" },
       { "type": "build", "name": "gmake" },

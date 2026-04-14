@@ -44,7 +44,7 @@ jobs:
     - uses: ./.github/workflows/composite-unix
 
 
-  linux-gcc-9-10-11:
+  linux-gcc-old:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
 
@@ -61,12 +61,13 @@ jobs:
     - *checkout
 
     - name: GCC APT
-      if: matrix.gcc-version < 11
+      if: matrix.gcc-version < 10
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
 
-    - uses: ./.github/workflows/composite-unix
+    - &default-workflow
+      run: cmake --workflow default
 
 
   gcc-7-8:
@@ -90,7 +91,7 @@ jobs:
     - name: install compilers
       run: |
         apt update -y
-        apt install -y --no-install-recommends ca-certificates gpg curl make ninja-build ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
+        apt install -y --no-install-recommends ca-certificates gpg curl make ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
 
     - name: install CMake
       run: |
@@ -103,7 +104,7 @@ jobs:
 
     - *checkout
 
-    - uses: ./.github/workflows/composite-unix
+    - *default-workflow
 
 
   valgrind-memory:
