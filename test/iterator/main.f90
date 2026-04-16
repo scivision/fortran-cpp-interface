@@ -16,6 +16,10 @@ integer(C_INT) FUNCTION getIteratorValue_C(pit) BIND(C, NAME='getIteratorValue_C
   import C_INT, C_PTR
   type(C_PTR), value, intent(in) :: pit
 end function
+subroutine destroyIterator_C(pit) BIND(C, NAME='destroyIterator_C')
+  import C_PTR
+  type(C_PTR), value, intent(in) :: pit
+end subroutine
 end interface
 
 type(C_PTR) :: it
@@ -25,6 +29,7 @@ it = initIterator_C()
 print *, getIteratorValue_C(it)
 
 call incrementIterator_C(it)
+call destroyIterator_C(it)
 
 print *, "OK: iterator"
 

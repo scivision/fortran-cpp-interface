@@ -6,6 +6,7 @@ extern "C" {
 void* initIterator_C();
 void incrementIterator_C(void*);
 int getIteratorValue_C(void*);
+void destroyIterator_C(void*);
 
 #ifdef __cplusplus
 }
