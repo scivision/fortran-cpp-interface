@@ -17,7 +17,7 @@ int main()
   for (auto i=0u; i < x2.size(); i++){
     std::cout << x2[i] << "\n";
     if (x2[i] != 2*x[i]){
-      std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
+      std::cerr << "value " <<  x2[i] << "!=" << x[i] << "\n";
       return EXIT_FAILURE;
     }
   }

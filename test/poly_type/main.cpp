@@ -19,11 +19,11 @@ int main(){
     std::cerr << "Error: " << A << " != 4\n";
     return EXIT_FAILURE;
   }
-  std::cout << "C:3 = " << C << std::endl;
+  std::cout << "C:3 = " << C << "\n";
   add_one_C(&xtype, &x3, &A, &C);
-  std::cout << "C:3 = " << C << std::endl;
+  std::cout << "C:3 = " << C << "\n";
   add_one_C(&xtype, &x3, &A, &C);
-  std::cout << "C:3 = " << C << std::endl;
+  std::cout << "C:3 = " << C << "\n";
 
   xtype = 4;
   init_type(&xtype, &x4);
@@ -33,11 +33,11 @@ int main(){
     std::cerr << "Error: " << A << " != 5\n";
     return EXIT_FAILURE;
   }
-  std::cout << "C:4 = " << C << std::endl;
+  std::cout << "C:4 = " << C << "\n";
   add_one_C(&xtype, &x4, &A, &C);
-  std::cout << "C:4 = " << C << std::endl;
+  std::cout << "C:4 = " << C << "\n";
   add_one_C(&xtype, &x4, &A, &C);
-  std::cout << "C:4 = " << C << std::endl;
+  std::cout << "C:4 = " << C << "\n";
 
   dealloc_type(&xtype, &x3);
   std::cout << "three deallocated\n";

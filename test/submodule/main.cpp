@@ -11,11 +11,11 @@
 int main() {
 
   if (fabs(pi() - M_PI) > 1e-4) {
-    std::cerr << "pi() unexpected value: " << pi() << std::endl;
+    std::cerr << "pi() unexpected value: " << pi() << "\n";
     return EXIT_FAILURE;
   }
 
-  std::cout << "OK: pi() value: " << pi() << std::endl;
+  std::cout << "OK: pi() value: " << pi() << "\n";
 
   return EXIT_SUCCESS;
 

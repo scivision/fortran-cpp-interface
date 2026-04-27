@@ -17,7 +17,7 @@ int main()
   point23(&a[0], &b[0], &N);
 
   if (b[0] != a[1] || b[1] != a[2]){
-    std::cerr << "value " <<  b[0] << "!=" << a[1] << " or " << b[1] << "!=" << a[2] << std::endl;
+    std::cerr << "value " <<  b[0] << " != " << a[1] << " or " << b[1] << " != " << a[2] << "\n";
     return EXIT_FAILURE;
   }
 

@@ -9,7 +9,7 @@ void struct_check_cpp(struct params *s) {
 struct params *p = s;
 
 if (p->my_int != 123) {
-  std::cerr << "Error: my_int = " << p->my_int << std::endl;
+  std::cerr << "Error: my_int = " << p->my_int << "\n";
   exit(EXIT_FAILURE);
 }
 
@@ -19,7 +19,7 @@ if (! p->my_bool) {
 }
 
 if (strncmp(p->my_char, "Hello", 5) != 0) {
-  std::cerr << "Error: my_char != Hello " << p->my_char << std::endl;
+  std::cerr << "Error: my_char != Hello " << p->my_char << "\n";
   exit(EXIT_FAILURE);
 }
 

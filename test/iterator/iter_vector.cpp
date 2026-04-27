@@ -16,11 +16,11 @@ void* ptr = &(*it);
 auto it2 = static_cast<std::vector<int>::iterator*>(ptr);
 
 
-std::cout << *it << std::endl;
+std::cout << *it << "\n";
 incrementIterator(it);
-std::cout << *it << std::endl;
+std::cout << *it << "\n";
 incrementIterator(it);
-std::cout << *it << std::endl;
+std::cout << *it << "\n";
 incrementIterator(it);
 
 return EXIT_SUCCESS;

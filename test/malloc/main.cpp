@@ -19,7 +19,7 @@ int main()
 
   for (auto i=0u; i < N; i++){
     if (x2[i] != 2 * x[i]){
-      std::cerr << "value " <<  x2[i] << "!=" << x[i] << std::endl;
+      std::cerr << "value " <<  x2[i] << "!=" << x[i] << "\n";
       return EXIT_FAILURE;
     }
   }
