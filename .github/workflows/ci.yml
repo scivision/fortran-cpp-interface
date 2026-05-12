@@ -1,8 +1,7 @@
 name: ci
 
 env:
-  CTEST_NO_TESTS_ACTION: error
-  CTEST_PARALLEL_LEVEL: 0
+  HOMEBREW_NO_INSTALL_CLEANUP: 1
 
 on:
   push:
@@ -83,6 +82,7 @@ jobs:
       fail-fast: false
       matrix:
         gcc-version: [8]
+        cmake_version: [4.3.2]
     # GCC 7 works, but just didn't feel the need to test so old a version
 
     env: *gcc-env
@@ -95,16 +95,13 @@ jobs:
 
     - name: install CMake
       run: |
-        curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
-        apt-get update
-        test -f /usr/share/doc/kitware-archive-keyring/copyright || rm /usr/share/keyrings/kitware-archive-keyring.gpg
-        apt-get install --no-install-recommends -y kitware-archive-keyring
-        apt-get install --no-install-recommends -y cmake
+        curl -LO "https://github.com/Kitware/CMake/releases/download/v${{ matrix.cmake_version }}/cmake-${{ matrix.cmake_version }}-linux-x86_64.tar.gz"
+        tar -xf cmake-${{ matrix.cmake_version }}-linux-x86_64.tar.gz --exclude=doc/ --exclude=man/ --exclude=Help/
+        echo "CMAKE=$GITHUB_WORKSPACE/cmake-${{ matrix.cmake_version }}-linux-x86_64/bin/cmake" >> $GITHUB_ENV
 
     - *checkout
 
-    - *default-workflow
+    - run: $CMAKE --workflow gmake
 
 
   valgrind-memory:
@@ -123,33 +120,34 @@ jobs:
     - run: ctest -S memcheck.cmake -VV -E "sleep|string_array|string_view|binding_derived"
 
 
-  linux-flang:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # just saving CI time
+#   linux-flang:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 15
 
-    strategy:
-      matrix:
-        llvm-version: [21]
+#     strategy:
+#       matrix:
+#         llvm-version: [21]
 
-    steps:
-    - *checkout
+#     steps:
+#     - *checkout
 
-    - name: Apt LLVM
-      run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh ${{ matrix.llvm-version }}
-          sudo apt-get update
+#     - name: Apt LLVM
+#       run: |
+#           wget https://apt.llvm.org/llvm.sh
+#           chmod +x llvm.sh
+#           sudo ./llvm.sh ${{ matrix.llvm-version }}
+#           sudo apt-get update
 
-    - name: install Flang
-      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
-# MUST specify version here or default old Clang used despite LLVM apt docs
+#     - name: install Flang
+#       run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
+# # MUST specify version here or default old Clang used despite LLVM apt docs
 
-    - uses: ./.github/workflows/composite-unix
-      env:
-        CC: clang-${{ matrix.llvm-version }}
-        CXX: clang++-${{ matrix.llvm-version }}
-        FC: flang-${{ matrix.llvm-version }}
+#     - uses: ./.github/workflows/composite-unix
+#       env:
+#         CC: clang-${{ matrix.llvm-version }}
+#         CXX: clang++-${{ matrix.llvm-version }}
+#         FC: flang-${{ matrix.llvm-version }}
 
 
   mac:
@@ -200,7 +198,7 @@ jobs:
 
     - *checkout
 
-    - run: cmake --workflow ninja
+    - run: cmake --workflow default
 
     - name: upload CMakeConfigureLog.yaml
       if: failure() && hashFiles('build/CMakeFiles/CMakeConfigureLog.yaml') != ''

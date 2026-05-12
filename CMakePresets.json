@@ -5,19 +5,16 @@
 {
   "name": "default",
   "binaryDir": "build",
+  "generator": "Ninja",
   "cacheVariables": {
     "CMAKE_BUILD_TYPE": "Release",
     "CMAKE_COMPILE_WARNING_AS_ERROR": true,
     "CMAKE_LINK_WARNING_AS_ERROR": true
   }
 },
-{ "name": "ninja", "inherits": "default",
-  "generator": "Ninja"
-},
 { "name": "gmake", "inherits": "default",
   "generator": "Unix Makefiles"
 },
-{ "name": "build", "inherits": "default"},
 {
   "name": "debug", "inherits": "default",
   "cacheVariables": {
@@ -37,13 +34,11 @@
 }
 ],
 "buildPresets": [
-  { "name": "default", "configurePreset": "default", "configuration": "Release", "jobs": 0 },
-  { "name": "build", "inherits": "default", "configurePreset": "build" },
+  { "name": "default", "configurePreset": "default", "configuration": "Release"},
   { "name": "msvc", "inherits": "default", "configurePreset": "msvc" },
   { "name": "debug", "inherits": "default", "configurePreset": "debug", "configuration": "Debug" },
   { "name": "reldebug", "inherits": "default", "configurePreset": "reldebug", "configuration": "RelWithDebInfo" },
-  { "name": "ninja", "configurePreset": "ninja" },
-  { "name": "gmake", "inherits": "default", "configurePreset": "gmake" }
+  { "name": "gmake", "inherits": "default", "configurePreset": "gmake", "jobs": 4 }
 ],
 "testPresets": [
 {
@@ -73,62 +68,28 @@
   "configurePreset": "debug",
   "configuration": "Debug"
 },
-{ "name": "ninja", "configurePreset": "ninja" },
 { "name": "gmake", "configurePreset": "gmake" }
 ],
 "workflowPresets": [
-  {
-    "name": "default",
-    "displayName": "build and test",
-    "steps": [
+  { "name": "default", "displayName": "build and test", "steps": [
       { "type": "configure", "name": "default" },
       { "type": "build", "name": "default" },
-      { "type": "test", "name": "default" }
-    ]
-  },
-  {
-    "name": "build",
-    "displayName": "build only",
-    "steps": [
-      { "type": "configure", "name": "build" },
-      { "type": "build", "name": "build" }
-    ]
-  },
-  {
-    "name": "debug",
-    "displayName": "Debug build and test",
-    "steps": [
+      { "type": "test", "name": "default" } ] },
+  { "name": "build", "displayName": "build only", "steps": [
+      { "type": "configure", "name": "default" },
+      { "type": "build", "name": "default" } ] },
+  { "name": "debug", "displayName": "Debug build and test", "steps": [
       { "type": "configure", "name": "debug" },
       { "type": "build", "name": "debug" },
-      { "type": "test", "name": "debug" }
-    ]
-  },
-  {
-    "name": "msvc",
-    "displayName": "MSVC build and test",
-    "steps": [
+      { "type": "test", "name": "debug" } ] },
+  { "name": "msvc", "displayName": "MSVC build and test", "steps": [
       { "type": "configure", "name": "msvc" },
       { "type": "build", "name": "msvc" },
-      { "type": "test", "name": "msvc" }
-    ]
-  },
-  {
-    "name": "ninja",
-    "displayName": "Ninja build and test",
-    "steps": [
-      { "type": "configure", "name": "ninja" },
-      { "type": "build", "name": "ninja" },
-      { "type": "test", "name": "ninja" }
-    ]
-  },
-  {
-    "name": "gmake",
-    "displayName": "GNU Make build and test",
-    "steps": [
+      { "type": "test", "name": "msvc" } ] },
+  { "name": "gmake", "displayName": "GNU Make build and test", "steps": [
       { "type": "configure", "name": "gmake" },
       { "type": "build", "name": "gmake" },
-      { "type": "test", "name": "gmake" }
-    ]
+      { "type": "test", "name": "gmake" } ]
   }
 ]
 }

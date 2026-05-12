@@ -8,7 +8,7 @@ runs:
   steps:
 
   - name: Ninja build and test
-    run: cmake --workflow ninja --fresh
+    run: cmake --workflow default --fresh
     shell: bash
 
   - name: GNU Make build and test
