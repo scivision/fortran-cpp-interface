@@ -2,15 +2,16 @@ include(CheckIncludeFile)
 include(CheckSymbolExists)
 include(CheckIncludeFileCXX)
 
+set(linker_lang)
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" AND CMAKE_GENERATOR STREQUAL "Unix Makefiles")
   # otherwise failed to link since -lc++ is missing
   set(linker_lang CXX)
-  message(VERBOSE "Setting linker language to CXX for certain targets")
-elseif(NOT CMAKE_GENERATOR MATCHES "Visual Studio")
-  # IntelLLVM|NVHPC need Fortran.
-  # For other compilers (except as above) don't need it set, but Fortran doesn't hurt.
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM|NVHPC" AND NOT CMAKE_GENERATOR MATCHES "Visual Studio")
+  # IntelLLVM|NVHPC need Fortran
   set(linker_lang Fortran)
-  message(VERBOSE "Setting linker language to Fortran for certain targets")
+endif()
+if(linker_lang)
+  message(STATUS "Setting linker language to ${linker_lang} for certain targets")
 endif()
 
 # --- abi check: C++ and Fortran compiler ABI compatibility
