@@ -1,7 +1,11 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+
 #include <memory>
+#ifndef __cpp_lib_to_address
+#error "C++20 std::to_address is required for this test"
+#endif
 
 
 char* iter_ptr(char* c){

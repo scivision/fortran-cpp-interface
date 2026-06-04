@@ -46,11 +46,13 @@ foreach(a IN ITEMS
   allocate bounds contiguous
   array bool error exception
   iterator
-  glibc malloc
+  malloc
   nullptr
   opaque pointer poly_function poly_type real struct
   sleep string submodule
-  time vector)
+  time
+  uid
+  vector)
 
   add_subdirectory(test/${a})
 
