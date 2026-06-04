@@ -129,7 +129,8 @@ The "error" examples show this.
 
 ### ISO_Fortran_binding.h
 
-On 2019-01-12 [a GCC commit](https://github.com/gcc-mirror/gcc/commit/bbf18dc5d248a79a20ebf4b3a751669cd75485fd)
+On 2019-01-12
+[a GCC commit](https://github.com/gcc-mirror/gcc/commit/bbf18dc5d248a79a20ebf4b3a751669cd75485fd)
 from Paul Thomas brought ISO_Fortran_binding.h to
 [GCC 9](https://gcc.gnu.org/gcc-9/changes.html).
 
@@ -137,7 +138,7 @@ Compilers having "ISO_Fortran_binding.h" include:
 
 * GCC &ge; 9
 * Intel oneAPI
-* Clang / Flang LLVM &ge; 19
+* Clang / Flang LLVM &ge; 19 (note for macos: not AppleClang yet, need to use Homebrew Clang + Flang)
 * IBM OpenXL
 * Cray Fortran
 

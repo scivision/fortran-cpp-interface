@@ -70,7 +70,16 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "NVHPC")
   set(CMAKE_REQUIRED_LIBRARIES nvf)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
-  set(CMAKE_REQUIRED_LIBRARIES FortranRuntime FortranDecimal)
+  find_library(flang_rt
+  NAMES flang_rt.runtime FortranRuntime
+  NAMES_PER_DIR
+  )
+  # newer Flang versions have flang_rt.runtime, older Flang have FortranRuntime
+  if(flang_rt)
+    set(CMAKE_REQUIRED_LIBRARIES ${flang_rt})
+  else()
+    message(WARNING "Couldn't find Flang runtime library; some checks may fail")
+  endif()
 endif()
 
 # some compilers (e.g. NVHPC) have ISO_Fortran_binding.h but don't
