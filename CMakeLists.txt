@@ -43,7 +43,7 @@ endif()
 
 foreach(a IN ITEMS
   iso_fortran_binding
-  allocate contiguous
+  allocate bounds contiguous
   array bool error exception
   iterator
   glibc malloc
