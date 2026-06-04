@@ -140,7 +140,7 @@ endblock()
 if(CMAKE_C_COMPILER_ID MATCHES "Clang|GNU|^Intel")
   add_compile_options(
   "$<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug>>:-Wextra>"
-  "$<$<COMPILE_LANGUAGE:C,CXX>:-Wall;-Werror=array-bounds>"
+  "$<$<AND:$<COMPILE_LANGUAGE:C,CXX>,$<CONFIG:Debug,RelWithDebInfo>>:-Wall;-Werror=array-bounds>"
   "$<$<COMPILE_LANGUAGE:C>:-Werror=implicit-function-declaration>"
   )
 elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
@@ -154,7 +154,7 @@ add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-eI>")
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
 add_compile_options(
-"$<$<COMPILE_LANGUAGE:Fortran>:-Wall>"
+"$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-Wall>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-Wextra>"
 "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>"
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>"
@@ -169,6 +169,8 @@ add_compile_options(
 )
 
 # -fpscomp logicals is required for C_BOOL
+# -fpscomp:logicals isn't acceptable on Linux
+# -fpscomp;logicals in generator expression works on Windows and Linux.
 add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
 
 # -stand f18 is just for warnings, it doesn't change compiler behavior
