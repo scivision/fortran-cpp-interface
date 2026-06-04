@@ -1,12 +1,5 @@
 set_property(DIRECTORY PROPERTY LABELS iterator)
 
-include(CheckCXXSymbolExists)
-
-check_cxx_symbol_exists(__cpp_lib_to_address "memory" cpp20_to_address)
-if(NOT cpp20_to_address)
-  return()
-endif()
-
 add_library(int_iterator OBJECT lib.cpp)
 target_include_directories(int_iterator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
