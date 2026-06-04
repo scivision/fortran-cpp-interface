@@ -69,41 +69,6 @@ jobs:
       run: cmake --workflow default
 
 
-  gcc-7-8:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:20.04
-      env:
-        DEBIAN_FRONTEND: noninteractive
-
-    timeout-minutes: 15
-
-    strategy:
-      fail-fast: false
-      matrix:
-        gcc-version: [8]
-        cmake_version: [4.3.2]
-    # GCC 7 works, but just didn't feel the need to test so old a version
-
-    env: *gcc-env
-
-    steps:
-    - name: install compilers
-      run: |
-        apt update -y
-        apt install -y --no-install-recommends ca-certificates gpg curl make ${{ env.CC }} ${{ env.CXX }} ${{ env.FC }}
-
-    - name: install CMake
-      run: |
-        curl -LO "https://github.com/Kitware/CMake/releases/download/v${{ matrix.cmake_version }}/cmake-${{ matrix.cmake_version }}-linux-x86_64.tar.gz"
-        tar -xf cmake-${{ matrix.cmake_version }}-linux-x86_64.tar.gz --exclude=doc/ --exclude=man/ --exclude=Help/
-        echo "CMAKE=$GITHUB_WORKSPACE/cmake-${{ matrix.cmake_version }}-linux-x86_64/bin/cmake" >> $GITHUB_ENV
-
-    - *checkout
-
-    - run: $CMAKE --workflow gmake
-
-
   valgrind-memory:
     runs-on: ubuntu-latest
     needs: linux-gcc
