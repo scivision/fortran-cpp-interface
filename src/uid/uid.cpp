@@ -18,6 +18,12 @@
 
 #include "uid.h"
 
+#if __has_attribute(unlikely)
+#define UNLIKELY [[unlikely]]
+#else
+#define UNLIKELY
+#endif
+
 
 extern "C" {
 std::string::size_type c_get_uid(char* result, const std::string::size_type buffer_size) {
@@ -27,7 +33,7 @@ std::string::size_type c_get_uid(char* result, const std::string::size_type buff
 
 std::string::size_type str2char(std::string_view s, char* result, const std::string::size_type buffer_size)
 {
-  if(s.length() >= buffer_size) [[unlikely]]
+  if(s.length() >= buffer_size) UNLIKELY
   {
     std::cerr << "ERROR: " << s << " " << std::make_error_code(std::errc::result_out_of_range) << "\n";
     return 0;

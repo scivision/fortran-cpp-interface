@@ -170,6 +170,9 @@ add_compile_options(
 "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>"
 )
 
+add_compile_options("$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,10.0>>:-Wno-attributes>")
+# this is for UNLIKELY/LIKELY macros
+
 # "$<$<COMPILE_LANGUAGE:Fortran>:-Werror=array-bounds;-fcheck=all>"
 
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
