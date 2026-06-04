@@ -10,7 +10,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND
   return()
 endif()
 
-add_executable(bounds_fortran bounds.f90 ${PROJECT_SOURCE_DIR}/src/bounds/bounds.cpp)
+add_executable(bounds_fortran bounds.f90 ${PROJECT_SOURCE_DIR}/src/bounds/bounds.cpp ${PROJECT_SOURCE_DIR}/src/bounds/bounds.f90)
 target_include_directories(bounds_fortran PRIVATE ${PROJECT_SOURCE_DIR}/src/bounds)
 set_property(TARGET bounds_fortran PROPERTY LINKER_LANGUAGE ${linker_lang})
 
