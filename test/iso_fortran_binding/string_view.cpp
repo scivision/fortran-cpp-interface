@@ -3,7 +3,7 @@
 #include <string_view>
 #include <iostream>
 
-#include "ISO_Fortran_binding.h"
+#include <ISO_Fortran_binding.h>
 
 extern "C" {
    void echo_c( const CFI_cdesc_t* Fstr )

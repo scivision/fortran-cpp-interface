@@ -32,6 +32,14 @@ if(HAVE_C_CHAR_PTR)
   add_test(NAME CFI_establish_string COMMAND cfi_establish_string)
 
   if(HAVE_CFI_CDESC)
+    add_executable(string_inout_c string_inout.c string_inout.f90)
+    set_property(TARGET string_inout_c PROPERTY LINKER_LANGUAGE Fortran)
+    add_test(NAME StringInOutC COMMAND string_inout_c)
+
+    add_executable(string_inout_cpp string_inout.cpp string_inout.f90)
+    set_property(TARGET string_inout_cpp PROPERTY LINKER_LANGUAGE Fortran)
+    add_test(NAME StringInOutCPP COMMAND string_inout_cpp)
+
     add_executable(string_array string_array.cpp string_array.f90)
     set_property(TARGET string_array PROPERTY LINKER_LANGUAGE CXX)
     target_compile_options(string_array PRIVATE "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wno-uninitialized>")

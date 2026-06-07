@@ -1,6 +1,6 @@
 // https://fortran-lang.discourse.group/t/experiment-dealing-with-a-pointer-to-a-string-from-c/930/3
 #include <string.h>
-#include "ISO_Fortran_binding.h"
+#include <ISO_Fortran_binding.h>
 
 static char *str = "Hello";
 

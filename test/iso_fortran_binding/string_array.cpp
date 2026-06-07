@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "ISO_Fortran_binding.h"
+#include <ISO_Fortran_binding.h>
 
 extern "C" {
    // Prototype for the Fortran procedures
