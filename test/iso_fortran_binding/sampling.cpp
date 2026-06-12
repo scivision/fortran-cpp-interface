@@ -14,8 +14,18 @@
 #include <source_location>
 #endif
 
+#if __has_include(<format>)
+#include <format>
+#endif
+
 #include <ISO_Fortran_binding.h>
 
+
+void check_cfi(int
+#if defined(__cpp_lib_source_location)
+, const std::source_location& = std::source_location::current()
+#endif
+);
 
 
 static const std::vector<std::string> cfi_errstrs = {
@@ -54,16 +64,22 @@ std::string cfiGetErrorString(int stat) {
     return cfi_errstrs[11];
 }
 
-void check_cfi(int s)
-{
-  if (s != CFI_SUCCESS){
+void check_cfi(int src
 #if defined(__cpp_lib_source_location)
-    constexpr std::source_location loc = std::source_location::current();
-    std::cerr << loc.file_name() << ":" << loc.line() <<
+, const std::source_location& location){
+  std::string s =
+#if defined(__cpp_lib_format)
+    std::format("{}:{}", location.file_name(), location.line());
 #else
-    std::cerr <<
+    std::string(location.file_name()) + ":" + std::to_string(location.line());
 #endif
-    " CFI API failed with error: (" << s << ") " << cfiGetErrorString(s) << "\n";
+#else
+ ){
+  std::string_view s;
+#endif
+
+  if (src != CFI_SUCCESS){
+    std::cerr <<" CFI API failed " << s << " with error: (" << src << ") " << cfiGetErrorString(src) << "\n";
   }
 }
 
