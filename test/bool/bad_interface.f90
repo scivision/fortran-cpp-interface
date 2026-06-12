@@ -6,8 +6,10 @@ use, intrinsic ::iso_c_binding, only : C_BOOL, C_INT
 
 implicit none
 
+include "logical_kind.inc"
+
 type, bind(C) :: bool_args
-logical(8) :: value
+logical(lk) :: value
 integer(C_INT) :: dummy
 end type
 

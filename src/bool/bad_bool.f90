@@ -5,10 +5,10 @@ use, intrinsic :: iso_fortran_env, only : error_unit
 
 implicit none
 
-integer, parameter :: lk = 8
+include "logical_kind.inc"
 
 type, bind(C) :: bool_args
-	logical(8) :: value
+	logical(lk) :: value
 	integer(C_INT) :: dummy
 end type
 

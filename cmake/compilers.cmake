@@ -103,16 +103,11 @@ endif()
 endblock()
 
 
-check_source_compiles(Fortran
-"program test
-implicit none
+check_source_compiles(Fortran "program test
 real :: a(1)
-print '(L1)', is_contiguous(a)
+if (.not. is_contiguous(a)) error stop
 end program"
-f08contiguous
-)
-
-include(${CMAKE_CURRENT_LIST_DIR}/f08submod_bind.cmake)
+f08contiguous)
 
 
 block()
