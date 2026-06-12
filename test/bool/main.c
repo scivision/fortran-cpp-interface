@@ -24,13 +24,16 @@ if(b){
   c++;
 }
 
-b = logical_not(true);
+// pass a pointer to int with value 42 to check that the Fortran function receives it correctly
+int dummy = 42;
+
+b = logical_not(true, &dummy);
 if(b) {
   fprintf(stderr, "logical_not(true) should be false: %d\n", b);
   c++;
 }
 
-b = logical_not(false);
+b = logical_not(false, &dummy);
 if (!b) {
   fprintf(stderr, "logical_not(false) should be true: %d\n", b);
   c++;

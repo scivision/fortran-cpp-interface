@@ -1,24 +1,26 @@
-program logical_C_bool
+! This shows a common mistake to fail to specify C_BOOL in the interface, which in general mismatches the size of the logical type and causes warnings about mismatched types.  This test should
+
+program bad_interface
 
 use, intrinsic ::iso_c_binding, only : C_BOOL, C_INT
 
 implicit none
 
 interface
-logical(C_BOOL) function logical_not(a, dummy) bind(C)
-import C_BOOL, C_INT
-logical(C_BOOL), intent(in), value :: a
-integer(C_INT), intent(in) :: dummy
+logical(C_BOOL) function logical_not(a, dint) bind(C)
+import C_INT, C_BOOL
+logical, intent(in), value :: a
+integer(C_INT), intent(in) :: dint
 end function
 
 logical(C_BOOL) function bool_passthru(a, dint) bind(C)
 import C_INT, C_BOOL
-logical(C_BOOL), intent(in), value :: a
+logical, intent(in), value :: a
 integer(C_INT), intent(in) :: dint
 end function
 end interface
 
-logical(C_BOOL) :: tc, fc
+logical :: tc, fc
 logical :: t0, f0, t1, f1
 !! show there's no warnings
 

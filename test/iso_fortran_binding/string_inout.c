@@ -4,11 +4,11 @@
 
 void process_strings_cfi(const CFI_cdesc_t *in_desc, CFI_cdesc_t *out_desc) {
     // 1. Get exact lengths directly from the Fortran descriptor
-    size_t in_len  = in_desc->elem_len;
+    // size_t in_len  = in_desc->elem_len;
     size_t out_len = out_desc->elem_len;
 
     // 2. Direct pointer access to Fortran's memory
-    char *in_ptr  = (char*)(in_desc->base_addr);
+    // char *in_ptr  = (char*)(in_desc->base_addr);
     char *out_ptr = (char*)(out_desc->base_addr);
 
     // Note: Fortran strings are NOT null-terminated!
