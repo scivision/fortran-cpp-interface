@@ -5,6 +5,8 @@ integer, parameter :: lk = selected_logical_kind(1)
 end program"
 f23logical_kind)
 
+# this is an arbitrary value we found provokes failure across OS and compilers.
+# this is not guaranteed to fail, so someday these "bad" tests may need to be removed
 set(logical_bytes 8)
 math(EXPR logical_bits "${logical_bytes}*8")
 
@@ -49,6 +51,10 @@ add_test(NAME C_Cpp_bool COMMAND c_cxx_bool)
 add_executable(cxx_c_bool main.cpp)
 target_link_libraries(cxx_c_bool PRIVATE bool_c)
 add_test(NAME Cpp_C_bool COMMAND cxx_c_bool)
+
+# These WILL_FAIL tests might stop working someday - we just found a value that would fail for all
+# compilers we tried, but that might not always be the case.
+# If these tests start passing, they should be removed, but the "bad" interfaces should still be avoided in practice.
 
 
 add_executable(fortran_c_bad_bool bad_interface.f90)
