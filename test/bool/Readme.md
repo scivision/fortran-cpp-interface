@@ -3,7 +3,7 @@
 When interfacing between C or C++ and Fortran, the `logical(C_BOOL)` type is used to represent boolean values.
 This test demonstrates how to use `logical(C_BOOL)` in Fortran and how it interacts with C and C++ code.
 
-The "test/bool/bad_interface.f90" and "src/bool/bad_bool.f90" files contain examples of incorrect usage of `logical(C_BOOL)`, which should lead to compilation errors.
+The "test/bool/bad_interface.f90" and "src/bool/bad_bool.f90" files contain examples of incorrect usage of `logical(C_BOOL)`, which should lead to runtime issues by messing up the values of following dummy arguments.
 
 [nvfortran](https://forums.developer.nvidia.com/t/nvfortran-c-bool-bind-c-not-improper-value/291896)
 supports F2018 standard `C_BOOL` if `nvfortran -Munixlogical` is used.
