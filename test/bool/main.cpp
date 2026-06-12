@@ -21,30 +21,31 @@ if(b){
   c++;
 }
 
-// pass a pointer to int with value 42 to check that the Fortran function receives it correctly
-int dummy = 42;
+bool_args args{true, 42};
 
-b = logical_not(true, &dummy);
+b = logical_not(args);
 
 if(b){
   std::cerr << "logical_not(true) failed: " << b << "\n";
   c++;
 }
 
-b = logical_not(false, &dummy);
+args.value = false;
+b = logical_not(args);
 
 if (!b){
   std::cerr << "logical_not(false) failed: " << b << "\n";
   c++;
 }
 
-b = bool_passthru(false, &dummy);
+b = bool_passthru(args);
 if(b){
   std::cerr << "bool_passthru(false) failed: " << b << "\n";
   c++;
 }
 
-b = bool_passthru(true, &dummy);
+args.value = true;
+b = bool_passthru(args);
 if(!b){
   std::cerr << "bool_passthru(true) failed: " << b << "\n";
   c++;

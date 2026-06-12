@@ -7,26 +7,26 @@
 
 #include "my_bool.h"
 
-bool logical_not(bool a, int* dummy)
+bool logical_not(bool_args args)
 {
-  printf("C boolean sizeof(%d) = %zu\n", a, sizeof(a));
-  if (*dummy != 42) {
-    fprintf(stderr, "ERROR: dummy argument != 42, but %d\n", *dummy);
+  printf("C boolean sizeof(%d) = %zu\n", args.value, sizeof(args.value));
+  if (args.dummy != 42) {
+    fprintf(stderr, "ERROR: dummy argument != 42, but %d\n", args.dummy);
     exit(EXIT_FAILURE);
   }
 
-  return !a;
+  return !args.value;
 }
 
-bool bool_passthru(bool a, int* dummy)
+bool bool_passthru(bool_args args)
 {
-  printf("C boolean sizeof(%d) = %zu\n", a, sizeof(a));
-  if (*dummy != 42) {
-    fprintf(stderr, "ERROR: dummy argument != 42, but %d\n", *dummy);
+  printf("C boolean sizeof(%d) = %zu\n", args.value, sizeof(args.value));
+  if (args.dummy != 42) {
+    fprintf(stderr, "ERROR: dummy argument != 42, but %d\n", args.dummy);
     exit(EXIT_FAILURE);
   }
 
-  return a;
+  return args.value;
 }
 
 bool bool_true(){ return true; }

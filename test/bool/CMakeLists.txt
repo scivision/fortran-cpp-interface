@@ -39,17 +39,18 @@ add_test(NAME Cpp_C_bool COMMAND cxx_c_bool)
 add_executable(fortran_c_bad_bool bad_interface.f90)
 target_link_libraries(fortran_c_bad_bool PRIVATE bool_c)
 set_property(TARGET fortran_c_bad_bool PROPERTY LINKER_LANGUAGE Fortran)
-add_test(NAME Fortran_C_bad_bool COMMAND fortran_c_bad_bool)
+add_test(NAME Fortran_C_bad_bool COMMAND ${CMAKE_COMMAND} -E env $<TARGET_FILE:fortran_c_bad_bool>)
 
 add_library(bad_bool_fortran OBJECT ${PROJECT_SOURCE_DIR}/src/bool/bad_bool.f90)
 target_include_directories(bad_bool_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/bool)
 
 add_executable(c_fortran_bad_bool main.c)
 target_link_libraries(c_fortran_bad_bool PRIVATE bad_bool_fortran)
-add_test(NAME C_Fortran_bad_bool COMMAND c_fortran_bad_bool)
+add_test(NAME C_Fortran_bad_bool COMMAND ${CMAKE_COMMAND} -E env $<TARGET_FILE:c_fortran_bad_bool>)
 
 add_executable(cxx_fortran_bad_bool main.cpp)
 target_link_libraries(cxx_fortran_bad_bool PRIVATE bad_bool_fortran)
-add_test(NAME Cpp_Fortran_bad_bool COMMAND cxx_fortran_bad_bool)
+add_test(NAME Cpp_Fortran_bad_bool COMMAND ${CMAKE_COMMAND} -E env $<TARGET_FILE:cxx_fortran_bad_bool>)
 
 set_tests_properties(C_Fortran_bad_bool Fortran_C_bad_bool Cpp_Fortran_bad_bool PROPERTIES WILL_FAIL true)
+set_target_properties(c_fortran_bool c_fortran_bad_bool PROPERTIES LINKER_LANGUAGE C)
