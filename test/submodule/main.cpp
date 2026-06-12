@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cstdlib>
 
-// #define _USE_MATH_DEFINES  // Windows oneAPI needs as compiler define
 #include <cmath>
 
 #include "my_submodule.h"
@@ -18,5 +17,4 @@ int main() {
   std::cout << "OK: pi() value: " << pi() << "\n";
 
   return EXIT_SUCCESS;
-
 }

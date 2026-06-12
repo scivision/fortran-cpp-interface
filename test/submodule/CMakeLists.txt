@@ -1,7 +1,6 @@
 set_property(DIRECTORY PROPERTY LABELS submodule)
 
-if(NOT f08submod_bind)
-  message(STATUS "Fortran submodule bind(C) is not supported by the compiler")
+if(DEFINED submod_bind AND NOT submod_bind)
   return()
 endif()
 
@@ -10,9 +9,10 @@ target_include_directories(submodule_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src
 
 add_executable(c_fortran_submodule main.c)
 target_link_libraries(c_fortran_submodule PRIVATE submodule_fortran)
+target_compile_definitions(c_fortran_submodule PRIVATE $<$<BOOL:${MSVC}>:_USE_MATH_DEFINES>)
 add_test(NAME C_Fortran_submodule COMMAND c_fortran_submodule)
 
 add_executable(cxx_fortran_submodule main.cpp)
 target_link_libraries(cxx_fortran_submodule PRIVATE submodule_fortran)
-target_compile_definitions(cxx_fortran_submodule PRIVATE _USE_MATH_DEFINES)
+target_compile_definitions(cxx_fortran_submodule PRIVATE $<$<BOOL:${MSVC}>:_USE_MATH_DEFINES>)
 add_test(NAME C++_Fortran_submodule COMMAND cxx_fortran_submodule)
