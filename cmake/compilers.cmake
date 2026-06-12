@@ -183,8 +183,12 @@ add_compile_options(
 
 # -fpscomp logicals is required for C_BOOL
 # -fpscomp:logicals isn't acceptable on Linux
-# -fpscomp;logicals in generator expression works on Windows and Linux.
-add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
+# -fpscomp;logicals in generator expression gives warnings on Windows
+if(WIN32)
+  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:/fpscomp:logicals>")
+else()
+  add_compile_options("$<$<COMPILE_LANGUAGE:Fortran>:-fpscomp;logicals>")
+endif()
 
 # -stand f18 is just for warnings, it doesn't change compiler behavior
 
