@@ -1,4 +1,7 @@
+#if __STDC_VERSION__ < 202311L
 #include <stdbool.h>
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 

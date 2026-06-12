@@ -1,12 +1,12 @@
 set_property(DIRECTORY PROPERTY LABELS bool)
 
-add_library(bool_fortran ${PROJECT_SOURCE_DIR}/src/bool/logbool.f90)
+add_library(bool_fortran OBJECT ${PROJECT_SOURCE_DIR}/src/bool/logbool.f90)
 target_include_directories(bool_fortran INTERFACE ${PROJECT_SOURCE_DIR}/src/bool)
 
-add_library(bool_cxx ${PROJECT_SOURCE_DIR}/src/bool/logbool.cpp)
+add_library(bool_cxx OBJECT ${PROJECT_SOURCE_DIR}/src/bool/logbool.cpp)
 target_include_directories(bool_cxx PUBLIC ${PROJECT_SOURCE_DIR}/src/bool)
 
-add_library(bool_c ${PROJECT_SOURCE_DIR}/src/bool/logbool.c)
+add_library(bool_c OBJECT ${PROJECT_SOURCE_DIR}/src/bool/logbool.c)
 target_include_directories(bool_c PUBLIC ${PROJECT_SOURCE_DIR}/src/bool)
 
 add_executable(c_fortran_bool main.c)

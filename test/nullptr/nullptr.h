@@ -1,7 +1,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#else
+#elif __STDC_VERSION__ < 202311L
 #include <stdbool.h>
 #endif
 

@@ -1,6 +1,9 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+
+#if __STDC_VERSION__ < 202311L
+#include <stdbool.h>
+#endif
 
 #include "mynan.h"
 
