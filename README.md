@@ -92,9 +92,9 @@ supports F2018 standard `C_BOOL` if `nvfortran -Munixlogical` is used.
 > The logical constants .TRUE. and .FALSE. are defined to be the four-byte values -1 and 0 respectively.
 A logical expression is defined to be .TRUE. if its least significant bit is 1 and .FALSE. otherwise.
 
-Example output, Fortran interfacing with C or C++
+#### Example output, Fortran interfacing with C or C++
 
-* Intel oneAPI 2023 without `-fpscomp logicals`
+* Intel oneAPI 2023..2026 (Linux or Windows) without `-fpscomp logicals`
 * NVHPC 2023.5 without `-Munixlogical`
 
 ```
@@ -108,8 +108,8 @@ Example output, Fortran interfacing with C or C++
          C_BOOL:     8         0        FF
 ```
 
-* Intel oneAPI 2023 with `-fpscomp logicals`
-* NVHPC 2023.5 with `-Munixlogical`
+* Intel oneAPI with `-fpscomp logicals`
+* NVHPC with `-Munixlogical`
 
 ```
  logical_not(T): F
