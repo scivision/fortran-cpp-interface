@@ -5,10 +5,13 @@ integer, parameter :: lk = selected_logical_kind(1)
 end program"
 f23logical_kind)
 
+set(logical_bytes 8)
+math(EXPR logical_bits "${logical_bytes}*8")
+
 if(f23logical_kind)
-  file(GENERATE OUTPUT logical_kind.inc CONTENT "integer, parameter :: lk = selected_logical_kind(64)")
+  file(GENERATE OUTPUT logical_kind.inc CONTENT "integer, parameter :: lk = selected_logical_kind(${logical_bits})")
 else()
-  file(GENERATE OUTPUT logical_kind.inc CONTENT "integer, parameter :: lk = 8")
+  file(GENERATE OUTPUT logical_kind.inc CONTENT "integer, parameter :: lk = ${logical_bytes}")
 endif()
 
 add_library(bool_fortran OBJECT ${PROJECT_SOURCE_DIR}/src/bool/logbool.f90)

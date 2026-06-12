@@ -103,12 +103,6 @@ endif()
 endblock()
 
 
-check_source_compiles(Fortran "program test
-real :: a(1)
-if (.not. is_contiguous(a)) error stop
-end program"
-f08contiguous)
-
 
 block()
 

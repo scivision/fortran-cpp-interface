@@ -1,7 +1,6 @@
 set_property(DIRECTORY PROPERTY LABELS contiguous)
 
-if(NOT f08contiguous)
-  message(STATUS "Fortran compiler ${CMAKE_Fortran_COMPILER_ID} does not support is_contiguous")
+if(DEFINED f08contiguous AND NOT f08contiguous)
   return()
 endif()
 
