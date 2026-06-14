@@ -36,10 +36,29 @@ contains
 subroutine set_data(self,array)
   class(dataobj_poly), intent(inout) :: self
   real(c_float), dimension(:,:), intent(in) :: array
+  integer(c_int) :: nx, ny
+  integer(c_int) :: dealloc_status, alloc_status
 
-  self%lx=size(array,1)
-  self%ly=size(array,2)
-  allocate(self%dataval(self%lx,self%ly))
+  nx = size(array,1)
+  ny = size(array,2)
+
+  ! Reuse existing allocation when shape matches to avoid churn.
+  if (associated(self%dataval)) then
+    if (size(self%dataval,1) == nx .and. size(self%dataval,2) == ny) then
+      self%lx = nx
+      self%ly = ny
+      self%dataval(:,:) = array(:,:)
+      return
+    end if
+    deallocate(self%dataval, stat=dealloc_status)
+    if (dealloc_status /= 0) return
+  end if
+
+  allocate(self%dataval(nx,ny), stat=alloc_status)
+  if (alloc_status /= 0) return
+
+  self%lx = nx
+  self%ly = ny
   self%dataval(:,:)=array(:,:)
 end subroutine set_data
 
