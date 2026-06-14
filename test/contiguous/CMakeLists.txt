@@ -13,4 +13,4 @@ add_test(NAME C_Fortran_contiguous COMMAND c_fortran_contiguous)
 
 add_executable(cxx_fortran_contiguous main.cpp)
 target_link_libraries(cxx_fortran_contiguous PRIVATE contiguous_fortran)
-add_test(NAME C++_Fortran_contiguous COMMAND cxx_fortran_contiguous)
+add_test(NAME Cpp_Fortran_contiguous COMMAND cxx_fortran_contiguous)

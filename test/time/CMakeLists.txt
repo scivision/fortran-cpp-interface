@@ -2,7 +2,7 @@ set_property(DIRECTORY PROPERTY LABELS time)
 
 add_library(fortran_clock OBJECT clock.f90)
 add_executable(cxx_fortran_tictoc main.cpp $<TARGET_OBJECTS:fortran_clock>)
-add_test(NAME C++_Fortran_tictoc COMMAND cxx_fortran_tictoc)
+add_test(NAME Cpp_Fortran_tictoc COMMAND cxx_fortran_tictoc)
 
 
 foreach(t IN ITEMS strftime strptime)

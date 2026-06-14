@@ -9,4 +9,4 @@ add_test(NAME C_Fortran_opaque COMMAND c_opaque)
 
 add_executable(cpp_opaque main.cpp)
 target_link_libraries(cpp_opaque PRIVATE opaque_fortran)
-add_test(NAME C++_Fortran_opaque COMMAND cpp_opaque)
+add_test(NAME Cpp_Fortran_opaque COMMAND cpp_opaque)

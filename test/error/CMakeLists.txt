@@ -12,7 +12,7 @@ COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:c_fortran_error> -Dexp_code=42 -P $
 
 add_executable(cxx_fortran_error main.cpp)
 target_link_libraries(cxx_fortran_error PRIVATE error_fortran)
-add_test(NAME C++_Fortran_error
+add_test(NAME Cpp_Fortran_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:cxx_fortran_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 
@@ -22,7 +22,7 @@ add_executable(fortran_cxx_error error_cpp.f90 $<TARGET_OBJECTS:cpp_err>)
 if(NOT CMAKE_GENERATOR MATCHES "Visual Studio")
   set_property(TARGET fortran_cxx_error PROPERTY LINKER_LANGUAGE ${linker_lang})
 endif()
-add_test(NAME Fortran_C++_error
+add_test(NAME Fortran_Cpp_error
 COMMAND ${CMAKE_COMMAND} -Dexe=$<TARGET_FILE:fortran_cxx_error> -Dexp_code=42 -P ${PROJECT_SOURCE_DIR}/cmake/test_error.cmake
 )
 

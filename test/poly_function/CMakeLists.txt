@@ -8,4 +8,4 @@ target_include_directories(poly_fcn INTERFACE ${PROJECT_SOURCE_DIR}/src/poly_fun
 
 add_executable(cpp_poly_fcn main.cpp)
 target_link_libraries(cpp_poly_fcn PRIVATE poly_fcn)
-add_test(NAME C++_Fortran_poly_fcn COMMAND cpp_poly_fcn)
+add_test(NAME Cpp_Fortran_poly_fcn COMMAND cpp_poly_fcn)

@@ -14,4 +14,4 @@ add_test(NAME C_Fortran_poly_type COMMAND c_poly_type)
 
 add_executable(cpp_poly_type main.cpp)
 target_link_libraries(cpp_poly_type PRIVATE poly_type_lib)
-add_test(NAME C++_Fortran_poly_type COMMAND cpp_poly_type)
+add_test(NAME Cpp_Fortran_poly_type COMMAND cpp_poly_type)

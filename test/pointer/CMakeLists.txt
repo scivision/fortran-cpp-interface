@@ -12,12 +12,12 @@ add_test(NAME C_Fortran_pointer COMMAND c_fortran_pointer)
 
 add_executable(cxx_fortran_pointer main.cpp)
 target_link_libraries(cxx_fortran_pointer PRIVATE pointer_fortran)
-add_test(NAME C++_Fortran_pointer COMMAND cxx_fortran_pointer)
+add_test(NAME Cpp_Fortran_pointer COMMAND cxx_fortran_pointer)
 
 add_library(cpp_null OBJECT ${PROJECT_SOURCE_DIR}/src/pointer/null.cpp)
 add_executable(fortran_cxx_null null_c.f90 $<TARGET_OBJECTS:cpp_null>)
 set_property(TARGET fortran_cxx_null PROPERTY LINKER_LANGUAGE ${linker_lang})
-add_test(NAME Fortran_C++_null COMMAND fortran_cxx_null)
+add_test(NAME Fortran_Cpp_null COMMAND fortran_cxx_null)
 
 # for Visual Studio generator object library
 add_library(c_null OBJECT ${PROJECT_SOURCE_DIR}/src/pointer/null.c)
