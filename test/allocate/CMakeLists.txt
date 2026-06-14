@@ -20,7 +20,3 @@ add_test(NAME Cpp_Fortran_allocate COMMAND cpp_fortran_allocate)
 add_executable(c_fortran_allocate main.c)
 target_link_libraries(c_fortran_allocate PRIVATE alloc_fortran)
 add_test(NAME C_Fortran_allocate COMMAND c_fortran_allocate)
-
-if(CMAKE_Fortran_COMPILER_ID MATCHES "Cray|IntelLLVM")
-  set_property(TEST Cpp_Fortran_allocate C_Fortran_allocate PROPERTY SKIP_RETURN_CODE 77)
-endif()

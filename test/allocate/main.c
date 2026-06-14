@@ -17,25 +17,25 @@ int main(void){
   alloc1(&A1, &B1, d1);
   printf("1D: A and B allocated\n");
 
-  dealloc1(&A1, &B1, d1);
+  dealloc1(&A1, &B1);
   printf("1D: A and B deallocated\n");
 
   alloc2(&A2, &B2, d2);
   printf("2D: A and B allocated\n");
 
-  dealloc2(&A2, &B2, d2);
+  dealloc2(&A2, &B2);
   printf("2D: A and B deallocated\n");
 
   alloc3(&A3, &B3, d3);
   printf("3D: A and B allocated\n");
 
-  dealloc3(&A3, &B3, d3);
+  dealloc3(&A3, &B3);
   printf("3D: A and B deallocated\n");
 
   alloc4(&A4, &B4, d4);
   printf("4D: A and B allocated\n");
 
-  dealloc4(&A4, &B4, d4);
+  dealloc4(&A4, &B4);
   printf("4D: A and B deallocated\n");
 
   printf("OK: allocate test\n");
