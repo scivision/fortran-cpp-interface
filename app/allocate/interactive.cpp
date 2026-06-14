@@ -10,10 +10,10 @@ int main(){
 
   std::vector<size_t> d1 = {1000000000};
 
-  float *A1;
+  float *A1 = nullptr;
 
 
-  falloc1(&A1, &d1.front());
+  falloc1(&A1, d1.data());
   std::cout << "1D: allocated\n";
 
   std::cout << "press enter to deallocate 1D\n";

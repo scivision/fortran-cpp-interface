@@ -1,3 +1,5 @@
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12,8 +14,8 @@ void dealloc2(float**, float**, const size_t*);
 void dealloc3(float**, float**, const size_t*);
 void dealloc4(float**, float**, const size_t*);
 
-void falloc1(float**, const size_t*);
-void fdealloc1(float**);
+void falloc1(float** Ac, const size_t dims[1]);
+void fdealloc1(float** Ac);
 
 #ifdef __cplusplus
 }
