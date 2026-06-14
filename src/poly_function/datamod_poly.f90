@@ -33,11 +33,13 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! type-bound procedures
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-subroutine set_data(self,array)
+integer(c_int) function set_data(self,array)
   class(dataobj_poly), intent(inout) :: self
   real(c_float), dimension(:,:), intent(in) :: array
   integer(c_int) :: nx, ny
   integer(c_int) :: dealloc_status, alloc_status
+
+  set_data = 0_c_int
 
   nx = size(array,1)
   ny = size(array,2)
@@ -51,16 +53,22 @@ subroutine set_data(self,array)
       return
     end if
     deallocate(self%dataval, stat=dealloc_status)
-    if (dealloc_status /= 0) return
+    if (dealloc_status /= 0) then
+      set_data = 1_c_int
+      return
+    end if
   end if
 
   allocate(self%dataval(nx,ny), stat=alloc_status)
-  if (alloc_status /= 0) return
+  if (alloc_status /= 0) then
+    set_data = 2_c_int
+    return
+  end if
 
   self%lx = nx
   self%ly = ny
   self%dataval(:,:)=array(:,:)
-end subroutine set_data
+end function set_data
 
 
 subroutine print_data(self)

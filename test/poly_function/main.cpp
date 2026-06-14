@@ -7,6 +7,10 @@
 // 3: zero dimensions in constructor
 // 4: allocation failure
 // 5: invalid/stale object pointer
+// 6: invalid C->Fortran input data pointer mapping
+// 7: set_data deallocation failure
+// 8: set_data allocation failure
+// 9: destruct deallocation failure
 #include <array>
 #include <iostream>
 #include <cstdlib>
@@ -153,6 +157,29 @@ if (status != 0) {
 status = destruct_C(&objtype, &objptr2);
 if (status != 0) {
 	std::cerr << "Expected success from double destruct, got status " << status << "\n";
+	return EXIT_FAILURE;
+}
+
+// Invalid-type destroy should return invalid type status when handle is non-null.
+void* invalid_type_obj = nullptr;
+objtype = 1;
+status = objconstruct_C(&objtype, &invalid_type_obj, &arrptr, &lx1, &ly1);
+if (status != 0) {
+	std::cerr << "Failed to construct invalid_type_obj with status " << status << "\n";
+	return EXIT_FAILURE;
+}
+
+objtype = 999;
+status = destruct_C(&objtype, &invalid_type_obj);
+if (status != 1) {
+	std::cerr << "Expected invalid objtype status 1 from destruct_C, got " << status << "\n";
+	return EXIT_FAILURE;
+}
+
+objtype = 1;
+status = destruct_C(&objtype, &invalid_type_obj);
+if (status != 0) {
+	std::cerr << "Cleanup destruct_C failed for invalid_type_obj with status " << status << "\n";
 	return EXIT_FAILURE;
 }
 

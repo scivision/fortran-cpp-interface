@@ -12,6 +12,10 @@ module c_interface_poly
   integer(c_int), parameter :: STATUS_ZERO_DIMS = 3_c_int
   integer(c_int), parameter :: STATUS_ALLOC_FAIL = 4_c_int
   integer(c_int), parameter :: STATUS_BAD_OBJECT_PTR = 5_c_int
+  integer(c_int), parameter :: STATUS_FORTDATA_PTR = 6_c_int
+  integer(c_int), parameter :: STATUS_SET_DATA_DEALLOC_FAIL = 7_c_int
+  integer(c_int), parameter :: STATUS_SET_DATA_ALLOC_FAIL = 8_c_int
+  integer(c_int), parameter :: STATUS_DESTRUCT_DEALLOC_FAIL = 9_c_int
 
 contains
 
@@ -27,6 +31,7 @@ integer(c_int) function objconstruct_C(objtype,cptr_f90obj,cptr_indata,lx,ly) bi
   type(data2), pointer :: tmpobj2    !< ditto
   real(c_float), dimension(:,:), pointer :: fortdata
   integer :: alloc_status
+  integer(c_int) :: data_status
 
   !> nullify for sake of clarity and good practice
   nullify(tmpobj1, tmpobj2)
@@ -69,7 +74,25 @@ integer(c_int) function objconstruct_C(objtype,cptr_f90obj,cptr_indata,lx,ly) bi
   !> initialize some test data, and call methods to print
   print*, 'Initializing test data...'
   call c_f_pointer(cptr_indata,fortdata,shape=[lx,ly])
-  call obj%set_data(fortdata)
+  if (.not. associated(fortdata)) then
+    objconstruct_C = STATUS_FORTDATA_PTR
+    return
+  end if
+
+  data_status = obj%set_data(fortdata)
+  select case (data_status)
+    case (0_c_int)
+      continue
+    case (1_c_int)
+      objconstruct_C = STATUS_SET_DATA_DEALLOC_FAIL
+      return
+    case (2_c_int)
+      objconstruct_C = STATUS_SET_DATA_ALLOC_FAIL
+      return
+    case default
+      objconstruct_C = STATUS_SET_DATA_ALLOC_FAIL
+      return
+  end select
 
   !! note lack of deallocate and nullify here; we need memory allocated to persist past the return.
 end function objconstruct_C
@@ -139,6 +162,7 @@ integer(c_int), intent(in) :: objtype
 
 class(dataobj_poly),pointer :: obj
 integer(c_int) :: status
+integer :: dealloc_status
 
 destruct_C = STATUS_SUCCESS
 if (.not. c_associated(objC)) return
@@ -149,8 +173,20 @@ if (status /= 0) then
   return
 end if
 
-if (associated(obj%dataval)) deallocate(obj%dataval)
-deallocate(obj)
+if (associated(obj%dataval)) then
+  deallocate(obj%dataval, stat=dealloc_status)
+  if (dealloc_status /= 0) then
+    destruct_C = STATUS_DESTRUCT_DEALLOC_FAIL
+    return
+  end if
+end if
+
+deallocate(obj, stat=dealloc_status)
+if (dealloc_status /= 0) then
+  destruct_C = STATUS_DESTRUCT_DEALLOC_FAIL
+  return
+end if
+
 objC = c_null_ptr
 
 end function destruct_C
