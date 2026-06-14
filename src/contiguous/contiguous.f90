@@ -4,6 +4,9 @@ use, intrinsic :: iso_c_binding, only : C_FLOAT, C_SIZE_T, C_PTR, c_f_pointer
 
 implicit none
 
+private
+public :: asub, fcheck
+
 contains
 
 subroutine asub(Ac, dims) bind(C)
@@ -14,9 +17,20 @@ real(C_FLOAT), pointer, contiguous :: A(:)
 
 call c_f_pointer(Ac, A, dims)
 
-if (.not. is_contiguous(A)) error stop "assumed shape array is not contiguous"
+if (.not. is_contiguous(A)) error stop "Fortran assumed shape array is not contiguous"
 
-print '(a,i0,a,10F7.1)', "contig: Fortran got length ", dims(1), " array: ", A
+print '(a,i0,a,10F7.1)', "contiguous: Fortran got length ", dims(1), " array: ", A
+end subroutine
+
+
+subroutine fcheck(A)
+real(C_FLOAT), intent(in) :: A(:)
+
+if (.not. is_contiguous(A)) then
+	error stop 'Fortran array is not contiguous'
+end if
+
+print '(a,i0,a,10F7.1)', "Fortran got length ", size(A), " array: ", A
 end subroutine
 
 end module contig

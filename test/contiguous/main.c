@@ -1,26 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "contiguous.h"
 
 int main(void){
 
-size_t N = 3;
+float a[] = {1.0f, 2.0f, 3.0f};
+size_t N = sizeof(a) / sizeof(a[0]);
 
-float* a = malloc(N * sizeof(float));
-
-memcpy(a, (float[]){1, 2, 3}, N * sizeof(float));
-
-float* p = malloc(N * sizeof(float));
-p[0] = a[2];
-p[1] = a[1];
-p[2] = a[0];
-free(a);
-
-asub(&p[0], &N);
-
-free(p);
+asub(a, &N);
 
 printf("OK: C contiguous array\n");
 
