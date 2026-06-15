@@ -1,6 +1,9 @@
-#include <nullptr.h>
 #include <stddef.h>
 
+#if __STDC_VERSION__ < 202311L
+#include <stdbool.h>
+#endif
+
 const char* nullchar(bool b) {
-  return b ? NULL : "hello";
+  return b ? nullptr : "hello";
 }
