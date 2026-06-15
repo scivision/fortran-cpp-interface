@@ -19,4 +19,5 @@ add_test(NAME Cpp_Fortran_allocate COMMAND cpp_fortran_allocate)
 
 add_executable(c_fortran_allocate main.c)
 target_link_libraries(c_fortran_allocate PRIVATE alloc_fortran)
+set_property(TARGET c_fortran_allocate PROPERTY LINKER_LANGUAGE C)
 add_test(NAME C_Fortran_allocate COMMAND c_fortran_allocate)

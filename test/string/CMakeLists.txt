@@ -3,11 +3,10 @@ set_property(DIRECTORY PROPERTY LABELS "string")
 add_library(f_print OBJECT print.f90)
 
 add_executable(string_c main.c $<TARGET_OBJECTS:f_print>)
-add_executable(string_cpp main.cpp $<TARGET_OBJECTS:f_print>)
-
 set_property(TARGET string_c PROPERTY LINKER_LANGUAGE C) # for oneAPI Linux
-
 add_test(NAME string_c COMMAND string_c)
+
+add_executable(string_cpp main.cpp $<TARGET_OBJECTS:f_print>)
 add_test(NAME string_cpp COMMAND string_cpp)
 
 # single C_CHAR -- fails on nvfortran
