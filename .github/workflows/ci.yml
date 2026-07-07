@@ -23,13 +23,13 @@ concurrency:
 
 jobs:
 
-  linux-gcc:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+  ubuntu26-gcc:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
 
     strategy:
       matrix:
-        gcc-version: [12, 13, 14]
+        gcc-version: [15]
 
     env:
       CC: gcc-${{ matrix.gcc-version }}
@@ -43,7 +43,48 @@ jobs:
     - uses: ./.github/workflows/composite-unix
 
 
-  linux-gcc-old:
+  ubuntu26-flang:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        llvm-version: [22]
+
+    env:
+      CC: clang-${{ matrix.llvm-version }}
+      CXX: clang++-${{ matrix.llvm-version }}
+      FC: flang-${{ matrix.llvm-version }}
+
+    steps:
+    - name: install Flang
+      run: sudo apt install --no-install-recommends flang-${{ matrix.llvm-version }}
+
+    - *checkout
+    - uses: ./.github/workflows/composite-unix
+
+
+  ubuntu24:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        gcc-version: [12, 13, 14]
+
+    env:
+      CC: gcc-${{ matrix.gcc-version }}
+      CXX: g++-${{ matrix.gcc-version }}
+      FC: gfortran-${{ matrix.gcc-version }}
+
+    steps:
+    - *checkout
+
+    - &default-workflow
+      run: cmake --workflow default
+
+
+  ubuntu22:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
 
@@ -65,13 +106,12 @@ jobs:
         sudo apt update -y
         sudo apt install -y --no-install-recommends gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
 
-    - &default-workflow
-      run: cmake --workflow default
+    - *default-workflow
 
 
   valgrind-memory:
-    runs-on: ubuntu-latest
-    needs: linux-gcc
+    runs-on: ubuntu-26.04
+    needs: ubuntu26-gcc
     timeout-minutes: 10
 
     steps:
