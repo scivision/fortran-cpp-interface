@@ -70,7 +70,7 @@ jobs:
 
     strategy:
       matrix:
-        gcc-version: [12, 13, 14]
+        gcc-version: [10, 11, 12, 13, 14]
 
     env:
       CC: gcc-${{ matrix.gcc-version }}
@@ -78,35 +78,16 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-    - *checkout
-
-    - &default-workflow
-      run: cmake --workflow default
-
-
-  ubuntu22:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 15
-
-    strategy:
-      matrix:
-        gcc-version: [9, 10, 11]
-
-    env: &gcc-env
-      CC: gcc-${{ matrix.gcc-version }}
-      CXX: g++-${{ matrix.gcc-version }}
-      FC: gfortran-${{ matrix.gcc-version }}
-
-    steps:
-    - *checkout
-
     - name: GCC APT
-      if: matrix.gcc-version < 10
+      if: matrix.gcc-version < 12
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gcc-${{ matrix.gcc-version }} g++-${{ matrix.gcc-version }} gfortran-${{ matrix.gcc-version }}
 
-    - *default-workflow
+    - *checkout
+
+    - &default-workflow
+      run: cmake --workflow default
 
 
   valgrind-memory:
