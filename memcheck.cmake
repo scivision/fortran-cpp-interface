@@ -53,10 +53,8 @@ set(CTEST_BUILD_CONFIGURATION Debug)
 
 if(DEFINED ENV{CMAKE_GENERATOR})
   set(CTEST_CMAKE_GENERATOR $ENV{CMAKE_GENERATOR})
-elseif(WIN32)
-  set(CTEST_CMAKE_GENERATOR "MinGW Makefiles")
 else()
-  set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+  set(CTEST_CMAKE_GENERATOR "Ninja")
 endif()
 
 message(STATUS "Checker ${CTEST_MEMORYCHECK_TYPE}: ${CTEST_MEMORYCHECK_COMMAND}")
@@ -83,10 +81,6 @@ if(NOT (ret EQUAL 0 AND err EQUAL 0))
 endif()
 
 ctest_memcheck(
-INCLUDE ${include}
-INCLUDE_LABEL ${include_label}
-EXCLUDE ${exclude}
-EXCLUDE_LABEL ${exclude_label}
 RETURN_VALUE ret
 CAPTURE_CMAKE_ERROR err
 DEFECT_COUNT count
