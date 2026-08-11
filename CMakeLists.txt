@@ -23,9 +23,12 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 20)
 # we use c++20 features in some examples
 
-option(dev "developer mode")
-
 message(STATUS "${PROJECT_NAME} CMake ${CMAKE_VERSION}")
+
+check_source_compiles(Fortran "program test; use, intrinsic :: iso_c_binding; end program test;" HAVE_FORTRAN_ISO_C_BINDING)
+if(NOT HAVE_FORTRAN_ISO_C_BINDING)
+  message(FATAL_ERROR "Fortran compiler does not support ISO C Binding")
+endif()
 
 include(cmake/compilers.cmake)
 
