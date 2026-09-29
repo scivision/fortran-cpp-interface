@@ -34,6 +34,8 @@ jobs:
     - uses: fortran-lang/setup-fortran@v1
       with:
         compiler: intel
+        version: latest
+# need 'latest' else the oldest available version gets installed
 
     - uses: actions/checkout@v7
 
