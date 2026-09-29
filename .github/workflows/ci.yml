@@ -15,6 +15,7 @@ on:
       - "**/CMakeLists.txt"
       - ".github/workflows/ci.yml"
   workflow_dispatch:
+  pull_request:
 
 # avoid wasted runs
 concurrency:
@@ -23,44 +24,29 @@ concurrency:
 
 jobs:
 
-  ubuntu26-gcc:
+  ubuntu26:
     runs-on: ubuntu-26.04
     timeout-minutes: 10
 
     strategy:
       matrix:
-        gcc-version: [15]
+        comp: [ {cc: gcc-15, cxx: g++-15, fc: gfortran-15},
+                {cc: clang-22, cxx: clang++-22, fc: flang-22 }
+        ]
 
     env:
-      CC: gcc-${{ matrix.gcc-version }}
-      CXX: g++-${{ matrix.gcc-version }}
-      FC: gfortran-${{ matrix.gcc-version }}
-
-    steps:
-    - &checkout
-      uses: actions/checkout@v7
-
-    - uses: ./.github/workflows/composite-unix
-
-
-  ubuntu26-flang:
-    runs-on: ubuntu-26.04
-    timeout-minutes: 15
-
-    strategy:
-      matrix:
-        llvm-version: [22]
-
-    env:
-      CC: clang-${{ matrix.llvm-version }}
-      CXX: clang++-${{ matrix.llvm-version }}
-      FC: flang-${{ matrix.llvm-version }}
+      CC: ${{ matrix.comp.cc }}
+      CXX: ${{ matrix.comp.cxx }}
+      FC: ${{ matrix.comp.fc }}
 
     steps:
     - name: install Flang
-      run: sudo apt install --no-install-recommends flang-${{ matrix.llvm-version }}
+      if: ${{ startsWith(matrix.comp.fc, 'flang') }}
+      run: sudo apt install --no-install-recommends ${{ matrix.comp.fc }}
 
-    - *checkout
+    - &checkout
+      uses: actions/checkout@v7
+
     - uses: ./.github/workflows/composite-unix
 
 
@@ -92,7 +78,7 @@ jobs:
 
   valgrind-memory:
     runs-on: ubuntu-26.04
-    needs: ubuntu26-gcc
+    needs: ubuntu26
     timeout-minutes: 10
 
     steps:
@@ -142,7 +128,7 @@ jobs:
 
     strategy:
       matrix:
-        compiler: [{cpp: clang++, c: clang, fc: flang-new },
+        compiler: [{cpp: clang++, c: clang, fc: flang },
                    {cpp: clang++, c: clang, fc: gfortran-15 },
                    {cpp: g++-15, c: gcc-15, fc: gfortran-15 }]
 
@@ -155,7 +141,7 @@ jobs:
 
     steps:
     - name: install Flang
-      if: ${{ matrix.compiler.fc == 'flang-new' }}
+      if: ${{ matrix.compiler.fc == 'flang' }}
       run: brew install flang
 
     - *checkout
