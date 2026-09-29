@@ -1,12 +1,5 @@
 name: oneapi-linux
-
-env:
-  CC: icx
-  CXX: icpx
-  FC: ifx
-# https://github.com/oneapi-src/oneapi-ci/blob/master/.github/workflows/build_all.yml
-
-  # debug triggers asan build errors, peculiar to GitHub Actions
+# debug triggers asan build errors, peculiar to GitHub Actions
 
 on:
   push:
@@ -37,32 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    # strategy:
-    #   matrix:
-    #     oneapi: [2025.3]
-
     steps:
-    - uses: actions/checkout@v7
-
-    - name: cache install oneAPI
-      id: cache-install
-      uses: actions/cache@v6
+    - uses: fortran-lang/setup-fortran@v1
       with:
-        path: |
-          /opt/intel/oneapi
-        key: oneapi-apt
+        compiler: intel
 
-    - name: non-cache install oneAPI
-      if: steps.cache-install.outputs.cache-hit != 'true'
-      timeout-minutes: 5
-      run: |
-        .github/workflows/oneapi_setup_apt_repo_linux.sh
-        sudo apt install --no-install-recommends intel-oneapi-compiler-dpcpp-cpp intel-oneapi-compiler-fortran
-
-    - name: Setup Intel oneAPI environment
-      run: |
-        source /opt/intel/oneapi/setvars.sh
-        printenv >> $GITHUB_ENV
+    - uses: actions/checkout@v7
 
     - run: cmake --workflow default
 
@@ -72,7 +45,3 @@ jobs:
       with:
         name: oneapi-${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml
-
-    - name: exclude unused files from cache
-      if: steps.cache-install.outputs.cache-hit != 'true'
-      run: .github/workflows/oneapi_cache_exclude_linux.sh
