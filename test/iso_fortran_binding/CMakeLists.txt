@@ -1,9 +1,5 @@
 set_property(DIRECTORY PROPERTY LABELS ISO_Fortran_binding)
 
-if(NOT HAVE_ISO_FORTRAN_BINDING_H)
-  return()
-endif()
-
 if(HAVE_C_ALLOC_CHAR)
   add_executable(string_view string_view.f90 string_view.cpp)
   set_property(TARGET string_view PROPERTY LINKER_LANGUAGE ${linker_lang})

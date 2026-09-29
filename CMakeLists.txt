@@ -44,21 +44,40 @@ endif()
 
 # Targets
 
-foreach(a IN ITEMS
-  iso_fortran_binding
-  allocate bounds contiguous
-  array bool error exception
-  iterator
-  malloc
-  nullptr
-  opaque pointer poly_function poly_type real struct
-  sleep string submodule
-  time
-  uid
-  vector)
+set(test_targs
+allocate
+contiguous
+array bool
+error
+exception
+iterator
+malloc
+nullptr
+opaque
+pointer
+poly_function
+poly_type
+real
+struct
+sleep
+string
+submodule
+time
+uid
+vector
+)
 
+if(HAVE_ISO_FORTRAN_BINDING_H)
+  list(APPEND test_targs iso_fortran_binding rank)
+  if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 12)
+    message(STATUS "GNU Fortran < 12 has known bugs in non-default array bounds. Skipping bounds tests.")
+  else()
+    list(APPEND test_targs bounds)
+  endif()
+endif()
+
+foreach(a IN LISTS test_targs)
   add_subdirectory(test/${a})
-
 endforeach()
 
 file(GENERATE OUTPUT .gitignore CONTENT "*")
